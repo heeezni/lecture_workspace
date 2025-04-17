@@ -7,15 +7,21 @@
     <!-- css의 3가지 적용 방법 중, 
      내부 css는 style 태그 안에 css코드 작성
      가장 보편적인 적용방법 (일괄적용 가능)-->
-    <style>
+    <!-- <style>
         td{
             font-size: 9px;
-            color: red;
+            color: purple;
         }
         input{
-            background-color: yellow;
+            background-color: rgb(250, 225, 229);
         }
-    </style>
+    </style> -->
+
+    <!-- 스타일의 재사용성을 높이기 위해, 
+     여러 문서에 걸쳐서 사용되는 css는 공통의 파일로 저장해 놓고
+     '링크'시킨다. -->
+     <link rel="stylesheet" href="./css/style.css">
+     <!-- '.'은 나와 같은 디렉토리 -->
 </head>
 <body>
     <!-- align : 정렬  -->
@@ -24,7 +30,7 @@
             <td colspan="2" align="center">회원가입</td>
         </tr>
         <tr>
-            <!-- 인라인 css (개별적용) -->
+            <!-- 인라인 css (개별적용) (우선순위) -->
             <td style="font-size: 9px">ID</td>
             <td><input type="text" placeholder="아이디를 입력하세요"></td>
         </tr>
@@ -44,9 +50,9 @@
                 <input type="text" placeholder="메일 아이디 입력">
                 @
                 <select>
-                    <option value="">구글</option>
-                    <option value="">네이버</option>
-                    <option value="">다음</option>
+                    <option value="">google.com</option>
+                    <option value="">naver.com</option>
+                    <option value="">daum.net</option>
                 </select>
             </td>
         </tr>

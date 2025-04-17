@@ -1,0 +1,11 @@
+td{
+    font-size: 9px;
+    color: purple;
+}
+input{
+    background-color: rgb(250, 225, 229);
+}
+
+/* 선택자(누구)를 {
+    속성:값; (어떻게 할지)
+     } */
