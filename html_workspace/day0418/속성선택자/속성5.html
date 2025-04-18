@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* class의 값 중에 btn이 포함되어 있는 */
+        button[class*="btn"]{
+            background-color: pink;
+            /* 모서리 둥글둥글 */
+            border-radius: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <button class="btn-primary">버튼 1</button>
+    <button class="secondary-btn">버튼 2</button>
+    <button class="button">버튼 3</button>
+</body>
+</html>

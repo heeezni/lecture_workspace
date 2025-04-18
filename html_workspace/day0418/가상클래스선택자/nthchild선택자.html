@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 'n번째 자식요소' 선택자로 지정
+        :nth-child(n) */
+        /* li:nth-child(5),li:nth-child(1),li:nth-child(3),li:nth-child(7){ 
+        color: red;
+        } */
+
+        /* even 짝수 odd 홀수 */
+        li:nth-child(even){
+            color: aqua;
+        }
+        li:nth-child(odd){
+            color: pink;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <ul>
+        <li>아이템 1</li>
+        <li>아이템 2</li>
+        <li>아이템 3</li>
+        <li>아이템 4</li>
+        <li>아이템 5</li>
+        <li>아이템 6</li>
+        <li>아이템 7</li>
+    </ul>
+</body>
+</html>

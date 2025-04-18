@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 요소의 앞/뒤에 가상요소 추가 
+     ::before / ::after -->
+    <style>
+        p::before{
+            content:"새로 생성된 문자열이야 ";
+            color: red;
+        }
+        p::after{
+            content: " 뒤에 붙어";
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <p>이 문장은 ::before 예제임</p>
+</body>
+</html>
