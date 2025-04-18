@@ -1,0 +1,32 @@
+DML : Manipulation 조작어
+
+
+테이블 복사하기
+create table emp2 as select *from emp;
+
+1) 부서 정보에 다음의 데이터를 넣어보기 (insert)
+
+부서번호 : 50
+부서명 : SECRET
+부서위치 : SEOUL
+insert into dept2(deptno,dname,loc) values(50,'SECRET','SEOUL');
+//순서 맞춰서 쓰기
+
+2) 레코드 1건 삭제 (delete)
+
+delete from emp2;
+//모든 걸 다 지움, where문 넣어야함
+
+급여가 800인 사원 지워보기
+delete from emp2 where sal=800;
+10번 부서 사원들 모두 삭제
+delete from emp2 where deptno=10;
+
+3)레코드 수정 (update)
+7788사원의 업무를 한국어 '분석'으로 수정
+update emp2 set job='분석' where empno=7788;
+
+
+update emp2 set ename='회장',sal=9000, comm=5000 where empno=7839;
+여러가지 수정은 , 콤마 사용
+set은 한 번만 씀

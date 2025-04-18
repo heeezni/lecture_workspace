@@ -1,0 +1,34 @@
+select * from emp;
+
+select ename, sal from emp;
+
+select ename, sal from emp where deptno=10;
+
+select ename, sal from emp where sal>=3000;
+
+select ename, hiredate from emp where job='MANAGER';
+
+select ename, sal from emp where sal>=1000 and sal<=3000;
+
+select * from emp where sal<2000 or comm>=500;
+
+select * from emp where ename like 'A%';
+// %A : A로 끝나는 = vs like -> : =은 더 정확하고 확실한 값
+
+select ename,comm from emp where comm is not null;
+// is not은 연산자. null은 값이 아니기 때문에 =을 쓸 수 없음.
+
+select * from emp where job='SALESMAN';
+// SALESMAN은 쿼리문이 아니다 (데이터임)
+
+select * from dept;
+
+select ename, (sal*1.1) from emp;
+// select ename, sal+sal*(10/100.0) from emp;
+
+select * from emp order by hiredate asc;
+
+select * from emp order by sal desc;
+
+
+

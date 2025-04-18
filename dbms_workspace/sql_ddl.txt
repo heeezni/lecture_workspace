@@ -1,0 +1,6 @@
+[DDL - 존재와 관련된 쿼리문 생성, 소멸, 변경]
+
+실습을 위해 emp2, dept2 소멸
+
+drop table emp2;
+drop table dept2;
