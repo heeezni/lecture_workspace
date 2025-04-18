@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            font-size: 19px;
+        }
+        /*  현재 이미지가 차지 하고 있던 정상적인 위치(normal position)를 벗어나게 해보자
+         'float'을 적용
+         float을 적용하면, img 후에 위치한 모든 요소들 중 인라인 요소들은
+         이미지의 float된 위치를 인식할 수 있으나
+         블럭요소들은 float된 요소를 인식할 수 없기 때문에
+         아무것도 없다고 착각하여, 이미지의 공간을 파고 들어오게 됨 */
+        img{
+            float: left;
+        }
+        #box{
+            background-color: red;
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <img src="../../images/tenor.gif" width="200px">
+    <div id="box">블럭요소</div>
+    <!--  
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni sit officiis doloremque enim obcaecati eius unde nesciunt fuga. Impedit maxime facere quos architecto atque deleniti, velit repellat saepe maiores mollitia?
+        Nemo dicta earum, aliquid quae repellendus at exercitationem hic vel perspiciatis sit delectus dolor eaque tempore laudantium id officiis explicabo cupiditate iusto! Ratione aliquam iste ducimus optio! Nisi, eveniet fugit.
+        Fugit sequi facilis libero enim doloribus saepe illum, perferendis ullam officiis ipsum dignissimos quaerat voluptate nihil quam nostrum architecto repudiandae neque ipsa sunt! Labore, culpa quasi. Obcaecati eveniet corrupti in.
+        Corporis debitis nesciunt, voluptatibus a assumenda et fugit maxime officia culpa neque dolor, molestias beatae inventore! Nulla harum, provident accusantium corrupti eveniet reprehenderit asperiores omnis aliquam. Provident quod quibusdam voluptatum.
+        Ab mollitia nemo placeat ut eos modi debitis, possimus animi deserunt vel ad quod dolor deleniti obcaecati, quibusdam blanditiis adipisci consequatur, voluptatibus distinctio? Cupiditate soluta veritatis et ullam nulla provident!
+    -->
+</body>
+</html>

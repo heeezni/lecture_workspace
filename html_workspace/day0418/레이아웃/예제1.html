@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            /* 너비는 제한을 둬도 되지만, 
+            높이는 컨텐츠양에 좌우되므로 제한 둬서는 안됨 */
+            width: 1000px;
+
+            /* 이 요소가 차지하고 남은 공간의 좌,우 여백을 양쪽에 똑같이 배분한다 
+            :정가운데에 놓을 수 있게 
+            margin: auto; */
+            margin: auto;
+        }
+        #header{
+            height: 50px;
+            background-color: skyblue;
+        }
+        #content{
+            height: 500px;
+            background-color: beige; 
+
+        }
+        #footer{
+            height: 50px;
+            background-color: mediumaquamarine;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 각각의 div를 별도로 조정하면, 코드 중복이 발생하고,
+     유지보수성이 떨어지므로, 가장 바깥쪽에 부모요소로 컨테이너를 하나 둔다
+     div로 wrapper -->
+    <div id="wrapper">
+        <div id="header">헤더영역</div>
+        <div id="content">컨텐츠영역</div>
+        <div id="footer">푸터</div>
+    </div>
+    
+</body>
+</html>
