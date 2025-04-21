@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 500px;
+            margin: auto;
+            /* 화면 정중앙 배치 */
+        }
+
+        #header{background-color: palevioletred;
+        }
+        
+        #aside{background-color: pink;
+        float: left;
+         /*normal position에서 벗어남 */
+         width: 100px;
+         height: 400px;
+        }
+
+        #section{background-color: lavenderblush;
+        width: 500px;
+        height: 400px;
+        float: left; 
+        /*block요소를 float시키면 서로 배척하는 성질이 사라짐
+        주의: 인라인으로 변하는 것은 아니다. 왜? 만약 float으로 인해 인라인으로 변할 경우
+        width,height가 적용이 되지 않아야 한다.
+        하지만 block은 float시키면 width, height,margin,padiing 다 가능
+        'float시키면 사이좋아짐'*/}
+
+        #footer{background-color: lavender;
+            height: 50px;
+            clear: both;
+            /* left또는 right로 float되어있는 요소로 인하여
+            공간이 비어있는 상황에 대해, 해당 공간을 강제 인식 시키는 속성
+            ->이 속성을 적용하면 float된 공간을 인식해서 파고 들어가는 것을 방지해줌 */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">header</div>
+        <div id="aside">aside</div>
+        <div id="section">section</div>
+        <div id="footer">footer</div>
+    </div>
+</body>
+</html>
+
+<!-- 드디어 웹페이지 기본 레이아웃만들어봄
+ clear:both; 중요 -->

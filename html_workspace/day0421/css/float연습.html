@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{font-size: 20px;}
+        img{
+            width: 200px;
+            height: 200px;
+            float: left;}
+        div{background-color: beige;
+        width: 230px;
+        border: 2px solid red;
+        height: 150px;
+        }
+
+        /* float시 인라인 방식(ex:글씨)은 침범x
+        블록 방식(ex:div)은 침범해버림 */
+    </style>
+</head>
+<body>
+    <!-- 이미지와 텍스트를 섞어서 사용할 때,
+     이미지의 높이 = 텍스트의 높이 : 문제 X ,
+     이미지의 높이 > 텍스트의 높이 : 높이차 발생-> 여백이 생겨버림 -->
+
+     <img src="../../images/tenor.gif" alt="춤추는 고양이">
+     <div>
+         Lorem ipsum dolor sit
+     </div>
+
+</body>
+</html>
