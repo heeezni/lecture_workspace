@@ -1,0 +1,47 @@
+<script>
+    // (1)
+    // let a=10;
+    // let b=5;
+    // a =a-b;
+    // console.log(a+b); // 결과는 10
+
+    // (2)
+    // let a =7;
+    // let b =3;
+    // a = b;
+    // console.log(a+b); // 결과는 6
+
+    // (3)
+    // let a=5;
+    // let b="apple"
+    // console.log(a+b); // 결과는 5apple
+    
+    // (4)
+    // let a=3;
+    // let b="apple";
+    // console.log(a-b); // 결과는 NaN 연결자는 +만 가능 \
+
+
+    // (5)
+    // let x =3;
+    // x +=7;
+    // x++;
+    // x-=6;
+    // console.log(x); // 결과는 5
+
+    var a=3, b=5, c=0;
+    c=((a+=2)!=b)? 1:2
+    c++;
+    console.log(c++); // 3
+    console.log(c); // 4
+
+    var x=true, y=false;
+    var k=0;
+    k= (x&&y)? 0:3;
+    k=(k!=0)? 10:5;
+    k%=10;
+    console.log(k++); // 0 일단 출력 0, 그리고 후위증가로 k=1
+    console.log(++k); // 2 k=1에 전위증가 출력 2
+
+</script>
+

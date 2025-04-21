@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let n=0; 
+        //전역변수: 프로그램과 생을 같이함
+
+        // 전역변수의 값을 1씩 증가시키기
+       function increase(){
+            n++;
+            console.log("카운트 = "+n);
+       }
+        // 전역변수의 값을 1씩 감소시키기
+       function decrease(){
+            n--;
+            console.log("카운트 = "+n);
+       }
+    </script>
+</head>
+<body>
+    <button onclick="increase()">증가</button>
+    <button onclick="decrease()">감소</button>
+</body>
+</html>
