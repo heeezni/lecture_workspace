@@ -4,3 +4,27 @@
 
 drop table emp2;
 drop table dept2;
+------------------------------------------------------------------------------------------
+create table member(id varchar(20),pwd varchar(64),email varchar(25));
+show tables; 테이블(데이터) 확인
+desc member; 구조 확인
+
+<컬럼 추가하기>
+문자 20자 수용가능한 name컬럼 추가하기 
+alter table member **add** name varchar(20);
+
+<테이블명 변경>
+member -> membership 바꾸고싶을 때
+**rename** table member **to** membership;
+
+<컬럼명 변경>
+pwd->pass 바꾸고싶을 때
+alter table member **change** pwd pass varchar(64); //크기도 명시
+
+<컬럼 용량 추가>
+email컬럼의 varchar(25)를 (35)로 늘리고 싶을 때 
+alter table member **modify** email varchar(35);
+
+<테이블 제거하기>
+**drop** table membership;
+

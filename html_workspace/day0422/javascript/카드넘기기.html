@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카드넘기기</title>
+    <style>
+        /* a 태그를 버튼처럼 보이게 만들기 */
+        a{
+            background-color: red;
+            display: inline-block;
+            /* 인라인 속성은 유지하여 다른 태그와 공존 가능
+            블록 속성도 부여하여 너비, 높이, 마진 조정도 가능 */
+            width: 120px;
+            height: 70px;
+            border-radius: 10px; 
+            line-height: 70px;
+            text-align: center; /* 글씨 가운데로 */
+            text-decoration: none; /* 밑줄 없애기 */
+            color: yellow;
+            font-weight: bold;
+        }
+        a:hover{
+            background-color: orange;
+        }
+    </style>
+    <script>
+        let n=1;
+        //현재 보고있는 카드의 다음사진 나오도록 src를 교체하자
+        function next(){
+            let card=document.getElementById("card");
+            n++;
+            card.src="../../images/card/h"+ n +".jpg"
+            // 정의한 변수를 써야함 let card로 정의했으니까
+            // card.src써야함
+
+        }
+    </script>
+</head>
+<body>
+    <!-- **자바스크립트 코드를 작성할 수 있는 영역**
+    1)<script>태그에
+    2) onClick과 같은 이벤트 핸들러
+    3) a태그에 javascript: 접두어 붙이기 -->
+
+        <a href="javascript:next()">다음 카드</a>
+
+        <div>
+            <img id="card" src="../../images/card/h1.jpg">
+        </div>
+
+</body>
+</html>

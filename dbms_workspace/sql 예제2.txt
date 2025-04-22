@@ -1,0 +1,26 @@
+select ename, job, sal from emp where job='SALESMAN' or job='CLERK';
+= select ename, job,sal from emp where job in ('SALESMAN', 'CLERK');
+
+//between A and B
+select ename, sal from emp where sal>=2000 and sal<=3000 order by sal desc;
+= select ename, sal from emp where sal between 2000 and 3000 order by sal desc;
+
+select ename,sal from emp where ename like '%K%' order by hiredate asc;
+%k% : k가 들어가는 
+
+select ename, sal, comm from emp where comm is null order by sal desc;
+
+select ename, sal from emp order by sal desc limit 0,3; // limit 0,3은 가장 높은 급여자부터 시작해서 3개
+//데이터 부분 조회 limit와 offset
+select ename, sal, deptno from emp order by sal asc limit 5 offset 2;
+//상위 2명 제외 (offset) 그 다음 5명만(limit) 출력
+
+select ename, sal from emp where sal not between 1500 and 2000 order by sal asc;
+
+//다중 order by 사용
+select * from emp order by deptno asc, sal desc;
+
+
+select * from emp order by sal desc limit 1,1; 두번째 높은 급여자
+limit 시작행번호, 개수
+select * from emp order by sal asc limit 1,1; 두번째 낮은 급여자

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            width: 1000px;
+            height: 700px;
+            margin: auto;
+        }
+        #header{
+            width: 100%;
+            height: 50px;
+            background-color: red;
+        }
+        #side_up{
+            width: 500px;
+            height: 300px;
+            background-color: orange;
+        }
+        #side_bottom{
+            width: 500px;
+            height: 300px;
+            background-color: yellow;
+            
+        }
+        #leftside{
+            width: 500px;
+            height: 600px;
+            float: left;
+        }
+        /* 아예 leftside를 타이트하게 묶어버려서 세로로 세워버림 (세미 wrapper의 기능) */
+
+        #side_right{
+            width: 500px;
+            height: 600px;
+            float: left;
+            background-color: greenyellow;
+        }
+        #footer{
+            width: 100%;
+            height: 50px;
+            background-color: green;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header"></div>
+        <div id="leftside">
+            <div id="side_up"></div>
+            <div id="side_bottom"></div>
+        </div>
+        <div id="side_right"></div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>

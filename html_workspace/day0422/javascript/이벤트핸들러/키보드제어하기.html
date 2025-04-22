@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트핸들러-키보드제어</title>
+    <script>
+        function init(event){
+            //이미 자바스크립트 언어 자체적으로 이벤트가 발생할 때마다 자동으로 해당 이벤트에 대한
+            // 모든 정보를 가진 객체를 자동으로 생성해주는데
+            // 이 객체를 가리켜 event 객체라 한다.
+            console.log("누른 키의 아스키코드:" + event.keyCode);
+        }
+    </script>
+</head>
+<body onkeydown="init(event)">
+    <!-- 키보드는 문서 전체가 대상 -->
+    
+</body>
+</html>
+
+<!-- 아스키코드: 문자를 컴퓨터가 이해할 수 있도록 숫자로 바꿔놓은 표준 코드 체계
+ 컴퓨터는 문자를 직접이해x 각 문자를 숫자로 바꿔서 처리 -->
+ 
+ <!-- **아무 키나 누를 때마다 해당 키의 아스키 코드(keyCode)**를 콘솔에 출력합니다. -->

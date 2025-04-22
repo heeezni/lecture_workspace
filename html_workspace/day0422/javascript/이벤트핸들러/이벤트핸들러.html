@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function init(){
+        let box=document.getElementById("box");
+        box.innerText="인희진"
+        }
+    </script>
+</head>
+<body onload="init()"> <!-- onload이후에 짜야 모든 순서가 보임 -->
+    <div id="box"></div>
+
+    <button ondblclick="alert()" onmouseover="alert('올렸어?')"onMouseout="alert('내려놨어?')">저를 클릭하세요</button>
+    <select onchange="alert('다른걸로 바꿨어?')">
+        <option value="google.com">google</option>
+        <option value="naver.com">naver</option>
+        <option value="daum.net">daum</option>
+        <!-- option 사이의 텍스트는 유저가 보게되는 디자인적 텍스트에 불과
+         실제 서버에 전송할 데이터는 value 속성에 넣기 -->
+         <!-- 주의) onChange 이벤트 핸들러는 기존의 값이 바뀌는 상황을 잡아내는 이벤트 핸들러
+           꼭 select 박스에만 사용할 수 있는게 아님 (오해금물)-->
+    </select> 
+    <input type="text" onchange="alert('다른 값을 넣었네?')">
+
+
+
+</body>
+</html>
+
+
+<!-- 
+onclick
+ondblclick
+onmouseover
+onMouseout
+onchange
+onload
+
+focus 대상에 커서가 올려졌을 때
+blur 대상에 커서가 벗어났을 때 
+-->

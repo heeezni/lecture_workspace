@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joypad Effect</title>
+    <style>
+        #wrapper{
+            width: 900px;
+            height: 600px;
+            margin: auto; 
+            overflow: hidden;
+        }
+        #aside{
+            width: 200px;
+            height: 600px;
+            background-color: rgb(112, 112, 243);
+            float: left;
+
+            /* 방향키 가운데로 정렬하기 */
+            display: flex;
+            justify-content: center; /* 가로 정렬 */
+            align-items: center;     /* 세로 정렬 */
+        }
+        #section{
+            width: 700px;
+            height: 600px;
+            background-color: skyblue;
+            float: left;
+            position: relative;
+            /* 자식때문에 */
+            background-image: url(../../images/plane/bg.jpg);
+            /* 배경은 뒤에 깔려서 이미지와 자리싸움x(충돌x) */
+        }
+        button{
+            width: 60px;
+            height: 50px;
+            background-color: rgb(207, 241, 255);
+            color: black;
+            border-radius: 10%;
+            border-radius: 15px;
+        }
+        #hero{
+            width: 40px;
+            position: absolute;
+            /* 자신의 부모요소를 기준으로 배치하겠음 */
+            left: 200px;
+            top: 100px;
+        }
+        </style>
+        <script>
+            let x=2;
+            let y=1; //비행기 위치 초기값 맞춰줘야 자연스러움
+            function moveRight(){
+                x++;
+                // 문서 내의 hero요소에 적용된 css 중 position값 중 left값을 증가시키기
+               let hero = document.querySelector("#hero");
+               hero.style.left= x*100+"px";
+            }
+            function moveLeft(){
+                x--;
+                let hero = document.querySelector("#hero");
+                hero.style.left= x*100+"px";
+            }
+            function moveUp(){
+                y--;
+                let hero = document.querySelector("#hero");
+                hero.style.top= y*100+"px";
+            }
+            function moveDown(){
+                y++;
+                let hero = document.querySelector("#hero");
+                hero.style.top= y*100+"px";
+            }
+    
+        </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <table>
+                <tr>
+                    <td></td>
+                    <td><button onclick="moveUp()">↑</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><button onclick="moveLeft()">←</button></td>
+                    <td><button onclick="moveDown()">↓</button></td>
+                    <td><button onclick="moveRight()">→</button></td>
+                </tr>
+            </table>
+        </div>
+        <div id="section">
+            <img id="hero" src="../../images/plane/plane.png" alt="비행기">
+        </div>
+    </div>
+</body>
+</html>

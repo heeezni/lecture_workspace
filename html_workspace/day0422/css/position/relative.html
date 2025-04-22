@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상대위치</title>
+    <style>
+        /* 
+        x축 - left값 (오른쪽으로 갈수록 커짐)
+         y축 - top값 (아래로 갈수록 커짐)
+         */
+        #box1{background-color: aquamarine;
+            position: relative;
+            top: 50px;
+        }
+        #box2{background-color: palevioletred;
+            position: relative; 
+            /* 상대위치는 다른요소에 의해 밀려나거나,
+            영향을 받은 현재 자신의 위치를 기준으로 한 위치속성 */
+            top: 50px;
+        }
+        #box1,#box2{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box1">box1</div>
+    <div id="box2">box2</div>
+</body>
+</html>

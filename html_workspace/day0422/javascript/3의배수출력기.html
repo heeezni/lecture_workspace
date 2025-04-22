@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #num{
+            font-size: 100px;
+            color: palevioletred;
+        }
+    </style>
+
+    <script>
+        let n=0;
+        function count(){
+            n++;
+            let num=document.getElementById("num"); 
+            let result=(n%3==0)? "♥":n;
+            num.innerText=result;
+        }
+
+
+    </script>
+</head>
+<body>
+    <button onclick="count()">버튼</button>
+    <div id="num">0</div> 
+    <!-- 시작화면에 0표기 해놓기 -->
+</body>
+</html>

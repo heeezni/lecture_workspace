@@ -1,0 +1,4 @@
+mysql-bin
+mysql -h localhost -u root -p
+1234
+use dev(파일명)
