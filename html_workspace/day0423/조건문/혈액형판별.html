@@ -1,0 +1,24 @@
+<!-- if else문으로 혈액형 판별기 만들기 -->
+<script>
+
+    let bd=prompt("본인의 혈액형을 입력하세요");
+    let msg;
+    
+    if(bd=="A"){ //toUpperCase() 소문자대문자 변환
+        msg=("세심하다");
+    } else if(bd=="B"){
+        msg=("왕고집");
+    } else if(bd=="AB"){
+        msg=("오지랖쟁이");
+    } else if(bd=="O"){
+        msg=("결정장애");
+    } else { //조건문에서 처리하지 않는 그 외의 모든 경우
+        msg=("다시 입력하세요");
+    }
+    
+    document.write(msg);
+    // 코드중복은 묶어서 밖으로 빼기
+    // msg에 어떤 값이 들어갈지 조건문을 다 처리한 뒤, 그걸 출력해야 하니까
+    // 조건문 끝난 뒤 위치해야함
+
+</script>

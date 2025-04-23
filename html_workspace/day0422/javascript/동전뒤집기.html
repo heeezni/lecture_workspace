@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스위치 누를 때마다 동전뒤집기</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 600px;
+            margin: auto;
+        }
+        #aside{
+            width: 150px;
+            height: 100%;
+            background-color: orange;
+            float: left;
+        }
+        #section{
+            width: 450px;
+            height: 100%;
+            background-color: beige;
+            float: left;
+        }
+        #coin{
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+    <script>
+        let flag=false;
+
+        function onOff(){
+            flag=!flag
+            let s1=document.querySelector("#switch");
+            let s2=(flag)? "on" : "off";
+            s1.src="../../images/light/switch_" +s2+".png";
+
+            let c1=document.getElementById("coin");
+            let c2=(flag)? 1:2;
+            c1.src="../../images/coin"+c2+".png";
+
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside"><img id="switch" src="../../images/light/switch_off.png" onclick="onOff()"></div>
+        <div id="section"><img id="coin" src="../../images/coin1.png"></div>
+    </div>
+</body>
+</html>

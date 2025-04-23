@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과일선택 else if활용</title>
+    <script>
+        
+        
+        function showInput(){
+            let n=prompt("과일을 선택하세요\n 1.사과 2.바나나 3.포도 4.체리 5.오렌지");
+            n=parseInt(n);
+                    // 줄바꿈<br>은 html에서만, JS는 \n
+            let img = document.querySelector("img");
+
+            let fileName;
+
+            // else if 문
+            if(n==1){
+                fileName="apple.png"; //어떤 이미지 파일을 쓸지 정함
+            } else if(n==2){
+                fileName="banana.png";
+            } else if(n==3){
+                fileName="grape.png";
+            } else if(n==4){
+                fileName="cherry.png";
+            } else if(n==5){
+                fileName="orange.png";
+            } else {
+                alert("1부터 5사이의 과일만 선택하세요 (숫자로)");
+            }
+            fileName="../../images/fruit/"+fileName; //전체 경로 문자열로 변환
+            img.src=fileName; //실제 이미지 경로로 보여지게 설정
+        }
+
+
+    </script>
+</head>
+<body>
+    <button onclick="showInput()">prompt 띄우기</button>
+    <!-- 처음엔 과일 선택하지 않은 시점, src 비워두기 -->
+     <img>
+</body>
+</html>

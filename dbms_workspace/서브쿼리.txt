@@ -1,0 +1,47 @@
+[Sub Query]
+쿼리문 안에 쿼리문
+
+20번 부서의 평균보다 높은 급여를 받는 사원의 이름, 급여 출력
+select ename, sal from emp where sal > (select avg(sal) from emp);
+
+커미션의 합보다 많은 급여를 받는 사원의 이름과 급여 출력
+select ename, sal from emp where sal > (select sum(comm) from emp);
+
+
+
+<서브 쿼리 예제>
+
+1. select ename, job, hiredate from emp where job = (select job from emp where ename = 'smith');
+
+2. SELECT * FROM emp WHERE hiredate < (SELECT hiredate FROM emp WHERE ename = 'WARD');
+
+3. select ename, sal from emp where sal<(select avg(sal) from emp);
+
+4. select ename, deptno from emp where deptno = (select deptno from dept where loc="DALLAS");
+
+5. select empno, ename, hiredate from emp where empno = (select mgr from emp where ename='ALLEN')
+
+6. select ename, sal from emp where sal>
+((select avg(sal) from emp where comm is not null)+1000);
+
+7. select ename, sal, deptno from emp where deptno = 
+(select deptno from emp order by sal desc limit 1,1);
+
+8. select ename, sal from emp where sal>
+(select sum(sal) from emp where ename like 'A%');
+
+9. select sum(sal) from emp where deptno=
+(select deptno from emp order by hiredate desc limit 1 offset 2);
+//limit 1 offset 2 세번째로 최근 입사자 1명
+
+10. select dname, loc, deptno from dept where deptno =
+(select deptno from emp where empno =
+(select mgr from emp where comm is not null order by comm desc limit 1 offset 0));
+// comm is not null 붙여줘야 진짜 comm 있는 사람 중에서 정렬
+
+11. select ename, sal from emp where sal > 
+(select max(sal) - min(sal) from emp);
+
+12. select ename, sal from emp where sal>
+(select avg(sal) from emp where deptno=(select deptno from dept where dname='SALES'));
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비행기 게임 만들어보기</title>
+    <style>
+        #stage{
+            width: 1000px;
+            height: 576px;
+            margin: auto;
+            background-image: url(../../html_workspace/images/plane/bg.jpg);
+            background-position: 0px 0px; 
+            /* 배경이 x축 방향, y축 방향으로 이동 */
+            position: relative; 
+            /* 자식요소에 포지션 지정되었으므로 */
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        let stage;
+        let bgX=0; //배경의 x축 값을 누적시킬 전역변수
+        let img; //init()에 두면 지역변수 이기 때문에 다른 함수블럭에서 접근 불가
+        // 모든 함수블럭에서 접근할 수 있게 전역변수로 빼기
+        let x=300;
+        let y=200;
+
+        // js로 css의 배경 제어하기
+        function bgEffect(){
+            // 현재 stage div에 적용된 배경 이미지의 포지션 left값을 감소시키기
+            // document.getElementById("stage"); stage를 Load와 동시에 전역변수에 받아놓았으므로
+            // 중복작성할 필요없다.
+            bgX-=10;
+            stage.style.backgroundPosition=bgX+"px 0px";
+
+        }
+                    
+        function init(){
+            // 지금까지는 이미지를 body태그에 직접 작성해서 존재시켰으나,
+            // 이제는 자바스크립트에서 동적(runtime 프로그램 가동되는 동안)으로 
+            // 이미지를 생성하여 화면에 부착하기
+            
+            img=document.createElement("img"); // <img>태그 작성과 동일
+            img.src="../images/plane/plane.png";
+            img.style.width="45px"; // 프로그래밍으로 css제어
+            img.style.position="absolute"; // 부모를 기준으로 한 위치
+            img.style.left=300+"px"; // x쪽으로 300px
+            img.style.top=200+"px"; // y쪽으로 200px
+            
+            // 생성된 이미지를 어느 부모 밑에 부착할 지를 결정
+            stage=document.getElementById("stage");
+            stage.appendChild(img); //대입된 이미지를 자식으로 부착
+            
+            //사람대신 컴퓨터(js)가 우리가 정의해놓은 함수를 호출하는 기능
+            // 이용하여 자동 배경효과구현
+            setInterval(bgEffect, 50); // 1/1000초 단위까지 표현가능
+            //딱 한 번만 반복하게 - init()에 넣기
+        }
+        function move(){
+            // 사용자가 키보드를 누를 때마다, 개발자는 해당 키에 대한 아스키 코드를 얻어와
+            // 어떤 키를 눌렀는지 분석하여 좌측 키면 left값 감소, 우측 키면 left 증가
+            // 위쪽 키면 top값 감소, 아래쪽 키면 top값 증가
+            // 따라서 키에 대한 조건판단 경우의 수 총 4가지 - else if문 사용
+
+            // console.log(event); // event객체는 이미 자바스크립트 내부적으로 자동생성되는 객체
+            // 사용자가 일으킨 모든 이벤트 정보가 들어있음
+            let key=event.keyCode;
+            
+            // 1번 
+            // if(key==37){
+            //     console.log("당신이 누른 키는 좌측키입니다");
+            //     x-=10;
+               
+            // } else if(key==39){
+            //     console.log("당신이 누른 키는 우측키입니다");
+            //     // 전역변수 img의 left값을 증가시켜보기
+            //     x+=10;
+                
+            // } else if(key==38){
+            //     console.log("당신이 누른 키는 위측키입니다");
+            //     y-=10;
+                
+            // } else if(key==40){
+            //     console.log("당신이 누른 키는 아래측키입니다");
+            //     y+=10;
+            // }
+            
+            // 2번
+            // if(key==37) x-=10;
+            // else if(key==39) x+=10;
+            // else if(key==38) y-=10;
+            // else if(key==40) y+=10;
+                                 
+            //     img.style.left=x+"px";
+            //     img.style.top=y+"px"; 
+            
+
+            switch(key){
+                case 37: moveLeft();
+                break;
+                case 39: moveRight();
+                break;
+                case 38: moveUp();
+                break;
+                case 40: moveDown();
+                break;
+            }
+        }
+            function moveRight(){
+                x+=10;
+                img.style.left=x+"px";
+            }
+            function moveLeft(){
+                x-=10;
+                img.style.left=x+"px";
+            }
+            function moveUp(){
+                y-=10;
+                img.style.top=y+"px";
+            }
+            function moveDown(){
+                y+=10;
+                img.style.top=y+"px";
+            }
+
+    </script>
+</head>
+<body onload="init()" onkeydown="move()">
+    <!--onload=" "안에는 문서 로드가 완료되면 호출할 함수 -->
+    <div id="stage"></div>
+</body>
+</html>
+
+<!-- background-image:url() 배경이미지 깔기 -->
+ <!-- 기존에 없었던 요소 생성은 createElement()
+  이미 문서에 존재하는 요소를 가져올 때는 getElementById(). querySelector() -->

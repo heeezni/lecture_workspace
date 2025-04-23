@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키보드 조작 없을 시 비행기도 left값 감소시키기</title>
+    <style>
+        #stage{
+            width: 1000px;
+            height: 576px;
+            margin: auto;
+            background-image: url(../../html_workspace/images/plane/bg.jpg);
+            background-position: 0px 0px; 
+            position: relative; 
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        let stage;
+        let img;
+        let bgX = 0;
+        let x = 300;
+        let y = 200;
+        let isMoving = false;
+
+    function bgEffect() {
+        bgX -= 10;
+        stage.style.backgroundPosition = bgX + "px 0px";
+
+        // 비행기 조작 안 하고 있을 때만 같이 왼쪽으로 이동
+        if (!isMoving) {
+            x -= 10;
+            img.style.left = x + "px";
+        }
+    }
+
+    function init() {
+        stage = document.getElementById("stage");
+
+        img = document.createElement("img");
+        img.src = "../images/plane/plane.png";
+        img.style.width = "45px";
+        img.style.position = "absolute";
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+
+        stage.appendChild(img);
+
+        setInterval(bgEffect, 50);
+    }
+
+    function move() {
+        isMoving = true;
+        let key = event.keyCode;
+
+        if (key == 37) x -= 10;
+        else if (key == 39) x += 10;
+        else if (key == 38) y -= 10;
+        else if (key == 40) y += 10;
+
+        img.style.left = x + "px";
+        img.style.top = y + "px";
+    }
+
+    function stopMove() {
+        isMoving = false;
+    }
+
+    </script>
+</head>
+<body onload="init()" onkeydown="move()" onkeyup="stopMove()">
+    <div id="stage"></div>
+    
+</body>
+</html>

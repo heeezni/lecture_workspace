@@ -1,0 +1,23 @@
+select **count(*)** from emp; 사원수 출력
+select **count(*)** from dept; 부서수 출력
+
+사원 급여의 합 select **sum(sal)** from emp;
+
+사원 급여의 평균 select **avg(sal)** from emp;
+
+최대 급여 출력 select **max(sal)** from emp;
+최소 급여 출력 select **min(sal)** from emp;
+
+//별칭 붙이기
+select avg(sal) **as 급여합** from emp;
+
+//종류별로 그룹화
+select deptno from emp **group by deptno**;
+
+★group  by에 명시된 컬럼만이 select의 절에 올 수 있음★
+그룹화 된 걸 대상으로는 where 대신 having 쓴다
+
+select ename, deptno
+    -> from emp
+    -> group by deptno;
+    이름은 14종류, deptno그룹은 3개 -> 모순이기 떄문에 에러

@@ -5,7 +5,7 @@ select ename, job, sal from emp where job='SALESMAN' or job='CLERK';
 select ename, sal from emp where sal>=2000 and sal<=3000 order by sal desc;
 = select ename, sal from emp where sal between 2000 and 3000 order by sal desc;
 
-select ename,sal from emp where ename like '%K%' order by hiredate asc;
+select ename,sal, hiredate from emp where ename like '%K%' order by hiredate asc;
 %k% : k가 들어가는 
 
 select ename, sal, comm from emp where comm is null order by sal desc;
