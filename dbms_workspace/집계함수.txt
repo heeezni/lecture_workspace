@@ -20,4 +20,4 @@ select deptno from emp **group by deptno**;
 select ename, deptno
     -> from emp
     -> group by deptno;
-    이름은 14종류, deptno그룹은 3개 -> 모순이기 떄문에 에러
+    이름은 14종류, deptno그룹은 3개 -> 모순이기 때문에 에러

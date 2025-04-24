@@ -1,0 +1,369 @@
+1. 1,3
+2. a b d c b d c b
+3. 3,4
+4. 10, 10, 8, 5, 무한, 11, 5, 9, 9, 9
+5. 
+<script>
+    for(let i=1; i<=10; i++){
+        document.write("☆");
+    }
+</script>
+
+6. 
+<script>
+    for(let i=2; i<=10; i+=2)
+    console.log(i);
+</script>
+7. 12345
+8. 
+<script>
+    for(let i=1; i<97;i++){
+        document.write("★");
+        if(i%10==0){ //10번 마다
+            document.write("<br>");
+        }
+    }
+</script>
+
+9. 
+<script>
+    for(let i=1; i<=20; i++){
+        document.write("☆");
+        if(i%4==0){
+            document.write("★<br>");
+        }
+    }
+
+    for(let i=1; i<25; i++){
+        document.write("☆");
+        if(i%4==0){
+            document.write("★<br>");
+        }
+    }
+</script>
+
+10.
+<!-- 반복문에서 중요한 것은 횟수! (내용에는 관심끄기)
+ 반복문은 구조를 작성한 후 내용을 보기 -->
+<script>
+    for(let i=1; i<=10; i++){
+        document.write(i+"회반복");
+        document.write("<br>");
+    }
+
+    for(let i=1; i<=10; i++){
+        document.write(i+"회반복<br>"); //태그와 문자열 합쳐서 ""에 넣을 수 있음
+    }
+
+    for(let i=0; i<10; i++){
+        document.write(`${i}회반복<br>`); //템플릿 문자열 표기 
+                                        // 쌍따옴표 대신 백틱`으로 감싸고 변수를 대상으로 ${} 감싸기
+    }
+</script>
+
+11.
+<script>
+    for(let i=2; i<=10; i+=2){
+        document.write(i+"회반복<br>");
+    }
+    for(let i=1;i<=5;i++){
+        document.write(2*i+"회반복<br>");
+    }
+</script>
+
+12.
+<script>
+    for(let i=1;i<=10;i++){
+        document.write("<br>")
+            if(i%2==0){
+                document.write("짝수");        
+            } else {
+               document.write(i);  
+            }
+    }
+    for(let i=1;i<=10;i++){
+        if(i%2==0){
+            document.write("짝수<br>");        
+        } else {
+            document.write(i+"<br>");  
+        }
+    }
+    // 삼항연산자로 풀면?
+    for(let i=1;i<=10;i++){
+        let str=(i%2==0)? "짝수":i;
+        document.write(str+"<br>");
+    }
+</script>
+
+13.
+<script>
+    for(let i=1;i<=10;i++){
+        document.write("<br>")
+            if(i%3==0){
+                document.write("★");        
+            } else {
+               document.write(i+"회 반복");  
+            }
+    }
+
+    for(let i=1;i<=10;i++){
+        let str=(i%3==0)? "★":i+"회반복";
+        document.write(str+"<br>");
+    }
+</script>
+
+14.
+<script>
+    for(let i=1;i<20;i++){
+            if(i%5==0){
+                document.write("★");        
+            } else {
+                document.write("☆")
+            }
+    }
+</script>
+
+15.
+<script>
+    for(let i=105;i<=108;i++){
+        document.write(i+"<br>")
+    }
+</script>
+
+16.
+<script>
+    for(let i=1;i<=9;i++){
+        document.write("3*"+ i +"="+ (i*3)+"<br>");
+        // document.write(`3*${i}=3*i<br>)`;
+    }
+</script>
+
+17.
+<script>
+    let n=prompt("원하는 단을 입력하세요")
+    n=parseInt(n); //문자열화된 숫자문자("7")를 실제 정수로 바꿔주기 **센스**
+
+    if (n){
+            for(i=1;i<10;i++){
+            document.write(`${n}*${i}=${n*i}<br>`)
+            // document.write(n +"*"+ i +"="+ (n*i)+"<br>");
+            }
+        }       
+</script>
+
+18.
+<script>
+    for(let i=1;i<=9;i++){
+        // document.write((3*i)+"=3*"+i+"<br>");
+        document.write(`${3*i}=3*${i}<br>`);
+    }
+</script>
+
+19.
+<script>
+    for(let i=1;i<=8;i++){
+        // document.write(i+"*"+(i+1)+"="+(i*(i+1))+"<br>");
+        document.write(`${i}*${i+1}=${i*(i+1)}<br>`);
+    }
+</script>
+
+20.
+<script>
+    for(let i=9;i>0;i--){
+        // document.write("5 * "+i+" = "+(5*i)+"<br>");
+        document.write(`5 * ${i} = ${5*i}<br>`)
+    }
+</script>
+
+21.
+<script>
+    for(let i=1;i<=10;i++){
+        if(i<=5){
+            document.write("☆");  
+        } else {
+            document.write("★");
+        }
+    }
+        
+    // let star=(i<=5)? "★":"☆"
+    // document.write(star+"<br>"); 삼항연산자로 나타내기
+</script>
+
+22.
+<script>
+    for(var i=0; i<5; i++){
+        i++
+        k=((i%2)==0)? "★":"☆"
+        document.write(k);
+ 
+    }
+</script>
+2씩 증가임 
+135
+☆☆☆ 
+
+23.
+<script>
+    // let n=prompt("원하는 수를 입력하세요");
+    // n=parseInt(n);
+    let n=parseInt(prompt("원하는 수를 입력하세요")); //parseInt 한 줄로 정리
+    
+    for(n;n>0;n--){
+        document.writeln(n)
+    }
+    // for(let n=유저가 결정;n>0;감소식){}
+</script>
+
+24. ★반복문
+<script>
+    let n=parseInt(prompt("원하는 수를 입력하세요"));
+    
+        if(n){
+            document.write((n-1)+", "+n+", "+(n+1));
+        }
+
+        for(let i=n-1;i<=n+1;i++){
+        document.writeln(i); //반복문으로 풀었을 경우
+    }
+</script>
+
+25.★
+<script>
+    let char = prompt("출력할 문자를 입력하세요");
+    let count = parseInt(prompt("몇 번 반복할까요?"));
+
+    for (let i = 0; i < count; i++) {
+        document.write(char);
+    }
+</script>
+
+26.
+<script>
+
+    let n=parseInt(prompt("개행을 원하는 횟수"));
+
+    for(let i=1; i<=100; i++){
+        document.write("★");
+        if(i%n==0){
+            document.write("<br>");
+        }
+    }
+</script>
+
+27. <!-- 이중for문 -->
+<script>
+    let n=parseInt(prompt("원하는 수를 입력하세요"));
+
+    for(let i=1;i<=n;i++){
+
+        for(let i=1;i<=n;i++){
+            if(i%n==0){
+            document.write("★<br>");
+            } else {
+            document.write("★");
+            }
+        } 
+    }
+    </script>
+
+    <!-- for문으로 나타내기 -->
+<script>
+    // 어떤 수 n을 입력받으면 반복횟수는 그 n*n만큼 반복하면됨
+    // 줄바꿈은 n번째에서 실행
+    let n=parseInt(prompt("원하는 수를 입력하세요"));
+
+    for(let i=1;i<=n*n;i++){
+        document.write("★");
+        if(i%n==0) //제어문의 {브레이스}를 생략하면 그 제어문의 영향력은 바로 아래 한 줄까지만
+            document.write("<br>");
+    }
+</script>
+------------------------------------------------------------
+ 28. 15/12/36/2/36/22/22
+
+ 29.★
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <script>
+     document.write("<table border='1px' style='width:500px; height:250px;'>")
+        //script에서 border와 style 직접 지정
+       for(let tr=1; tr<=3; tr++){
+         document.write("<tr>")
+           for(let td=1; td<=5; td++){
+             document.write("<td>"+tr+"0"+td+"</td>")
+           }
+         document.write("</tr>")
+       }
+     document.write("</table>")
+   </script>
+ </head>
+ <body>
+ 
+ </body>
+ </html>
+ <!-- 
+HTML 속성 (border='1px')에는 세미콜론이 필요하지 않아요.
+CSS 스타일 속성 (style="width:500px; height:250px;")에서는 세미콜론을 사용해야 합니다. 
+-->
+
+ 30.
+ <script>
+    for(var i=1;i<=4;i++){
+        document.write("<br>");
+        for(var a=1;a<=5;a++){
+            document.write("☆");
+        }
+    }
+</script>
+
+31.★ 테이블동적출력.html
+
+32.
+<script> 
+    //검정별은 층수와 연관
+      for(let i=1;i<=5;i++){
+          for(let j=1;j<=4;j++){
+            document.write("☆");
+          }
+        document.write("★<br>");
+      }
+    </script>
+    
+33.
+<script>
+    for(let i=2; i<=9; i++){
+        for(let j=2; j<=9 ; j++){
+            document.writeln(j+"*1"+"="+(j*1) )
+        }
+        document.write("<br>")
+    }
+</script>
+
+34.
+<script>
+    for(let i=1; i<=9; i++){
+        for(let j=2; j<=9 ; j++){
+            document.writeln(j+"*"+i+"="+(j*i) )
+        }
+        document.write("<br>")
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

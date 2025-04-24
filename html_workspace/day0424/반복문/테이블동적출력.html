@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테이블 동적출력으로 다중반복문 마스터하기</title>
+    <script>
+        let f=parseInt(prompt("몇 층짜리 건축물을 원하세요"));
+        let r=parseInt(prompt("몇 호수짜리 건축물을 원하세요"));
+         //문서에 동적으로 지정된 문자열 출력하는 역할
+        document.write("<table border='1px'>");
+            for(let j=1;j<=f;j++){   
+                document.write("<tr>");
+                for(let i=1;i<=r;i++){
+                    document.write("<td>"+j+0+i+"</td>"); //이상한 호수는 나중에...
+                }  
+            document.write("</tr>");
+            }
+        document.write("</table>");
+
+
+    </script>
+</head>
+<body>
+    <!-- 
+    2층에 3호수 짜리 건물
+    <table border="1px"> 
+        <tr>
+        <td>201</td>
+        <td>202</td>
+        <td>203</td>
+        </tr>
+
+        <tr>
+        <td>101</td>
+        <td>102</td>
+        <td>103</td>
+        </tr>
+    </table> 
+    -->
+</body>
+</html>

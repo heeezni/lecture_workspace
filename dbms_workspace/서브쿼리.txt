@@ -17,15 +17,15 @@ select ename, sal from emp where sal > (select sum(comm) from emp);
 
 3. select ename, sal from emp where sal<(select avg(sal) from emp);
 
-4. select ename, deptno from emp where deptno = (select deptno from dept where loc="DALLAS");
+4. select ename, deptno from emp where deptno = (select deptno from dept where loc='DALLAS');
 
 5. select empno, ename, hiredate from emp where empno = (select mgr from emp where ename='ALLEN')
 
 6. select ename, sal from emp where sal>
-((select avg(sal) from emp where comm is not null)+1000);
+(select avg(sal)+1000 from emp where comm is not null);
 
 7. select ename, sal, deptno from emp where deptno = 
-(select deptno from emp order by sal desc limit 1,1);
+(select deptno from emp order by sal desc limit 1 offset 1);
 
 8. select ename, sal from emp where sal>
 (select sum(sal) from emp where ename like 'A%');
@@ -39,9 +39,17 @@ select ename, sal from emp where sal > (select sum(comm) from emp);
 (select mgr from emp where comm is not null order by comm desc limit 1 offset 0));
 // comm is not null 붙여줘야 진짜 comm 있는 사람 중에서 정렬
 
+select dname, loc, deptno from dept where deptno=
+(select deptno from emp where empno=
+(select mgr from emp where comm=(select max(comm) from emp where comm is not null)));
+
+
 11. select ename, sal from emp where sal > 
 (select max(sal) - min(sal) from emp);
+
 
 12. select ename, sal from emp where sal>
 (select avg(sal) from emp where deptno=(select deptno from dept where dname='SALES'));
 
+
+// limit는 mySQL에만 있음 Oracle에는 x
