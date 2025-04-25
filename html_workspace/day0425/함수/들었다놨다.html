@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마우스 이벤트로 음식 옮기기 게임</title>
+    <style>
+        body{
+            margin: 0px;
+            /* 좌표 계산 쉽게 하려고 */
+        }
+        #wrapper{
+            width: 850px;
+            height: 550px;
+            background-color: beige;
+            border: 5px solid black;
+        }
+        #content{
+            width: 700px;
+            height: 100%;
+            float: left;
+            background-color: beige;
+            position: relative;
+        }
+        #aside{
+            width: 150px;
+            height: 100%;
+            float: left;
+            background-color: orange;
+            position: relative;
+            overflow: scroll; /* 스크롤 주기 */
+        }
+    </style>
+    <script>
+        // 프로그램에서 자주 사용될 가능성이 있는 요소들을 초기화 작업 시, 전역변수화 시켜놓자
+        let content;
+        let aside;
+        let img; //다른 함수영역(scope)에서도 접근할 수 있도록 전역으로 빼놓자
+        let flag=false; //처음엔 안 따라다니게
+
+        function createFood(){
+            img=document.createElement("img"); //<img>
+            img.src="../../images/food/hamburger.png"; //<img src="">
+            img.style.width=150+"px";
+            img.style.position="absolute";
+            img.style.left=100+"px";
+            img.style.top=180+"px";
+
+            //음식이 따라다니고, 안따라다니고의 기준은 flag 변수이므로
+            //유저를 배려하여, 클릭 시마다 논리값을 뒤집어 버리자
+            img.addEventListener("click", function(){
+                flag=!flag;
+
+                if(flag){
+                    this.style.border= "5px solid red"; //테두리는 flag true일때만 적용하자
+                    this.style.borderRadius="25%";
+                } else {
+                    this.style.border="none"; //마우스 클릭 안했을 때는 테두리x
+                } 
+            });
+
+            content.appendChild(img);
+        }
+
+        function createDish(n,x,y){ //접시 만들기
+            let div=document.createElement("div");
+            div.style.width=n*10+"px";
+            div.style.height=n*10+"px";
+            div.style.backgroundColor="white";
+            div.style.borderRadius=50+"%";
+            div.style.position="absolute";
+            div.style.left=x+"px";
+            div.style.top=y+"px";
+            div.style.border = "5px solid black"; // 테두리에는 solid도 반드시 추가
+
+            content.appendChild(div);
+        }
+ 
+        function init(){ // 프로그래밍 가동되면, 초기화할 작업이 있을 경우 초기화 함수를 정의하는게 좋은 방법
+            
+            //content요소에 대해 마우스 움직임 이벤트 연결하기
+            content=document.getElementById("content");
+            aside=document.getElementById("aside");
+            createDish(20,400,150); //접시 등장 시키기 ★함수 만들었으면 호출 필수★
+            createDish(10,450,200);
+            createFood(); //음식 등장 시키기
+
+            //문서 전체를 대상으로 마우스 이벤트를 연결하자
+            document.body.addEventListener("mousemove",function(){ //body는 1개, 굳이 아이디 주지 말자
+                console.log("지금 움직임?");
+                //마우스에 의한 x,y좌표를 **음식의 좌표와 일치시키면** 따라다니는 효과 가능
+                let x=event.clientX;
+                let y=event.clientY;
+
+                if(flag){ //아래의 조건식은 flag에 따라 수행될 지 말 지 결정된다.
+                    if(x<=(750-110) && y<=(550-70)){ //img 박스 밖으로 안 튀어나가게 하려면?
+                    img.style.left= (x-75)+"px" //(변수-이미지의 절반=마우스가 이미지 중심)
+                    img.style.top= (y-75)+"px"
+                    }
+                } 
+                //aside 영역에 좌표를 출력하자
+                aside.innerHTML=aside.innerHTML+`x=${x}, y=${y}<br>`;
+            });
+            
+        };
+
+        //문서가 로드된 이후에 작업 진행
+        addEventListener("load", function(){
+            init();
+        });
+
+        
+
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="content"></div>
+        <div id="aside"></div>
+    </div>
+</body>
+</html>

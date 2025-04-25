@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부드러운 움직임 구현</title>
+    <!--
+    left값을 나눠서(쪼개서) 가면 부드러운 움직임
+    감속도 운동
+    (내 위치) = (현재 내 위치) + (목표지점 - 현재 내 위치 =남은거리 )*a
+    x=x+a*(target-x) 
+    -->
+    <script>
+        let div;
+        let a=0.1; //비율계수 크기 (기울기). 숫자가 높을 수록 투박함
+        let targetX=800; //도달할 목표지점
+
+        function move(){//물체 움직임 함수
+            //나의 위치=기존 나의 위치+a(비율계수/기울기)*(목표지점-나의 위치); 
+            // 남은 거리에 정해진 비율로 증가할거야 = 야금야금 다가갈거야
+            div.style.left=parseInt(div.style.left)+a*(targetX-parseInt(div.style.left))+"px";
+            setTimeout("move()",20);
+        }
+        
+        function creatRect(){//물체 생성용 함수 
+            div=document.createElement("div");
+            div.style.background="red";
+            div.style.width=50+"px";
+            div.style.height=50+"px";
+            div.style.position="absolute";
+            div.style.top=100+"px";
+            div.style.left=0+"px";
+
+            document.body.appendChild(div);
+        }
+
+
+        addEventListener("load",function(){//프로그램 가동과 동시에 물체 생성
+            creatRect();//물체 생성 함수 호출
+
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
+

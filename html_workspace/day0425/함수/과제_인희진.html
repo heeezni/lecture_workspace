@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[신세계 4월] 인희진</title>
+  <style>
+    #box{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      position: absolute;
+      background-color: pink;
+      left: 0px;
+      top: 150px;
+      border: 3px solid black;
+    }
+  </style>
+  <script>
+    let x=0;
+    let flag=true;
+    let change=true;
+    
+    function move(){
+      let box=document.getElementById("box");
+      
+      if(flag){
+        x++;
+        if(x>=70){
+          flag=!flag;
+        } 
+      } else { 
+        x--;
+        if(x<=0){
+          flag=!flag;
+        }
+      }
+      box.style.left=x*10+"px";
+
+      if(change){
+      setTimeout("move()",20);
+      }
+    }
+
+    addEventListener("load",function(){
+      let m=document.getElementById("manual");
+      let a=document.getElementById("auto");
+
+      m.addEventListener("click", function(){
+          change=false;
+          move();
+      });
+      a.addEventListener("click", function(){
+          if(!change){
+          change=true;
+          move();
+        }
+      });
+    })
+
+  </script>
+</head>
+<body>
+  <button id="manual">수동</button>
+  <button id="auto">자동</button>
+  <div id="box"></div>
+</body>
+</html>

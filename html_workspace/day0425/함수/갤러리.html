@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>썸네일에서 선택 이미지 크게보기</title>
+    <style>
+        #wrapper{
+            width: 700px;
+            height: 550px;
+            margin: auto;
+            background-color: beige;
+        }
+        #aside{
+            width: 120px;
+            height: 100%;
+            background-color: skyblue;
+            float: left;
+            text-align: center; /* 내부의 컨텐츠 가운데 수평 정렬 */
+            overflow: scroll; /* 현재 영역을 넘쳐흐르는 컨텐츠가 있다면 스크롤 처리 */
+        }
+        #content{
+            width: 580px;
+            height: 100%;
+            background-color: rgb(199, 228, 240);
+            float: left;
+            text-align: center;
+        }
+        #aside img{
+            width: 100px; 
+            /* 너비만 부여하면, html에서 해당 너비에 대한 비율을 유지하여 높이를 알아서 설정 */
+            margin-top: 5px; 
+            /* 나의 외부영역에 있는 있는 윗부분에서 5px 떨어지기 */
+        }
+        #content img{
+            width: 100%;
+        }
+
+
+    </style>
+    <script>
+
+        function createThumb(){
+            for(let i=1; i<=9;i++){
+
+                // 태그로 이미지 하나씩 작성x(정적코드X)
+                // 프로그램 실행시(동적으로) 이미지 생성하여 aside에 자식요소로 부착하기
+                let img=document.createElement("img"); //<img>작성과 동일 (단 화면에 미부착)
+                img.src="../../images/geographic/animal"+i+".jpg"; //<img src="">과 동일
+                
+                //이미지에 클릭 이벤트 연결 (프로그래밍적 이벤트 연결)
+                // <img onClick="">과 같은 역할
+                img.addEventListener("click", function(){
+                        //우측의 content 영역에 지금 누른 썸네일 이미지의 큰 버전이 나오게 하자
+                        let content=document.getElementById("content");
+                        document.querySelector("#content img").src=this.src; // 길게 표시할 필요없이 나!로 지정
+                });
+                
+                let aside=document.getElementById("aside"); //부모얻기
+                aside.appendChild(img); //img 요소를 자식으로 부착
+            }
+        }
+            
+            
+        // 이벤트 핸들러 구현을 태그에 직접 작성하는 방법도 있지만,
+        // js의 프로그래밍적 방법으로 이벤트를 연결하는 방법도 있다
+         
+        // addEventListener() 메서드(함수)에 두번째 매개변수값으로는 함수가 올 수 있는데,
+        // 이 함수는 딱 그 이벤트 발생 시에만 호출되는 용도이므로 재사용성이 없음 = 익명함수 처리
+        // 재사용성이없는 함수는 함수명 없애기 : 익명함수
+        addEventListener("load", function(){ //앞에 window. 가 생략됐다고 생각하기
+            createThumb(); //썸네일 생성하는 함수 만들어봄
+        }); 
+    </script>
+</head>
+<body>
+    <!-- <button id="btn" onclick="this.innerText='나 왕버튼'">나 눌러봐</button> -->
+    <!-- <button id="btn" onclick="document.querySelector('#btn').innerText='나 왕버튼'">나 눌러봐</button> -->
+    <!-- 똑같음 - this활용하기 -->
+    <div id="wrapper">
+        <div id="aside"></div>
+        <div id="content"><img></div>
+    </div>
+</body>
+</html>
+
+<!-- 
+이벤트 핸들러 태그에 직접 호출 : 디자인과 코드가 섞여버림
+좋은 방법: 동적(프로그래밍적)으로 이벤트 핸들러 연결 
+ -->

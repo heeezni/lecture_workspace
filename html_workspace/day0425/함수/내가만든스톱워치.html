@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+      input{
+        width: 300px;
+        height: 300px;
+        text-align: center;
+        font-size: 200px;
+        color: palevioletred;
+      }
+      button{
+        width: 100px;
+        height: 50px;
+        font-size: 25px;
+      }
+    </style>
+    <script>
+        let n=0;
+        let timer;
+
+        function setCount(){
+          n++;
+          document.querySelector("input").value=n; //value는 input에 적혀있는 값
+          timer=setTimeout("setCount()",100);
+        }
+      
+      addEventListener("load", function(){
+        let start=document.getElementById("start");
+        let stop=document.getElementById("stop");
+        start.addEventListener("click", function(){
+          this.disabled=true;
+          stop.disabled=false;
+          setCount();
+        });
+        stop.addEventListener("click", function(){
+          clearTimeout(timer); //카운트 멈춤
+          this.disabled=true;
+          start.disabled=false;
+          // break;
+        });
+
+
+      });
+
+  </script>
+</head>
+<body>
+  <input type="text">
+  <br>
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+</body>
+</html>
