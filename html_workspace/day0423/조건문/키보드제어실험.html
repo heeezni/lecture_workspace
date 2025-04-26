@@ -9,7 +9,7 @@
             width: 1000px;
             height: 576px;
             margin: auto;
-            background-image: url(../../html_workspace/images/plane/bg.jpg);
+            background-image: url(../../images/plane/bg.jpg);
             background-position: 0px 0px; 
             position: relative; 
             overflow: hidden;
@@ -26,19 +26,13 @@
     function bgEffect() {
         bgX -= 10;
         stage.style.backgroundPosition = bgX + "px 0px";
-
-        // 비행기 조작 안 하고 있을 때만 같이 왼쪽으로 이동
-        if (!isMoving) {
-            x -= 10;
-            img.style.left = x + "px";
-        }
     }
 
     function init() {
         stage = document.getElementById("stage");
 
         img = document.createElement("img");
-        img.src = "../images/plane/plane.png";
+        img.src = "../../images/plane/plane.png";
         img.style.width = "45px";
         img.style.position = "absolute";
         img.style.left = x + "px";
@@ -70,6 +64,5 @@
 </head>
 <body onload="init()" onkeydown="move()" onkeyup="stopMove()">
     <div id="stage"></div>
-    
 </body>
 </html>

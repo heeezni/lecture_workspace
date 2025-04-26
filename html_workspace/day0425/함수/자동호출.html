@@ -4,7 +4,7 @@
     
     function test(){
         console.log("나 불렀어?");
-        setTimeout("test()",100); // 1/1000초 표현. 즉, 2초 뒤 나옴
+        setTimeout(test,100); // 1/1000초 표현.
         // 콘솔에서 test() 호출 시 - 가벼운 무한루프 (재귀호출이용)
     }
 

@@ -25,7 +25,7 @@
         function setCount(){
           n++;
           document.querySelector("input").value=n; //value는 input에 적혀있는 값
-          timer=setTimeout("setCount()",100);
+          timer=setTimeout(setCount,2000);
         }
       
       addEventListener("load", function(){
@@ -34,13 +34,13 @@
         start.addEventListener("click", function(){
           this.disabled=true;
           stop.disabled=false;
+          n=0; //star 눌렀을 때 초기화 가능
           setCount();
         });
         stop.addEventListener("click", function(){
           clearTimeout(timer); //카운트 멈춤
           this.disabled=true;
           start.disabled=false;
-          // break;
         });
 
 

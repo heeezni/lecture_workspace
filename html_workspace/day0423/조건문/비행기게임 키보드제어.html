@@ -9,7 +9,7 @@
             width: 1000px;
             height: 576px;
             margin: auto;
-            background-image: url(../../html_workspace/images/plane/bg.jpg);
+            background-image: url(../../images/plane/bg.jpg);
             background-position: 0px 0px; 
             /* 배경이 x축 방향, y축 방향으로 이동 */
             position: relative; 
@@ -41,7 +41,7 @@
             // 이미지를 생성하여 화면에 부착하기
             
             img=document.createElement("img"); // <img>태그 작성과 동일
-            img.src="../images/plane/plane.png";
+            img.src="../../images/plane/plane.png";
             img.style.width="45px"; // 프로그래밍으로 css제어
             img.style.position="absolute"; // 부모를 기준으로 한 위치
             img.style.left=300+"px"; // x쪽으로 300px
@@ -77,11 +77,11 @@
             //     x+=10;
                 
             // } else if(key==38){
-            //     console.log("당신이 누른 키는 위측키입니다");
+            //     console.log("당신이 누른 키는 상단키입니다");
             //     y-=10;
                 
             // } else if(key==40){
-            //     console.log("당신이 누른 키는 아래측키입니다");
+            //     console.log("당신이 누른 키는 하단키입니다");
             //     y+=10;
             // }
             
