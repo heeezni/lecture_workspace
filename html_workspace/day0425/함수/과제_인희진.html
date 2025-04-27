@@ -19,7 +19,9 @@
   <script>
     let x=0;
     let flag=true;
-    let change=true;
+    let change=false; 
+    //change=true로 시작하려면 → 버튼 눌렀을 때 그냥 무조건 move() 호출.
+    //change=false로 시작하려면 → 버튼 눌렀을 때 if (!change) 검사 후 move() 호출.
     
     function move(){
       let box=document.getElementById("box");
@@ -38,7 +40,7 @@
       box.style.left=x*10+"px";
 
       if(change){
-      setTimeout("move()",20);
+      setTimeout(move,20);
       }
     }
 
