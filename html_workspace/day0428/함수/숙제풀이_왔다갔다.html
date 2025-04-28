@@ -59,11 +59,12 @@
         // 1) 브라우저 기반 js(window=브라우저)
         // 2) Node.js 기반 js(global)
         window.addEventListener("load", function(){ 
-            createRect(); // 물체 만들기 함수 호출
+            createRect(); // 물체 만들기 함수 호출 
 
             //각 버튼들에 이벤트 연결하기
             document.querySelector("button:nth-child(1)").addEventListener("click", function(){
                 // alert(); 중간에 체크 한 번 하고가기
+                autoFlag=false;
                 move();
             });
             document.querySelector("button:nth-child(2)").addEventListener("click", function(){
