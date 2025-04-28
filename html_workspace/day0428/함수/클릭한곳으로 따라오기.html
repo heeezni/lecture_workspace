@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클릭한 곳으로 부드럽게 따라오기</title>
+    <style>
+        body{
+            margin: 0px;
+            /* 화면에 div 딱 달라붙게 */
+        }
+        #wrapper{
+            width: 100%;
+            height: 600px;
+            background-color: beige;
+            position: relative;
+            cursor: url("../../images/fruit/banana1.png"), auto; /* 미니언한테 바나나 주기 */
+        }
+    </style>
+    <script>
+        let img;
+        let a=0.1; // 비율계수 정의. 1에 가까울 수록 투박함, 0에 가까울 수록 부드러움
+        let targetX=650; //이미지가 도달할 x축 위치 (일단 임의지정)
+        let targetY=500;
+
+        function createPic(){
+            img=document.createElement("img");
+            img.src="../../images/minion.png";
+            img.style.width=60+"px";
+            img.style.position="absolute"; //wrapper기준으로 한 위치
+
+            img.style.left=200+"px";
+            img.style.top=150+"px";
+            document.getElementById("wrapper").appendChild(img); //한 줄로 부착하기 정리
+        }
+
+        function move(){ // 그냥 단 번에 건너뛰기가 아니라 목표지점에 야금야금 다가가는 감속도 공식 
+            //나의 위치= 현재 내 위치 + 비율계수*(남은거리= 목표지점-현재 내 위치)
+            img.style.left=parseFloat(img.style.left)+a*+(targetX-parseFloat(img.style.left))+"px";
+            //3.44556 parseInt(3.44556) → 3반환
+            //3.44556 parseFloat(3.44556) → 3.44556 반환 (더 정교)
+            img.style.top=parseFloat(img.style.top)+a*(targetY-parseFloat(img.style.top))+"px";
+            // px을 수식 계산 식에 넣지 않도록 조심!
+        }
+
+        function gameLoop(){
+            move();
+        }
+
+        window.addEventListener("load",function(){
+            createPic();
+            // 마우스 이벤트 연결하기 
+            // mousedown (마우스 누르기만 하면 실행)
+            // mousemove (마우스 졸졸 따라다님)
+            document.getElementById("wrapper").addEventListener("mousemove",function(){
+                // targetX=마우스x값;
+                // targetY=마우스y값; 으로 연결하면 마우스 따라옴
+                targetX=event.clientX;
+                targetY=event.clientY;
+            });
+            setInterval("gameLoop()",10);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+    </div>
+</body>
+</html>

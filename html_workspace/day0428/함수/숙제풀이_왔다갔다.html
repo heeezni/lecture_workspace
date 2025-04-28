@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>왔다갔다 강사님의 풀이</title>
+    <style>
+        #stage{
+            width: 700px;
+            height: 400px;
+            background-color: beige;
+            position: relative;
+        }
+    </style>
+    <script>
+        let rect; // 모든 영역에서 보일 수 있는 전역변수
+        let x=0; // rect의 위치를 결정할 전역변수 (누적이 되어야하니까)
+        let flag=true; // 방향을 결정하는 변수 (처음엔 증가하니까 true로 놓자)
+        let autoFlag=false; // 자동 호출 여부를 결정짓는 변수
+
+        function createRect(){
+            rect = document.createElement("div"); // <div>
+            rect.style.width=30+"px";
+            rect.style.height=30+"px";
+            rect.style.background="red";
+            rect.style.borderRadius="50%";
+
+            rect.style.position="absolute";
+            rect.style.left=0+"px";
+            rect.style.top=100+"px";
+
+            let stage=document.getElementById("stage"); //부착하려면 먼저 부모요소 얻어오기
+            stage.appendChild(rect);
+        }
+
+        function move(){ //왔다갔다 움직임 처리
+            //문서 내의 rect라는 요소에 적용된 css 중 left 값을 증가시키다가.
+            //일정 시점에 도달하면 방항바꾸자
+            if(flag){
+                x+=5; //5씩 누적
+            }else{
+                x-=5; //5씩 감소
+            }
+            
+            rect.style.left=x+"px";
+            
+            //우측 경계벽을 만나거나, 좌측 시작 벽을 만나면 방향은 뒤집혀야한다.
+            //if(x==700 || x==0)flag=flag; 는 증가값이 700에 맞아 떨어지지 않으면 안됨
+            if(x>=700 || x<=0) flag=!flag; // 방향 전환
+        }
+
+        function auto(){ //자동처리 함수
+            //자동이란, 이미 작성된 수동코드를 컴퓨터에게 맡기는 행위
+            if(autoFlag) move();
+        }
+
+
+        //자바스크립트 언어는 2가지 플랫폼으로 개발 가능
+        // 1) 브라우저 기반 js(window=브라우저)
+        // 2) Node.js 기반 js(global)
+        window.addEventListener("load", function(){ 
+            createRect(); // 물체 만들기 함수 호출
+
+            //각 버튼들에 이벤트 연결하기
+            document.querySelector("button:nth-child(1)").addEventListener("click", function(){
+                // alert(); 중간에 체크 한 번 하고가기
+                move();
+            });
+            document.querySelector("button:nth-child(2)").addEventListener("click", function(){
+                autoFlag=true;
+            });
+            document.querySelector("button:nth-child(3)").addEventListener("click", function(){
+                autoFlag=false;
+            });
+
+            // 멈추지않는 루프를 하나 실행시키자
+            // setTimeout()은 지정된 시간이 흐르고 나서 함수를 호출 후 자동 소멸
+            // setInterval()은 지정된 시간 간격으로 끝없이 지정된 함수를 호출하는 루프
+            setInterval("auto()",10); // 루프는 하나만
+        });
+
+        //이벤트에 로직 짜는 거 아니다 ★ 밖에다 만들어서 함수 호출하기
+    </script>
+</head>
+<body>
+    <button>Manual</button>
+    <button>Auto</button>
+    <button>Pause</button>
+    <div id="stage">
+    </div>
+</body>
+</html>
+<!-- 코드를 잘 때 들여쓰기 정리 잘하는 습관을 들이자!
+ 협업할 때 중요 (에러 잡기 쉽게) -->
+ <!-- 강사님은 FM으로 ""문자열로 함수호출 선호 -->

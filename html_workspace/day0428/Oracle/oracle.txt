@@ -1,0 +1,25 @@
+<myspace.dbf 만들기> // 데이터베이스 구축
+
+CREATE TABLESPACE myspace
+DATAFILE 'C:\oraclexe\app\oracle\oradata\XE\myspace.dbf'
+SIZE 1m; 
+//지정 후 ctrl + enter
+---
+<user 만들기>
+
+CREATE USER java 
+IDENTIFIED BY 1234 // 비번
+DEFAULT TABLESPACE myspace // 고향은 myspace
+quota unlimited ON myspace; //용량 제한 없어
+---
+
+<DCL (권한을 주고, 뺏고)>
+
+--접속권한
+GRANT CREATE SESSION TO java;
+
+--테이블에 대한 권한
+GRANT CREATE TABLE TO java;
+
+
+cmd창-sqlplus-java

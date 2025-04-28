@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>랜덤한 반딧불이</title>
+    <style>
+        body{margin: 0px;}
+        #wrapper{
+            height: 900px;
+            background-image: url(../../images/bandi/night.jpg);
+            background-size: 100% 100%;
+        }
+    </style>
+    <script src="../../js_lib/common.js"></script> 
+    <!-- 라이브러리 코드 불러옴 -->
+    <script>
+        let targetX=600,targetY=700;
+        let a=0.1;
+        let img;
+        let count=0; //반딧불의 위치를 언제 바꿀지를 결정짓는 변수
+
+        function init(){
+            img=document.createElement("img");
+            img.src="../../images/bandi/bug.png";
+            img.style.width=40+"px";
+            img.style.position="absolute";
+            img.style.left=100+"px";
+            img.style.top=100+"px";
+
+            document.getElementById("wrapper").appendChild(img); //이미지 반딧불이 이미지 부착
+        }
+
+        function move(){ //야금야금 움직이기
+            img.style.left=parseFloat(img.style.left)+a*(targetX-parseFloat(img.style.left))+"px";
+            //x축으로의 부드러운 움직임
+            img.style.top=parseFloat(img.style.top)+a*(targetY-parseFloat(img.style.top))+"px";
+            //y축으로의 부드러운 움직임
+        }
+
+        function setPos(){ // 랜덤구하기를 사용한 포지션 정하기
+            targetX=getRandom(10)*100; // 0~1000 화면의 너비에 사용
+            targetY=getRandom(9)*100; // 0~900 화면의 높이에 사용
+        }
+
+        function gameLoop(){
+            count++;
+            if(count%50==0)setPos(); //150마다 포지션을 바꾸는 함수 호출
+            move();
+
+        }
+
+        addEventListener("load", function(){
+            init();
+            let wrapper=document.getElementById("wrapper");
+            wrapper.addEventListener("mousedown",function(){
+                targetX=event.clientX;
+                targetY=event.clientY;
+            });
+            setInterval("gameLoop()",50);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

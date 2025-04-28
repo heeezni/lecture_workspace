@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서랍장 효과내기 (drawer)</title>
+    <style>
+        body{margin:0px;}
+        #rect{
+            /* width: 400px; */
+            /* 펼쳐놓은 값 */
+            height: 150px;
+            background-color: palevioletred;
+            position: relative;
+            /* top: 50px;
+            left: -370px; 
+            책갈피를 숨겨놓으려면? 
+            css에서는 
+            let rect=document.getElementById("rect");
+            rect.style.left;인식 불가 
+            js로 가자*/
+            border-radius: 6px;
+            left: -5px;
+            /* 책갈피처럼 안쪽은 둥글둥글효과 안보이게 숨겨라 */
+        }
+    </style>
+    <script>
+        let rect;
+        let a=0.1;
+        let targetW=350;
+
+        function init(){ // 프로그램 가동과 동시에 하고싶은 작업을 하는 함수영역
+            rect=document.getElementById("rect");
+            rect.style.width=30+"px";
+        }
+        function setLength(){ // 감속도 공식은 꼭 left에만 적용x, 물리적 크기, 위치 등 모두 가능
+            // 나의 너비 = 현재 나의 너비 + 비율 계수*(목표너비-현재 나의 너비)
+            rect.style.width=parseFloat(rect.style.width)+a*(targetW-parseFloat(rect.style.width))+"px";
+            //left를 조정 : div 자체가 좌우로 움직인다
+            // width를 조정	: div의 크기가 늘어난다 (서랍처럼)
+        }
+        function gameLoop(){ //길이를 조절하는 함수 끝없이 호출
+            setLength();
+        }
+
+        window.addEventListener("load",function(){
+            init();
+            // 이 시점은 rect를 얻어온 이후 시점이므로...제어하기 위해
+            rect.addEventListener("mouseover",function(){
+                targetW=350;
+            });
+            rect.addEventListener("mouseout",function(){
+                targetW=35;
+            });
+            setInterval("gameLoop()",10);
+        });
+    </script>
+</head>
+<body>
+    <div id="rect"></div>
+</body>
+</html>
