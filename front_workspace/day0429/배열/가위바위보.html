@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가위바위보</title>
+    <!-- <script>
+        function getRandom(max){ //원하는 수를 넣으면 해당 수까지를 최대값으로 하는 랜덤값 반환
+            return parseInt(Math.random()*(max+1)); //0보다 크고 1보다 작은 난수
+        }
+    </script> -->
+    <script src="../../js_lib/common.js"></script>
+    <script>
+        /* 
+        배열의 용도: 규칙이 없는 데이터를 규칙화 시킬 수 있다
+                     랜덤 뿐만 아니라, 반복문과도 친하다
+        현재 이 프로그램의 경우 파일명에 규칙이 하나도 없다
+        따라서 파일명을 규칙있는 배열로 전환               
+        */
+        let imgArray=new Array(3); //메모리에 빈 상자 3개를 만들되
+                                    // 상자들간 서로 딱 붙어있게 [0][1][2]
+        imgArray[0]="가위.png"
+        imgArray[1]="바위.png"
+        imgArray[2]="보.png"
+    
+        function gawi(){
+            let img=document.querySelector("img");
+            img.src="../../images/"+imgArray[getRandom(imgArray.length-1)];
+            // getRandom[2] 는 하드코딩 
+            // imgArray.length로 유연하게 변수 주기
+
+        }
+
+        addEventListener("load", function(){
+            document.querySelector("button").addEventListener("click", function(){
+                gawi(); //버튼 누를 때 호출
+            });
+
+        });
+
+    </script>
+</head>
+<body>
+    <button>가위바위보 실행</button>
+    <p>
+    <img>
+</body>
+</html>

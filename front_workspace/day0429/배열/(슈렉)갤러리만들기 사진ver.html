@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>슈렉사진으로 갤러리 만들기</title>
+    <style>
+        #wrapper{
+            width: 500px;
+            height: 400px;
+            margin: auto;
+        }
+        #mask{
+            width: 500px;
+            height: 340px;
+            background-color: beige;
+            position: relative;  /* relative = static + left + top */
+            border: 3px solid black;
+            overflow: hidden;
+            /* 넘치는 컨텐츠는 가리자 */
+        }
+        #footer{
+            width: 100%;
+            background-color: beige;
+            border-left: 3px solid black;
+            border-right: 3px solid black;
+            border-bottom: 3px solid black;
+            float: left;
+            text-align: center;
+        }
+        #footer img{
+            width: 60px;  
+            height: auto; /* 자동으로 비율 맞춤 */
+            margin-left: 10px;
+
+            vertical-align: middle; /* 세로 가운데 정렬 */
+        }
+    
+    </style>
+    <script>
+        let imgArray=[
+            "img0.jpg",
+            "img1.jpg",
+            "img2.jpg",
+            "img3.jpg",
+            "img4.jpg",
+            "img5.jpg",
+            "img6.jpg"
+        ];
+        let box; //모든 영역에서 접근하기 위함
+        let n=0; //사용자가 현재 보고있는 사진의 index를 표현한 전역변수
+        let a=0.1;
+
+        function createImg(){ //슈렉 이미지 7개 생성하고, 7개 이미지를 담게될 바깥쪽 부모인 box생성하여
+                            //mask의 자식 요소로 부착하자
+
+                box=document.createElement("div");
+                box.style.width=500*imgArray.length+"px"; //박스의 너비는 사진 개수에 따라 유동적이기 때문
+                box.style.height=340+"px";
+                box.style.position="absolute";
+                box.style.left=0+"px"; //자바스크립트에서 제어하기 전에 초기화
+                                        //css와 호환이 안되는 경우가 많음
+
+                for(let i=0; i<imgArray.length; i++){
+                    //box안에 이미지 배열 수만큼의 슈렉을 생성하여 자식으로 부착하자
+                    let img=document.createElement("img");
+                    img.src="../../images/shurek/"+imgArray[i];
+                    img.style.position="absolute"; //부모인 box를 기준으로 배치
+                    img.style.left=(i*500)+"px";
+
+                    box.appendChild(img);//슈렉 이미지 추가
+                }
+
+                let mask=document.getElementById("mask");
+                mask.appendChild(box)
+        }
+        
+        function move(){ //사용자가 선택한 번 째의 슈렉이미지 box값을 위치시키기
+            //0번째 0px, 1번째 -500px, 2번째 -1000px
+            //n*-500
+            // box.style.left=n*-500+"px"; 끊겨서 움직이는 모습
+            // console.log(box.style.left);
+            box.style.left=parseFloat(box.style.left)+a*(-n*500-parseFloat(box.style.left))+"px"
+        }
+
+        function createControl(){ //일반인들은 콘솔 제어가 불가능하므로 UI로 이미지 제어 가능하게
+            let footer=document.getElementById("footer");
+            for (let i=0; i<imgArray.length; i++){
+                let img = document.createElement("img");
+                img.src="../../images/shurek/"+imgArray[i];
+  
+                img.addEventListener("mouseover", function(){
+                    n=i;
+                });
+                footer.style.height=45+"px";
+                footer.appendChild(img);
+            }
+        }
+
+        function gameLoop(){
+            // console.log("gameLoop call");
+            move();
+        }
+
+        addEventListener("load",function(){
+            createImg(); //슈렉의 이미지들 생성
+            createControl(); //이미지 컨트롤러 생성
+            setInterval("gameLoop()",10); //움직이는 건 무조건 setInterval호출
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- 겉에 있는 작은 액자(mask)가 부모 
+        안에 있는 긴 액자는 자식 -->
+        <div id="mask"></div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>
