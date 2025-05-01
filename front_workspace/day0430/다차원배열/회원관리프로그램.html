@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초고난도 회원관리 프로그램</title>
+    <style>
+        #wrapper{
+            width: 1006px;
+            height: 603px;
+            margin: auto;
+            border: 3px solid gray;
+            border-radius: 3px;
+            background-color: pink;
+        }
+        #aside1{
+            width: 200px;
+            height: 100%;
+            background-color: pink;
+            float: left;
+            border-right: 3px solid gray;
+            text-align: center;
+        }
+        #section{
+            width: 600px;
+            height: 100%;
+            float: left;
+        }
+        #header{
+            width: 600px;
+            height: 50px;
+            background-color: rgb(240, 121, 141);
+            border-bottom: 3px solid gray;
+            text-align: center;
+        }
+        #content{
+            width: 600px;
+            height: 550px;
+            background-color: rgb(248, 223, 232);
+            overflow: scroll;
+
+        }
+        #aside2{
+            width: 200px;
+            height: 100%;
+            background-color: pink;
+            float: left;
+            border-left: 3px solid gray;
+            text-align: center;
+        }
+        form input{
+            height: 35px;
+            margin: 2px;
+            border: 2px solid gray;
+            border-radius: 3px;
+        }
+        input[type=button]:hover{
+            background-color: salmon;
+        }
+        table{
+            border-collapse: collapse; 
+            /* 두겹으로 겹치는 테이블의 기본 경계를 허문다 */
+        }
+    </style>
+    <script>
+        let memberArray=[]; //비어있는 1차원 배열을 선언하자
+        let content; //회원목록이 table 출력될 영역
+        let currentIndex; //현재 내가 선택한 층
+
+
+        //변수명이 같지 않아도 전달이 됩니다. getDetail() 함수에서의 매개변수 이름은 index일 수 있고, 
+        // onClick 이벤트에서 사용하는 변수 이름은 i일 수 있습니다. 
+        // 중요한 점은, 괄호 안에 전달되는 값이 함수에서 매개변수로 받아들여진다는 것입니다.
+        function getDetail(index){ // 사원 1명에 대한 자세한 정보 가져와서 우측 영역에 출력하자
+            currentIndex=index; // 현재 내가 몇 층을 보고 있는 지 다른 함수에서도 알게 하기 위해 전역변수로 빼자
+            //넘어온 index는 층수이므로, memberArray 배열에 접근할 수 있다
+            form2.empno.value=memberArray[index][0]
+            form2.ename.value=memberArray[index][1]
+            form2.sal.value=memberArray[index][2]
+            form2.comm.value=memberArray[index][3]
+        }
+
+        function edit(){ //선택한 층에 있는 사원의 정보를 변경하여 테이블 갱신 처리
+            //현재 이차원 배열인 memberArray의 수정하고 싶은 사원을 접근해보자
+            //접근하려면 층 즉, currentIndex가 필요함
+            memberArray[currentIndex][0]=form2.empno.value; //오른쪽 폼의 사원번호 반영
+            memberArray[currentIndex][1]=form2.ename.value; //오른쪽 폼의 사원이름
+            memberArray[currentIndex][2]=form2.sal.value; //오른쪽 폼의 급여 반영
+            memberArray[currentIndex][3]=form2.comm.value; //오른쪽 폼의 커미션 반영
+
+            printTable();
+
+        }
+        function del(){ //사원 한 명 삭제 (이차원 배열의 몇 층을 제거할 지 결정짓는다)
+            //memberArray.splice(몇 층.1)
+            memberArray.splice(currentIndex,1)
+            printTable(); //테이블 갱신
+        }
+        
+        function printTable(){
+            let tag="<table border='1px' width='100%'>"; //나중에 이스케이프 문자로 ''안쓰는법
+            tag=tag+"<tr align='center'>";
+                tag=tag+"<td>No</td>";
+                tag=tag+"<td>EMPNO</td>";
+                tag=tag+"<td>ENAME</td>";
+                tag=tag+"<td>SAL</td>";
+                tag=tag+"<td>COMM</td>";
+            tag=tag+"</tr>";
+
+            //실제 데이터가 출력될 tr영역 (★★완전중요)
+            for(let i=0; i<memberArray.length; i++){ //이차원 배열은 층수와 같으니, 층수만큼 반복시킨다
+                tag=tag+"<tr align='center' onClick=\"getDetail("+i+")\" onMouseOver=\"this.style.background= 'pink'\" onMouseOut=\"this.style.background=''\">";
+                // 하이라이트 효과    
+                    tag=tag+"<td>"+(1+i)+"</td>";
+                    // tag=tag+"<td>"+memberArray[i][0]+"</td>";
+                    // tag=tag+"<td>"+memberArray[i][1]+"</td>";
+                    // tag=tag+"<td>"+memberArray[i][2]+"</td>";
+                    // tag=tag+"<td>"+memberArray[i][3]+"</td>"; //for문 돌리기 가능
+                    for(let a=0; a<memberArray[i].length; a++){
+                        tag=tag+"<td>"+memberArray[i][a]+"</td>";
+                    }
+                tag=tag+"</tr>";
+            }
+            //통계출력 (td를 5개 통합)
+            tag=tag+"<tr>";
+            tag=tag+"<td colspan='5' align='right'>사원수 총 "+ memberArray.length+"명</td>";
+            tag=tag+"</tr>";
+
+            tag=tag+"</table>";
+            content.innerHTML=tag; //모아진 태그를 한꺼번에 출력하자
+        }
+        
+        function regist(){ //메모리 상의 데이터베이스()=이차원배열)에 사원 한 명 등록하기
+            //사원 한 명은 하나의 일차원배열에 담을 수 있으므로, 일차원 배열 생성하자
+            let member=[];
+            member.push(form1.empno.value); //사원번호의 값을 0번째에 등록 ★
+            member.push(form1.ename.value);
+            member.push(form1.sal.value);
+            member.push(form1.comm.value);
+
+            //방금 생성된 사원 1명의 정보를 담는 member배열을
+            //memberArray라는 배열에 추가하자 (memberArray는 비로소 이차열 배열됨)
+            memberArray.push(member);
+            // alert("가입을 축하합니다");
+            form1.reset(); //등록 초기화 (기존 입력했던 데이터를 다시 지운다)
+        }
+
+        function init(){
+            content=document.getElementById("content");
+        }
+
+        addEventListener("load", function(){
+            init();
+            printTable();
+
+            //★ 문서로드 시 커서를 좌측 상단 입력 최상단에 올려놓아주는 배려
+            form1.empno.focus(); 
+
+            //등록버튼에 클릭이벤트 연결
+            let bt_regist=document.querySelector("#aside1 input[type='button']");
+            bt_regist.addEventListener("click",function(){
+                regist(); //회원 등록
+                printTable(); //회원 출력
+            });
+            form2.bt_edit.addEventListener("click", function(){
+                if(confirm("정보를 수정하시겠어요?")){
+                    if(currentIndex==undefined){
+                        alert("먼저 수정할 사원을 선택하세요.")
+                    }else{
+                        edit();
+                    }
+                }
+            });
+            form2.bt_del.addEventListener("click", function(){
+                if(confirm("삭제하시겠어요?")){ //true 나오면 삭제
+                    if(currentIndex==undefined){
+                        alert("먼저 삭제하실 사원을 선택하세요.");
+                    }else{
+                        del(); //회원 삭제 버튼
+                    }
+                }
+            });
+            document.querySelector("#bt_search").addEventListener("click", function(){
+                document.querySelector("input[name='search']").value="";
+                //reset은 form에만 사용가능
+        });
+    });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside1">
+                    <!-- 입력양식 구성
+            form태그는 말 그대로 양식
+            제출양식을 작성하기 위한 태그이며 눈에 보이지 않음
+            주 용도는 전송범위 설정 -->
+            <form name="form1">
+                <input type="text" name="empno" placeholder="사원번호 입력">
+                <input type="text" name="ename" placeholder="사원명 입력">
+                <input type="text" name="sal" placeholder="급여 입력">
+                <input type="text" name="comm" placeholder="커미션">
+                <input type="button" value="사원등록">
+            </form> <!-- name은 전송기능 가능 -->
+        </div>
+
+        <div id="section">
+            <div id="header">
+                <select id="searchField">
+                    <option value="0">사원번호</option>
+                    <option value="1">이름</option>
+                    <option value="2">급여</option>
+                    <option value="3">커미션</option>
+                </select>
+                <input type="text" name="search">
+                <button id="bt_search">검색</button>
+            </div>
+            <div id="content"></div>
+        </div>
+        <div id="aside2">
+            <form name="form2">
+                <input type="text" name="empno" placeholder="사원번호">
+                <input type="text" name="ename" placeholder="사원명">
+                <input type="text" name="sal" placeholder="급여">
+                <input type="text" name="comm" placeholder="커미션">
+                <input type="button" name="bt_edit" value="사원수정">
+                <input type="button" name="bt_del" value="사원삭제">
+            </form>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>점심 뭐 먹을래?</title>
+    <script src="../../js_lib/common.js"></script>
+    <script>
+        let array=new Array(10);
+        array[0]="김밥";
+        array[1]="닭갈비";
+        array[2]="떡볶이";
+        array[3]="짬뽕";
+        array[4]="육회비빔밥";
+        array[5]="타코";
+        array[6]="포케";
+        array[7]="핫도그";
+        array[8]="햄버거";
+        array[9]="김치볶음밥";
+
+        function menu(){
+            let div=document.querySelector("div");
+            div.innerText=array[getRandom(array.length-1)];
+        }
+
+
+        addEventListener("load",function(){
+            document.querySelector("button").addEventListener("click", function(){
+                menu();
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>점심메뉴는?</button>
+    <div>뭐가 나올까</div>
+</body>
+</html>
