@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게임맵 만들기</title>
+    <!-- 화면을 커다란 이차원 배열로 보고, 그 좌표에 맞춰 이미지(Object)를 배치
+      한 배열 칸 = 50px × 50px 크기의 사각형으로 보자-->
     <style>
         #stage{
             width: 100%;
@@ -20,6 +22,7 @@
         const tree=1; //앞으로 나무는 1의 값을 갖는다. (고정할 거라서 상수 const)
         const brick=2; //벽돌은 2다.
         const box=3; //박스는 3이다.
+        // const: 숫자를 가진 변수(상수)
         let map=[
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
