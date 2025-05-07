@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>당구공</title>
+    <style>
+        #wrapper{
+            width: 600px;
+            height: 600px;
+            border: 4px solid black;
+            margin: auto;
+            background-color: green;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    <script src="../js/Ball.js"></script>
+    <script>
+        let ballArray=[]; //다량의 공을 담게될 배열
+        let colorArray=["red","blue","navy","green","orange","yellow"];
+
+        function gameLoop(){
+            // 배열에 들어있는 모든 공을 대상으로 move()메서드 호출 예정
+           for(let i=0; i<ballArray.length; i++){
+                ballArray[i].move();
+           } 
+        }
+
+        function fire(){ //Ball 거푸집(클래스)으로부터 객체(인스턴스)를 생성하자
+            let wrapper=document.getElementById("wrapper"); //매개변수 너무 길어져서 뺌
+
+            // 다른 각도로 랜덤하게 움직이게하기
+            let x=parseInt(Math.random()*11);
+            let y=parseInt(Math.random()*11); 
+
+            let color=colorArray[parseInt(Math.random()*colorArray.length)];
+
+            //인스턴스 생성
+            let ball=new Ball(wrapper,100,200,40,40,x,y,color);
+            ballArray.push(ball);
+
+        }
+        
+        addEventListener("load",function(){
+            //키보드 이벤트 구현
+
+            //사용자가 이벤트를 일으키면, 해당 이벤트 정보 객체인 이벤트 객체가 생성되어
+            // addEventListener 메서드의 두번째 매개변수로 전달이 됨
+            // 개발자가 매개변수 받을지 말지는 자유
+            addEventListener("keydown", function(e){
+                if(e.keyCode==32){
+                    fire(); //발사!
+                }
+            });
+            setInterval(gameLoop,10);
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

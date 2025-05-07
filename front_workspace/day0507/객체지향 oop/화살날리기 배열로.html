@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화살날리기 (OOP의 이해)</title>
+    <script>
+        let spans=[];
+        let xs=[];
+        //let x=0; //화살의 x좌표
+        let velX=5; //화살의 속도
+
+        function move(){ //화살을 움직이게 하는 함수
+            // x = x + velX;
+            // span.style.left= x+"px"
+            for(let i=0; i<xs.length; i++){
+                xs[i]=xs[i]+velX;
+                spans[i].style.left= xs[i]+"px"
+            }
+        }
+
+        function init(){ //화살을 태어나게 하는 함수
+            //문서에 요소를 생성하여, left값을 증가시켜보자 (계속)
+            for (let a=0; a<4; a++){
+                let span=document.createElement("span"); //inline : 너비, 높이, 마진, 패딩x
+                span.innerText="→";
+                span.style.position="absolute";
+                span.style.left=0+"px";
+                span.style.top=(a*100)+"px";
+                span.style.fontSize=20+"px";
+                span.style.color="red";
+                document.body.appendChild(span);
+                spans.push(span);
+                xs.push(0);
+            }
+                spans[1].style.color="orange";
+                spans[2].style.color="blue";
+                spans[3].style.color="green";
+        }
+
+        addEventListener("load", function(){
+            init();
+            setInterval(move,10);
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>

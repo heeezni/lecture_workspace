@@ -20,7 +20,7 @@ SQL> create user js
 
 User created.
 
-SQL> --접속할 수 있는 궎난
+SQL> --접속할 수 있는 권한
 SQL> --접속할 수 있는 권한
 SQL> --SQL문의 3가지 DDL,DCL,DML
 SQL> grant create session to js;

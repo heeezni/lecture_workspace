@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>버튼을 누를 때마다 총알 발사</title>
+    <script src="./js/Bullet.js"></script>
+    <script>
+        let bulletArray=[]; // 다수의 총알을 보관할 전역변수
+        let colorArray=["red","orange","green","blue","purple","pink","navy"]
+
+        function fire(){
+            // 7가지 색상 중 랜덤한 색상을 추출하자
+            // 아래의 랜덤한 숫자는 절대로 7을 넘어서지 못하고, 최대 정수값은 6까지 반환
+            let n=parseInt(Math.random()*colorArray.length); //0.x ~ <1
+            let y=parseInt(Math.random()*(800+1));
+            let bullet = new Bullet(colorArray[n],y);
+            bulletArray.push(bullet); // 생성된 총알을 배열에 추가
+        }
+
+        function gameLoop(){ // 화면에 등장한 모든 총알을 대상으로 움직임 메서드 호출
+            for(let i=0; i<bulletArray.length; i++){ 
+                // 만약 배열에 아무런 요소가 없을 경우 for문 실행x
+                // undefined에 의한 에러발생 방지
+                let bullet=bulletArray[i];
+                bullet.move();
+            }
+        }
+
+        addEventListener("load", function(){
+            let bt=document.querySelector("button");
+
+            bt.addEventListener("click", function(){
+                fire();
+            });
+            setInterval(gameLoop,10);
+        });
+    </script>
+</head>
+<body>
+    <button>빵야</button>
+</body>
+</html>
+
+<!-- 
+new 는 틀에 쇳물붓기
+new 연산자 뒤 ()는 constructor 호출  -->
