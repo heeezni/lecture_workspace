@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #stage{
+            width: 1600px;
+            height: 576px;
+            background-image: url("../images/plane/bg.jpg");
+            background-size: 1600px 576px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+    <script src="./js/Hero.js"></script>
+    <script src="./js/Bullet.js"></script>
+    <script>
+        let bgX=0;
+        let hero;
+        let bulletArray=[]; //총알의 수를 예측할 수 없으므로 동적배열 (java.util.List와 동일)
+        let colorArray=["red","blue","navy","green","orange","yellow"];
+        
+        function bgEffect(){
+            //stage의 배경의 left값 감소
+            let stage=document.getElementById("stage");
+            stage.style.backgroundPosition=`${bgX--}px 0px`;
+        }
+        
+        function gameLoop(){
+            bgEffect();
+            hero.move();
+            
+            //총알의 움직임 메서드 호출
+            for(let i=0; i<bulletArray.length; i++){
+                bulletArray[i].shoot();
+            }
+        }
+        
+        function createHero(){
+            hero=new Hero(document.getElementById("stage"),100,100,200,200,0,0);
+        }
+
+        function fire(){ //총알 생성. 
+        // 누를 때마다 총알 생성시켜 이름 따로 주지 않고 배열에 담자
+
+            let bg=colorArray[parseInt(Math.random()*colorArray.length)];
+            let bullet=new Bullet(document.getElementById("stage"),(hero.x+hero.width*0.5),(hero.y+hero.height*0.5),30,30,10,2,bg)
+
+            bulletArray.push(bullet);
+        }
+
+        // 자바스크립트 함수 정의 유형 3가지
+        // 1) 선언적 방법에 의한 함수선언 funciton test(){...}
+        // 2) 표현식에 의한 함수 선언 let test=function(){...}
+        // 3) 화살표 함수 (자바에서는 람다) let test =()=>{화살표함수는 this 보유할 수 없다
+        //                                               화살표 함수영역에서 사용되는 this는
+        //                                               나를 가리키는 것이 아니라 상위 스코프를 가리킴}
+        addEventListener("load", ()=>{
+            console.log(this); //화살표함수가 자체적인 this를 가질 수 없기 때문에 
+            // 바깥쪽 스코프(영역)인 전역영역을 가리키게 되고,
+            // js언어에서 전역 정보는 window 객체가 보유하여, window 객체가 js언어의 최상위 객체
+            createHero();
+
+            //키보드 이벤트 연결
+            addEventListener("keydown", function(e){
+                switch(e.keyCode){//아스키 코드에 대한 판단
+                    case 37: hero.velX=-10;break; //left
+                    case 38: hero.velY=-10;break; //up
+                    case 39: hero.velX=10;break; //right
+                    case 40: hero.velY=10;break; //down
+                    case 32: fire();break; //space
+                    case 27: ; break; //esc
+                }
+            });
+
+            addEventListener("keyup", function(e){ //손 뗐을 때
+                switch(e.keyCode){//아스키 코드에 대한 판단
+                    case 37: hero.velX=0;break; //left
+                    case 38: hero.velY=0;break; //up
+                    case 39: hero.velX=0;break; //right
+                    case 40: hero.velY=0;break; //down
+                }
+            });
+
+            setInterval(gameLoop, 10);
+        });
+    </script>
+</head>
+<body>
+    <div id="stage"></div>
+</body>
+</html>
