@@ -9,7 +9,9 @@ class Rect{
         this.height=height;
         this.bg=bg;
         this.a=0.1;
-        this.targetH=parseFloat(Math.random()*(300+1));
+        this.targetH=parseInt(Math.random() *(300+1));
+        this.count=0; 
+        
 
         // style
         this.div.style.position="absolute";
@@ -26,15 +28,20 @@ class Rect{
     }
 
     move(){
-        height=parseInt(Math.random()*(300+1));
+        this.count++;
+        if(this.count%parseInt(Math.random() *(50+1))==0){
+            //일정 카운트 마다 targetH의 값 갱신
+            this.targetH=parseInt(Math.random() *(300+1));
+        }
         //console.log("move()...")
         //여기서 막대의 크기를 감속도 공식을 적용하여 움직여보자
         //나의 높이=현재 나의 높이+ a*(목표지점의 높이-현재 나의 높이)
-        this.div.style.height=parseFloat(this.div.style.height)+this.a*(this.targetH-parseFloat(this.div.style.height));
-
+        this.div.style.height=parseFloat(this.div.style.height)+this.a*(this.targetH-parseFloat(this.div.style.height))+"px";
+        this.div.innerText=this.div.style.height;
+        
         setTimeout(()=>{ //화살표함수
             this.move();
-        },10);
+        },30);
         //setTimeout("this.move()"); 안먹힘
     }
 }

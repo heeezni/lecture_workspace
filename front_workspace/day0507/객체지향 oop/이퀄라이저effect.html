@@ -8,8 +8,10 @@
     <script>
         let width=20; // 막대 하나당 너비
         let height=300; // 막대 하나당 높이
-        let count=15; // 생성하고픈 막대 수
-        let colorArray=["red","orange","yellow","green","blue","purple","pink","coral","navy","white"];
+        let count=30; // 생성하고픈 막대 수
+        let colorArray=["red","orange","yellow","green","blue","purple","pink","coral","navy","skyblue"];
+        let rect;
+        let rectArray=[]; //rect는 막대 하나만
 
         // 원하는 수만큼의 막대 만들어서, 부모에 부착하되 
         // 부모의 크기는 결정된 것이 아니라, 자식의 크기와 수에 비례하여 결정하자 (동적으로 부여)
@@ -22,18 +24,25 @@
             wrapper.style.width=width*count+"px";
             wrapper.style.height=height+"px";
             wrapper.style.margin="auto";
-            wrapper.style.background="lightgray";
-            wrapper.style.position="relative"
+            wrapper.style.background="black";
+            wrapper.style.position="relative";
+            wrapper.style.transform="scaleY(-1)"; //y축 flip
+
             document.body.appendChild(wrapper);
 
         
             for (let i=0; i<count; i++){
                 //10개에 대해서 모두 다른 색을 구해야 하므로 랜덤은 for문 내에서 작성
                 let bg=colorArray[parseInt(Math.random()*colorArray.length)];
-                new Rect(wrapper,i*width,0,width,height,bg);
+                rect=new Rect(wrapper,i*width,0,width,height,bg);
+                rectArray.push(rect);
             }
-        
+            
+            for(let i=0; i<rectArray.length; i++){
+                rectArray[i].move();
+            }
         }
+
 
         // let test=()=>{
         //         console.log("나 호출했어?", this); 
@@ -42,6 +51,7 @@
 
         addEventListener("load",function(){
             init();
+
         });
     </script>
 </head>

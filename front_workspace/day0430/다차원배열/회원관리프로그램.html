@@ -67,6 +67,26 @@
         let content; //회원목록이 table 출력될 영역
         let currentIndex; //현재 내가 선택한 층
 
+        memberArray.push([1,"Zino", 100, 150]);
+        memberArray.push([2,"Adams", 200, 250]);
+        memberArray.push([3,"Scott", 300, 350]);
+        memberArray.push([4,"King", 400, 450]);
+        memberArray.push([5,"WARD", 500, 550]);
+
+        function searchData(){
+            let category=document.querySelector("#category");
+            let keyword=document.querySelector("#keyword");
+
+            let searchArray=[];
+
+            for(let i=0; i<memberArray.length; i++){
+                if(memberArray[i][parseInt(category.value)]==keyword.value){
+                searchArray.push(memberArray[i]);
+                };
+            }
+            printTable(searchArray);
+        }
+
 
         //변수명이 같지 않아도 전달이 됩니다. getDetail() 함수에서의 매개변수 이름은 index일 수 있고, 
         // onClick 이벤트에서 사용하는 변수 이름은 i일 수 있습니다. 
@@ -100,7 +120,7 @@
             printTable(); //테이블 갱신
         }
         
-        function printTable(){
+        function printTable(arr=memberArray){
             let tag="<table border='1px' width='100%'>"; //나중에 이스케이프 문자로 ''안쓰는법
             tag=tag+"<tr align='center'>";
                 tag=tag+"<td>No</td>";
@@ -111,7 +131,7 @@
             tag=tag+"</tr>";
 
             //실제 데이터가 출력될 tr영역 (★★완전중요)
-            for(let i=0; i<memberArray.length; i++){ //이차원 배열은 층수와 같으니, 층수만큼 반복시킨다
+            for(let i=0; i<arr.length; i++){ //이차원 배열은 층수와 같으니, 층수만큼 반복시킨다
                 tag=tag+"<tr align='center' onClick=\"getDetail("+i+")\" onMouseOver=\"this.style.background= 'pink'\" onMouseOut=\"this.style.background=''\">";
                 // 하이라이트 효과    
                     tag=tag+"<td>"+(1+i)+"</td>";
@@ -119,14 +139,14 @@
                     // tag=tag+"<td>"+memberArray[i][1]+"</td>";
                     // tag=tag+"<td>"+memberArray[i][2]+"</td>";
                     // tag=tag+"<td>"+memberArray[i][3]+"</td>"; //for문 돌리기 가능
-                    for(let a=0; a<memberArray[i].length; a++){
-                        tag=tag+"<td>"+memberArray[i][a]+"</td>";
+                    for(let a=0; a<arr[i].length; a++){
+                        tag=tag+"<td>"+arr[i][a]+"</td>";
                     }
                 tag=tag+"</tr>";
             }
             //통계출력 (td를 5개 통합)
             tag=tag+"<tr>";
-            tag=tag+"<td colspan='5' align='right'>사원수 총 "+ memberArray.length+"명</td>";
+            tag=tag+"<td colspan='5' align='right'>사원수 총 "+ arr.length+"명</td>";
             tag=tag+"</tr>";
 
             tag=tag+"</table>";
@@ -183,8 +203,8 @@
                     }
                 }
             });
-            document.querySelector("#bt_search").addEventListener("click", function(){
-                document.querySelector("input[name='search']").value="";
+            document.querySelector("#header input[type='button']").addEventListener("click", function(){
+                searchData();
                 //reset은 form에만 사용가능
         });
     });
@@ -209,14 +229,14 @@
 
         <div id="section">
             <div id="header">
-                <select id="searchField">
+                <select id="category" name="category">
                     <option value="0">사원번호</option>
                     <option value="1">이름</option>
                     <option value="2">급여</option>
                     <option value="3">커미션</option>
                 </select>
-                <input type="text" name="search">
-                <button id="bt_search">검색</button>
+                <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요">
+                <input type="button" value="검색">
             </div>
             <div id="content"></div>
         </div>
