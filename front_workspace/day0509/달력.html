@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>달력만들기</title>
+    <style>
+        #wrapper{
+            background-color: bisque;
+            margin: auto;
+        }
+        #header{
+            height: 50px;
+            background-color: orange;
+            text-align: center;
+            line-height: 50px;
+        }
+        #header h2{
+            display: inline-block;
+            margin: 0px;
+        }
+        #header a{
+            text-decoration: none;
+            /* 밑줄없애기 */
+            margin: 0px 50px;
+            /* 2개만 명시하면 첫번째 요소는 top&bottom,
+            두번째 요소는 left&right */
+        }
+        #days{
+            background-color: yellow;
+            height: 40px;
+        }
+        #section{
+            background-color: beige;
+            
+        }
+    </style>
+    <script src="../js_lib/common.js"></script>
+    <script src="./js/Cell.js"></script>
+    <script>
+        let cellWidth=100; //각 셀의 너비
+        let cellHeight=100; //각 셀의 높이
+        let border=1; //셀의 보더 두께
+        let currentYear; //유저가 현재 보게 될 연도 , 로드 시에도 할당, 다음, 이전 버튼 누를 때도 할당
+        let currentMonth; //유저가 현재 보게 될 월
+        let cellArray=[]; //셀 생성 후 제어하려면 이름 필요->변수 필요하다
+        //하지만 변수명 일일이 다르게 주면 규칙 없으므로 배열로 가자
+
+        function createCell(){
+            // 위의 크기정보로 wrapper의 크기를 동적으로 계산할 수 있다! (전에 고민했던 부분)
+            let wrapper=document.getElementById("wrapper");
+            // let header=document.getElementById("header");
+            // let days=document.getElementById("days");
+
+            // let headerH=parseInt(header.style.height);
+            // let daysH=parseInt(days.style.height);
+
+            wrapper.style.width=(cellWidth+(border*3))*7+"px";
+            wrapper.style.height=(cellHeight+(border*2))*6+40+50+"px";
+
+            //요일 영역 출력
+            for(let i=0; i<7; i++){
+                let cell=new Cell(document.getElementById("days"),cellWidth,40,"yellow",1,"black",convertDay(i,"kor"));
+            }
+
+            for(let a=0; a<6; a++){ //6층 (최대6줄 필요함)
+                for(let i=0; i<7; i++){ //7호수 (일주일)
+                    let cell=new Cell(document.getElementById("section"),cellWidth,cellHeight,"white",border,"black","");
+                    cellArray.push(cell);
+                }
+            }
+        }
+        
+        //모든 셀의 innerText스트링을 지워버리자
+        function clearDate(){
+            let index=0;
+
+            for(let a=0; a<6; a++){
+                for(let i=0; i<7; i++){
+                    cellArray[index++].div.innerText="";
+                }
+            }
+        }
+
+        // 이미 생성된 셀에 날짜를 출력한다 (날짜 출력 전용 함수)
+        // 주의) 다음,이전 버튼을 누르면 기존에 셀에 출력된 날짜는 지우고, 새로운 날짜를 출력
+        function printDate(){
+            let count=0; //셀의 인덱스, 박스의 순번 (날짜 아님!)
+            let n=0; //유저가 보게될 달력의 날짜
+
+            for(let a=0; a<6; a++){
+                for(let i=0; i<7; i++){
+                    let cell=cellArray[count]; //셀 하나 꺼내기
+
+                    if(count >= getStartDay(currentYear, currentMonth) && n < getLastDate(currentYear,currentMonth)){
+                        n++; //1씩 증가를 count가 해당월의 시작일을 만나는 순간부터 하자 
+                        cell.div.innerText=n;
+                    }
+                    count++;
+                }
+            }
+
+        }
+        // 현재 날짜 얻어오기
+        function getCurrentDate(){
+            let d=new Date();
+            currentYear=d.getFullYear();
+            currentMonth=d.getMonth();
+        }
+
+        // 헤더 영역에 현재 보고있는 날짜 출력 (년,월)
+        function printTitle(yy,mm){ 
+            //다음,이전 버튼 누를 때 마다 호출할 것이므로 년,월 매개변수로 설정
+            let d=new Date(yy,mm);
+            currentYear=d.getFullYear();
+            currentMonth=d.getMonth();
+
+            let h2=document.querySelector("#header h2");
+            h2.innerText=`${currentYear}년 ${currentMonth+1}월`
+        }
+
+        // 참고) 이벤트 리스너의 두번째 매개변수로 들어가야하는 함수는
+        // 정의를 해야하지 호출해서는 안된다.
+        // 두번째 매개변수에 등록되는 함수는 개발자가 호출하는 함수가 아니라
+        // 브라우저가 load이벤트 발생시 거꾸로 호출을 해주는 역할을 하므로
+        // callback함수라 부른다.
+        addEventListener("load", function(){
+            
+            //현재 날짜를 제목에 출력부터 해주자
+            getCurrentDate();
+            createCell();
+            printTitle(currentYear,currentMonth);
+            printDate(currentYear,currentMonth);
+
+            //현재 보고있는 월의 시작요일을 조사해보자
+            getStartDay(currentYear,currentMonth);
+
+            //달력의 제목을 이전,다음 버튼으로 바꾸자
+            let bt_prev=document.querySelector("#header :nth-child(1)");
+            let bt_next=document.querySelector("#header :nth-child(3)");
+            
+            bt_prev.addEventListener("click",function(){
+                currentMonth--;//이전 월로 설정
+                printTitle(currentYear,currentMonth); //년도 계산 필요x Date내장객체가 알아서 계산함
+                clearDate();
+                printDate(currentYear,currentMonth);
+
+            });
+            bt_next.addEventListener("click",function(){
+                currentMonth++;//이전 월로 설정
+                printTitle(currentYear,currentMonth); //년도 계산 필요x Date내장객체가 알아서 계산함
+                clearDate();
+                printDate(currentYear,currentMonth);
+
+            });
+
+            
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <a href="#">이전</a>
+            <!-- 새로고침 안되게 임시링크 -->
+            <h2>1998</h2>
+            <a href="#">다음</a>
+        </div>
+        <div id="days"></div>
+        <div id="section"></div>
+    </div>
+</body>
+</html>

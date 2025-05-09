@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시계만들기</title>
+    <style>
+        #hour,#min,#sec{
+            font-size: 80px;
+            color: palevioletred;
+            background-color: blanchedalmond;
+            width: 120px;
+            height: 120px;
+            border: 2px solid gray;
+            border-radius: 3px;
+            display: inline-block;
+            /* 나란히 세워주기 */
+            text-align: center;
+        }
+    </style>
+    <script src="../js_lib/common.js"></script>
+    <script>
+        let showTime=function(){ 
+            //표현식에 의한 함수정의 (함수를 데이터처럼 변수로 받을 수 있다, 일급시민)
+            let d=new Date();
+
+            let h=d.getHours(); //시간만 추출
+            let hour=document.getElementById("hour");
+            hour.innerText=zeroString(h)
+
+            let m=d.getMinutes(); //분만 추출
+            let min=document.getElementById("min");
+            min.innerText=zeroString(m)
+
+            
+            let s=d.getSeconds(); //초만 추출
+            let sec=document.getElementById("sec");
+            sec.innerText=s;
+            if(s<10)sec.innerText="0"+s;
+        }
+        addEventListener("load",()=>{
+            setInterval(showTime,1000);
+
+        });
+    </script>
+</head>
+<body>
+    <div id="hour"></div>
+    <div id="min"></div>
+    <div id="sec"></div>
+</body>
+</html>
