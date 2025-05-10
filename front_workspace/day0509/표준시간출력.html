@@ -36,7 +36,7 @@
             let s=d.getSeconds(); //초만 추출
             let sec=document.getElementById("sec");
             sec.innerText=s;
-            if(s<10)sec.innerText="0"+s;
+            if(s>=0 && s<10)sec.innerText="0"+s;
         }
         addEventListener("load",()=>{
             setInterval(showTime,1000);
