@@ -9,7 +9,7 @@ class StringTest{
 		
 		
 		//new를 명시하지 않아도, 내부적으로 문자열 객체를 생성시키는 생성법을
-		//암시적,묵시적 (implicit)생성법이라함
+		//문자열 리터럴 사용 (상수풀)
 		String s1="korea"; //사실은 문자 '배열' char[]
 		String s2="korea";
 		System.out.println(s1==s2); //True ("korea"는 주소값이 상수풀로 들어감, 상수풀은 중복체크기능O)
