@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        
+        //alert("나를 생성시킨 오프너의 변수값은"+window.opener.x);
+       
+        // let storeList=[]; 공부목적
+        // store1={
+        //     store_name: "김밥천국",
+        //     tel:"02-1111-0000",
+        //     pos:"37.50971, 127.0554"
+        // };
+        // store2={
+        //     store_name: "육쌈냉면",
+        //     tel:"010-1234-5678",
+        //     pos:"37.50971, 127.0555"
+        // };
+        // store3={
+        //     store_name: "한솥도시락",
+        //     tel:"010-9876-5432",
+        //     pos:"37.50971, 127.0556"
+        // };
+        // storeList.push(store1);
+        // storeList.push(store2);
+        // storeList.push(store3);
+
+        //등록 시 누적된 맛집들의 리스트를 테이블로 동적 출력
+        function printTable(){
+            let tag="<table width='100%', border='1px'>";
+            tag+="<tr>";
+                tag+="<td>No</td>"
+                tag+="<td>상호명</td>"
+                tag+="<td>연락처</td>"
+                tag+="<td>위도경도</td>"
+                tag+="<td>대표사진</td>"
+            tag+="</tr>";
+
+            // 새 창이 opener를 통해 부모 창에 접근
+            let n=window.opener.storeList.length;
+            for(let i=0; i<n; i++){
+                let store=window.opener.storeList[i]; 
+                //배열을 말하는 것이므로 [i] 꼭 써주기
+                tag+="<tr>";
+                tag+="<td>"+n--+"</td>"
+                tag+="<td>"+store.store_name+"</td>"
+                tag+="<td>"+store.tel+"</td>"
+                tag+="<td>"+store.pos+"</td>"
+                tag+="<td>대표사진</td>"
+                tag+="</tr>";
+            }
+            tag+="</table>";    
+            document.body.innerHTML=tag;
+        }
+        
+
+        addEventListener("load", function(){
+            printTable();
+        });
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
