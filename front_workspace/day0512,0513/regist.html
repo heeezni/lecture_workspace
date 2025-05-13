@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin:0px}
+        #header{
+            width: 100%;
+            height: 40px;
+            background-color: orange;
+            line-height: 40px;
+        }
+        #header input[type="file"]{
+            width: 70px;
+        }
+        #content{
+            width: 100%;
+            height: 500px;
+            background-color: beige;
+        }
+        #footer{
+            width: 100%;
+            height: 50px;
+            background-color: yellow;
+            line-height: 50px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        let obj;
+
+        //사용자가 선택한 정보를 알고있는 이벤트 객체를 전달받아서
+        //파일을 읽어들이자!
+        function loadData(e){
+            console.log(e); //메모장 선택하면 target의 files의 0번째에 file있음
+            let file=e.target.files[0];//사용자가 선택한 바로 그 메모장
+
+            //console.log("A");
+            //파일읽기
+            let reader=new FileReader();
+            reader.onload=function(data){
+                //console.log("B");
+                console.log(data);
+                //data.target.result; //읽어들인 문자열 (json문자열 -> 객체 아님)
+                //따라서 파싱하기 전까지는 사용불가
+                obj=JSON.parse(data.target.result); //쌍따옴표 등을 제거한 후 JS객체 반영
+                console.log("파싱결과는 ",obj); 
+
+                printTable(obj); //출력시도
+            }
+            reader.readAsText(file);
+            //console.log("C");
+            //ACB 순서를 건너뛰는 실행방식 = 비동기 (이벤트는 다 비동기)
+        }
+        
+        function printTable(obj){
+            let tag="<table width='100%', border='1px'>";
+            tag+="<tr>";
+                tag+="<td>No</td>"
+                tag+="<td>상호명</td>"
+                tag+="<td>연락처</td>"
+                tag+="<td>위도경도</td>"
+                tag+="<td>대표사진</td>"
+            tag+="</tr>";
+
+            // 새 창이 opener를 통해 부모 창에 접근
+            let n=obj.storeList.length;
+            for(let i=0; i<obj.storeList.length;i++){
+                //n이 루프 도는 도중에 줄어들기 때문에 n은 출력용 숫자로만 사용하고, 
+                // 루프 조건에는 고정된 값을 써야함
+                let store=obj.storeList[i]; 
+                //배열을 말하는 것이므로 [i] 꼭 써주기
+                tag+="<tr>";
+                tag+="<td>"+n--+"</td>"
+                tag+="<td>"+store.store_name+"</td>"
+                tag+="<td>"+store.tel+"</td>"
+                tag+="<td>"+store.pos+"</td>"
+                tag+="<td>대표사진</td>"
+                tag+="</tr>";
+            }
+            tag+="</table>";    
+            document.getElementById("content").innerHTML=tag;
+        }
+
+        //지도를 보유한 부모창에, 현재 내가 보유한 리스트를 이용하여 마커출력
+        function showIcons(){
+            window.opener.registAll(obj);
+            window.close(); //나의 윈도우 자동 닫기
+        }
+
+        addEventListener("load", function(){
+            document.querySelector("#header input[type='file']").addEventListener("change", function(e){
+                loadData(e);
+            });
+            document.querySelector("#footer button").addEventListener("click",function(){
+                showIcons();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="header">
+        <input type="file">
+    </div>
+    <div id="content"></div>
+    <div id="footer">
+        <button>지도에 적용하기</button>
+    </div>
+</body>
+</html>

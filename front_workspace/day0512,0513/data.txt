@@ -1,0 +1,65 @@
+{
+    "storeList" : [
+        {
+            "store_name" : "삼성숯불갈비",
+            "tel" : "050-71370-8790",
+            "pos" : "37.51000, 127.0560",
+            "iconImg" : "../images/map/pin.png"
+        },
+        {
+            "store_name" : "니뽕내뽕",
+            "tel" : "02-6002-5151",
+            "pos" : "37.51299, 127.0576",
+            "iconImg" : "../images/map/heart.png"
+        },
+        {
+            "store_name" : "맥도날드",
+            "tel" : "070-7017-6471",
+            "pos" : "37.50887, 127.0590",
+            "iconImg" : "../images/map/star.png"
+        },
+        {
+            "store_name" : "클로버포케",
+            "tel" : "070-8845-7679",
+            "pos" : "37.51219, 127.0513",
+            "iconImg" : "../images/map/pin.png"
+        },
+        {
+            "store_name" : "능라도",
+            "tel" : "02-569-8939",
+            "pos" : "37.50968, 127.0555",
+            "iconImg" : "../images/map/pin.png"
+        },
+        {
+            "store_name" : "오봉집",
+            "tel" : "02-558-1529",
+            "pos" : "37.51061, 127.0558",
+            "iconImg" : "../images/map/marker.png"
+        },
+        {
+            "store_name" : "쇼지",
+            "tel" : "070-8623-9333",
+            "pos" : "37.50968, 127.0566",
+            "iconImg" : "../images/map/tag.png"
+        },
+        {
+            "store_name" : "모모베이글",
+            "tel" : "070-7017-6471",
+            "pos" : "37.50970, 127.0547",
+            "iconImg" : "../images/map/star.png"
+        },
+        {
+            "store_name" : "KFC",
+            "tel" : "02-501-7295",
+            "pos" : "37.51115, 127.0589",
+            "iconImg" : "../images/map/pin.png"
+        },
+        {
+            "store_name" : "삼성분식",
+            "tel" : "010-8351-1851",
+            "pos" : "37.51050, 127.0576",
+            "iconImg" : "../images/map/marker.png"
+        }
+    ]
+}
+

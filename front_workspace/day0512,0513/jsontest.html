@@ -1,0 +1,48 @@
+<script>
+/* 
+#JSON(JavaScript Object Notion)
+프로그래밍 언어가 아님, 
+데이터를 표현함에 있어 자바스크립트의 객체표현법을 전세계 개발자가 알고 있기 때문에
+별도의 표기법에 표준을 지정할 필요X
+JS객체 표기법을 본떠서 데이터를 표현해놓은 문자열이다! 
+(JSON - 자바스크립트의 리터럴을 따라서 작성)
+
+Json Validator - https://jsonlint.com/
+Json 문법 검증기
+*/
+
+// JSON은 프로그래밍 언어가 아니라 단지 문자열.
+//단 자바스크립트의 객체 표기법을 차용한 것 뿐
+
+    let man="{";
+    man+="\"name\" :\"철수\" ,"
+    man+="\"age\" :30,"
+    man+="\"ownCar\": false"
+    man+="}";
+
+    console.log(man);
+    // {"name" :"철수" ,"age" :30,"ownCar": false}
+
+    //위의 코드에서 JS입장에서는 문자열에 불과하므로,
+    //그 내부의 데이터를 접근할 방법. 즉, 구조화 되어있지 않다.
+    //따라서 JSON문자열을 자바스크립트뿐만 아니라 프로그래밍 언어에서 사용하려면
+    //해석 작업이 선행되어야 한다
+    //문자열 해석을 IT분야에서는 파싱(parsing)이라고 한다.
+
+    //JS 내장 객체 중 JSON 내장객체는 JSON 문자열을 객체로 자동변환 하거나
+    //아니면 객체리터럴로 된 실제 객체를 반대로 JSON문자열로 변환하기도 함
+
+    let obj=JSON.parse(man); //해석 후, (쌍따옴표 제거 후) 객체 리터럴 반환
+    /* {name: '철수', age: 30, ownCar: false}
+        age: 30
+        name: "철수"
+        ownCar: false
+       ▶ [[Prototype]]: Object
+    */
+    console.log(obj);
+    console.log(obj.name);
+    console.log(obj.age);
+    console.log(obj.ownCar);
+
+    JSON.stringify(obj); //객체리터럴을 문자열로 변환
+</script>
