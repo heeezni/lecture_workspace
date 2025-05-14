@@ -1,0 +1,8 @@
+<script src="./js/Bird.js"></script>
+<script src="./js/Duck.js"></script>
+<script>
+    let d=new Duck("blue",7);
+    d.fly();
+    d.eat(); //Duck클래스에는 없지만 Bird클래스에게서 상속받았으므로 오리꺼임 
+    console.log(d.color);
+</script>
