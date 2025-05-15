@@ -36,10 +36,12 @@
         let bgX=0;
         let st; //기존의 루프를 보관해놓고, 유저가 또다시 루프를 시도하면
                 //기존 루프는 제거하고 새로 시도한 루프로 대체
+        let startEnemy=false; // 적군이 생성되었는지 체크
         let hero;
         let bulletArray=[];
         let enemyArray=[];
         let total=0; //점수
+        
 
         //필요한 시점에 이 함수 호출하면 점수계산해줌 + 화면에 출력
         function setScore(n){
@@ -85,8 +87,13 @@
                 st=setInterval(gameLoop, 10);
             }else{
                 clearInterval(st);
-                st=undefined;
+                st=undefined; //초기화
             }
+
+            if(startEnemy==false){ //(!startEnemy 추천)
+                createEnemy();//적군 등장
+                }
+            
         }
 
         function handleMove(e){
@@ -114,17 +121,20 @@
             let i=getRandom(4);
             let k=getRandom(570);
             //적군은 여러마리이고, 각 적군마다 tick(),render() 호출되어야 하므로
-            //반복문으로 처리하려면 배열로 존재시켜야한다
-            // for(let i=1; i<=5; i++){
-                enemyArray.push(new Enemy(document.getElementById("stage"),"../images/plane/e"+(1+i)+".png",1400,k,65,55,-3,0));
-            // }
-            setTimeout(createEnemy,500);
+            //배열로 존재시켜야한다
+            enemyArray.push(new Enemy(document.getElementById("stage"),"../images/plane/e"+(1+i)+".png",1400,k,65,55,-3,0));
+            
+            startEnemy=true;
+
+            setTimeout(function(){
+                startEnemy=false; //타이머 끝나야 다시 생성하게
+                createEnemy();
+            },1000);
         }
 
         function init(){
             createHero();//주인공 등장
-            createEnemy();//적군 등장
-
+            
             //키보드 이벤트 구현
             addEventListener("keydown", function(e){
                 handleMove(e);

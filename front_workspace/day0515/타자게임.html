@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>베네치아 타자게임</title>
+    <style>
+        #wrapper{
+            width: 1250px;
+            height: 700px;
+            margin: auto;
+            overflow: hidden;
+        }
+        #aside{
+            width: 150px;
+            height: 100%;
+            background-color: peachpuff;
+            float: left;
+            text-align: center;
+        }
+        button {
+            width: 130px;
+            height: 30px;
+            color: tomato;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        #content{
+            width: 1100px;
+            height: 100%;
+            float: left;
+            background-image: url(../images/베네치아/베네치아.jpg);
+            background-size: 1100px 700px;
+            position: relative;
+        }
+        #content span{
+            background-color:yellow;
+        }
+        #box{
+            width: 150px;
+            height: 150px;
+            background-color: honeydew;
+            position: relative;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="./js/Word.js"></script>
+    <script src="../js_lib/common.js"></script>
+    <script src="./js/HP.js"></script>
+    <script>
+        let wordArray; //프로그램이 종료될 때까지 총 4레벨까지 게임가능한
+                     //데이터베이스를 담고있을 전역변수
+        let st; //interval undifined 상태
+        let wordList=[]; //단어 스트링 자체가 아닌, 단어 객체 인스턴스가 담겨질 배열
+        let speed=200; //게임의 속도를 좌우하는 변수(레벨이 올라갈수록 숫자 감소)
+        let level=0; //몇번 째 배열을 접근(층수접근)할 지를 결정
+        let hpArray=[]; //HP인스턴스를 보관할 배열
+
+        //프로그래밍 언어에서 메모장의 데이터를 바로 사용할 수 없으므로,
+        //메모장 파일을 읽어들여, 그 결과물인 JSON문자열을 parsing한 후
+        //객체로 반환받아서 사용하자
+        //단 파일에 대한 접근은 js가 불가능 하므로 
+        //크롬브라우저가 사용자에게 수락을 받은 그 결과를 얻어와서 처리해야 함
+        function loadData(e){
+            //console.log(e);
+            let file=e.target.files[0]; //사용자가 수락한 그 파일
+
+            //파일의 내용 읽기
+            let reader=new FileReader();
+            
+            reader.onload=function(data){ //data는 다 읽어들인 결과물
+                //console.log("메모장 읽은 결과는", data);
+                let jsonString=data.target.result; //메모장에 작성된 바로 그 문자열들
+                let obj=JSON.parse(jsonString); //문자열이므로 파싱하기
+
+                //console.log(obj);
+
+                wordArray=obj.wordList; //전역변수의 보관
+                createWord();
+
+                //start 버튼 활성화
+                //document.querySelector("button").disabled="enable";
+
+                for(let i=0; i<obj.wordList.length; i++){
+                    //console.log(obj.wordList[i]);
+                }
+            }
+            reader.readAsText(file); //문서 파일이기 때문에 readAsText선택
+        }
+        function createWord(){
+            for(let i=0; i<wordArray[level].length; i++){
+                let word=new Word(document.getElementById("content"),100+(i*100),getRandomByRange(-300,300),wordArray[level][i],"red");
+                wordList.push(word);
+            }
+        }
+        function nextStep(){
+            //모든 단어를 대상으로 tick(),render(),
+            for(let j=0; j<wordList.length; j++){
+                wordList[j].tick();
+                wordList[j].render();
+            }
+        }
+        //단어를 알아맞히는 과정에서 wordList의 길이가 0에 도달하면
+        //이 판을 다 클리어했다고 판단하여 레벨을 올리기
+        function checkLevel(){
+            if(wordList.length==0){
+                alert("레벨 "+(level+1)+"단계 통과를 축하드립니다!");
+                level++
+                speed-=200;
+
+                createWord();
+            }
+        }
+                       
+        //사용자가 입력한 단어 비교해서 제거 등의 처리
+        function checkText(obj){
+
+            //화면의 배열 수만큼 비교
+            for(let i=0; i<wordList.length; i++){
+               if(wordList[i].text==obj.value){
+
+                //제거하기 (화면에서 제거+배열에서도 제거)
+                let content=document.getElementById("content");
+                content.removeChild(wordList[i].span);
+
+                wordList.splice(i,1);
+                obj.value ="";
+                
+                checkLevel();//레벨올려야하는지 함수에 맡기기
+                return; //맞추면 함수 종료
+               }  
+            }
+            if(hpArray.length>0){
+            let box=document.getElementById("box");
+            box.removeChild(hpArray[0].div);
+            hpArray.splice(0,1);
+
+            }
+            if(hpArray.length == 0) {
+            clearInterval(st);
+            alert("Game Over 😢 다시 시작하려면 새로고침하세요.");
+            }
+
+            obj.value ="";
+        }
+        //9개의 HP인스턴스 생성하기
+        function createHP(){
+            for(let i=0; i<3; i++){
+                for(let j=0; j<3; j++){
+                    hpArray.push(new HP(document.getElementById("box"),50*j,50*i,47,47,"red","black"));
+                }
+            }
+        }
+
+        function gameLoop(){
+            //console.log("저 gameLoop중이에요");
+            nextStep(); //단어가 내려오게
+        }
+
+        function init(){
+            document.querySelector("input[type=file]").addEventListener("change",function(e){
+                loadData(e);
+            });
+            document.querySelector("#aside button").addEventListener("click", function(){
+                if(st==undefined){//가동된 인터벌이 없다면
+                    st=setInterval(gameLoop, speed);
+                    this.innerText="Pause";
+                }else{
+                    clearInterval(st);
+                    st=undefined; //삭제 후 다시 초기화
+                    this.innerText="Start!";
+                }
+            });
+            document.querySelector("#aside input[type='text']").addEventListener("keyup",function(e){
+                if(e.keyCode==13){ //엔터를 쳤다면
+                    //사용자가 입력한 단어와 화면에 생존해있는 단어 인스턴스 내부의
+                    //span의 innerText를 비교하자
+                    checkText(this);
+                }
+            });
+            createHP(); //에너지 생성
+        }
+
+        addEventListener("load",function(){
+            init();
+        });
+
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside">
+            <input type="file">
+            <button>Start!</button>
+            <input type="text" placeholder="단어입력">
+            <div id="box"></div>
+        </div>
+        <div id="content">
+        </div>
+    </div>
+</body>
+</html>
+

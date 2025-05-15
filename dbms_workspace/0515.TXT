@@ -1,0 +1,644 @@
+SQL> SELECT SELECT *
+  2  FROM EME E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO;
+SELECT SELECT *
+       *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT *
+  2  FROM EME E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO;
+FROM EME E INNER JOIN DEPT D
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT *
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO (ANSI)
+  4  ;
+ON E.DEPTNO=D.DEPTNO (ANSI)
+                      *
+ERROR at line 3:
+ORA-00904: "ANSI": invalid identifier 
+
+
+SQL> SELECT *
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO (ANSI)
+  4  ;
+ON E.DEPTNO=D.DEPTNO (ANSI)
+                      *
+ERROR at line 3:
+ORA-00904: "ANSI": invalid identifier 
+
+
+SQL> SELECT *
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      7369 SMITH                CLERK                    7902 80/12/17          
+       800                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7499 ALLEN                SALESMAN                 7698 81/02/20          
+      1600        300         30         30 SALES                               
+CHICAGO                                                                         
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+                                                                                
+      7521 WARD                 SALESMAN                 7698 81/02/22          
+      1250        500         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7566 JONES                MANAGER                  7839 81/04/02          
+      2975                    20         20 RESEARCH                            
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+DALLAS                                                                          
+                                                                                
+      7654 MARTIN               SALESMAN                 7698 81/09/28          
+      1250       1400         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7698 BLAKE                MANAGER                  7839 81/05/01          
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      2850                    30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7782 CLARK                MANAGER                  7839 81/06/09          
+      2450                    10         10 ACCOUNTING                          
+NEW YORK                                                                        
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      7788 SCOTT                ANALYST                  7566 87/04/19          
+      3000                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7839 KING                 PRESIDENT                     81/11/17          
+      5000                    10         10 ACCOUNTING                          
+NEW YORK                                                                        
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+                                                                                
+      7844 TURNER               SALESMAN                 7698 81/09/08          
+      1500          0         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7876 ADAMS                CLERK                    7788 87/05/23          
+      1100                    20         20 RESEARCH                            
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+DALLAS                                                                          
+                                                                                
+      7900 JAMES                CLERK                    7698 81/12/03          
+       950                    30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7902 FORD                 ANALYST                  7566 81/12/03          
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      3000                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7934 MILLER               CLERK                    7782 82/01/23          
+      1300                    10         10 ACCOUNTING                          
+NEW YORK                                                                        
+                                                                                
+
+14 rows selected.
+
+SQL> SET PAGESIZE 20;
+SQL> SET D.DEPTNO, COUNT(EMPNO),
+SP2-0158: unknown SET option "D.DEPTNO,"
+SQL> FROM EMP E INNER JOIN DEPT D
+SP2-0734: unknown command beginning "FROM EMP E..." - rest of line ignored.
+SQL> ON E.DEPTNO=D.DEPTNO
+SP2-0734: unknown command beginning "ON E.DEPTN..." - rest of line ignored.
+SQL> GROUP BY D.DEPTNO
+SP2-0734: unknown command beginning "GROUP BY D..." - rest of line ignored.
+SQL> SET D.DEPTNO, COUNT(EMPNO),
+SP2-0158: unknown SET option "D.DEPTNO,"
+SQL> FROM EMP E INNER JOIN DEPT D
+SP2-0734: unknown command beginning "FROM EMP E..." - rest of line ignored.
+SQL> ON E.DEPTNO=D.DEPTNO
+SP2-0734: unknown command beginning "ON E.DEPTN..." - rest of line ignored.
+SQL> GROUP BY D.DEPTNO
+SP2-0734: unknown command beginning "GROUP BY D..." - rest of line ignored.
+SQL> ;
+  1  SELECT *
+  2  FROM EMP E INNER JOIN DEPT D
+  3* ON E.DEPTNO=D.DEPTNO
+SQL> SET D.DEPTNO, COUNT(EMPNO),
+SP2-0158: unknown SET option "D.DEPTNO,"
+SQL> FROM EMP E INNER JOIN DEPT D
+SP2-0734: unknown command beginning "FROM EMP E..." - rest of line ignored.
+SQL> ON E.DEPTNO=D.DEPTNO
+SP2-0734: unknown command beginning "ON E.DEPTN..." - rest of line ignored.
+SQL> ;
+  1  SELECT *
+  2  FROM EMP E INNER JOIN DEPT D
+  3* ON E.DEPTNO=D.DEPTNO
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME                        LOC                                     
+---------- ---------------------------- --------------------------              
+        10 ACCOUNTING                   NEW YORK                                
+        20 RESEARCH                     DALLAS                                  
+        30 SALES                        CHICAGO                                 
+        40 OPERATIONS                   BOSTON                                  
+
+SQL> SELECT D.DEPTNO, COUNT(EMPNO),
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO;
+FROM EMP E INNER JOIN DEPT D
+*
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> SELECT *
+  2  FROM EMP E RIGHT OUTER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      7369 SMITH                CLERK                    7902 80/12/17          
+       800                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7499 ALLEN                SALESMAN                 7698 81/02/20          
+      1600        300         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7521 WARD                 SALESMAN                 7698 81/02/22          
+      1250        500         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7566 JONES                MANAGER                  7839 81/04/02          
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      2975                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7654 MARTIN               SALESMAN                 7698 81/09/28          
+      1250       1400         30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7698 BLAKE                MANAGER                  7839 81/05/01          
+      2850                    30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7782 CLARK                MANAGER                  7839 81/06/09          
+      2450                    10         10 ACCOUNTING                          
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+NEW YORK                                                                        
+                                                                                
+      7788 SCOTT                ANALYST                  7566 87/04/19          
+      3000                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7839 KING                 PRESIDENT                     81/11/17          
+      5000                    10         10 ACCOUNTING                          
+NEW YORK                                                                        
+                                                                                
+      7844 TURNER               SALESMAN                 7698 81/09/08          
+      1500          0         30         30 SALES                               
+CHICAGO                                                                         
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+                                                                                
+      7876 ADAMS                CLERK                    7788 87/05/23          
+      1100                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+      7900 JAMES                CLERK                    7698 81/12/03          
+       950                    30         30 SALES                               
+CHICAGO                                                                         
+                                                                                
+      7902 FORD                 ANALYST                  7566 81/12/03          
+      3000                    20         20 RESEARCH                            
+DALLAS                                                                          
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO     DEPTNO DNAME                               
+---------- ---------- ---------- ---------- ----------------------------        
+LOC                                                                             
+--------------------------                                                      
+      7934 MILLER               CLERK                    7782 82/01/23          
+      1300                    10         10 ACCOUNTING                          
+NEW YORK                                                                        
+                                                                                
+                                                                                
+                                         40 OPERATIONS                          
+BOSTON                                                                          
+                                                                                
+
+15 rows selected.
+
+SQL> SETLINE 600;
+SP2-0734: unknown command beginning "SETLINE 60..." - rest of line ignored.
+SQL> SET LINE 600;
+SQL> SELECT *
+  2  FROM EMP E RIGHT OUTER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  ;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME                        LOC                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ---------- ---------- ---------------------------- --------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                              
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20         20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20         20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10         10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20         20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10         10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20         20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30         30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20         20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10         10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                40 OPERATIONS                   BOSTON                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+
+15 rows selected.
+
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E RIGHT OUTER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  ;
+
+    DEPTNO COUNT(EMPNO)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        30            6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        20            5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        40            0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        10            3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT ENAME, SAL FROM EMP
+  2  UNION
+  3  SELECT DNAME, DEPTNO FROM DEPT;
+
+ENAME                               SAL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------------------------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ACCOUNTING                           10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ADAMS                              1100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+ALLEN                              1600                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+BLAKE                              2850                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+CLARK                              2450                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+FORD                               3000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+JAMES                               950                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+JONES                              2975                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+KING                               5000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+MARTIN                             1250                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+MILLER                             1300                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+OPERATIONS                           40                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+RESEARCH                             20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+SALES                                30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+SCOTT                              3000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+SMITH                               800                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+TURNER                             1500                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+ENAME                               SAL                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------------------------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+WARD                               1250                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+18 rows selected.
+
+SQL> SELECT D.DEPTNO, DNAME, LOC, EMPNO, ENAME
+  2  FROM EMP E RIGHT OUTER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO;
+
+    DEPTNO DNAME                        LOC                             EMPNO ENAME                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+---------- ---------------------------- -------------------------- ---------- --------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7369 SMITH                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        30 SALES                        CHICAGO                          7499 ALLEN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        30 SALES                        CHICAGO                          7521 WARD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        20 RESEARCH                     DALLAS                           7566 JONES                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        30 SALES                        CHICAGO                          7654 MARTIN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        30 SALES                        CHICAGO                          7698 BLAKE                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        10 ACCOUNTING                   NEW YORK                         7782 CLARK                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        20 RESEARCH                     DALLAS                           7788 SCOTT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        10 ACCOUNTING                   NEW YORK                         7839 KING                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        30 SALES                        CHICAGO                          7844 TURNER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        20 RESEARCH                     DALLAS                           7876 ADAMS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        30 SALES                        CHICAGO                          7900 JAMES                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        20 RESEARCH                     DALLAS                           7902 FORD                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                         7934 MILLER                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+        40 OPERATIONS                   BOSTON                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+15 rows selected.
+
+SQL> SELECT COUNT(EMPNO), D.DEPTNO
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO;
+
+COUNT(EMPNO)     DEPTNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+------------ ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+           6         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+           5         20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+           3         10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT COUNT(EMPNO), D.DEPTNO
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO)>
+  6  (SELECT COUNT(*)
+  7  FROM EMP
+  8  WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='SMITH'));
+
+COUNT(EMPNO)     DEPTNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+------------ ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+           6         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT DEPTNO, DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=
+  4  SELECT D.DEPTNO
+  5  FROM EMP E INNER JOIN DEPT D
+  6  ON E.DEPT=D.DEPTNO
+  7  GROUP BY D.DEPTNO
+  8  HAVING COUNT(EMPNO)>
+  9  (SELECT COUNT(*)
+ 10  FROM EMP
+ 11  WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='SMITH'));
+SELECT D.DEPTNO
+*
+ERROR at line 4:
+ORA-00936: missing expression 
+
+
+SQL> SELECT DEPTNO, DNAME, LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=
+  4  (SELECT D.DEPTNO
+  5  FROM EMP E INNER JOIN DEPT D
+  6  ON E.DEPTNO=D.DEPTNO
+  7  GROUP BY D.DEPTNO
+  8  HAVING COUNT(EMPNO))>
+  9  (SELECT COUNT(*)
+ 10  FROM EMP
+ 11  WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='SMITH'));
+HAVING COUNT(EMPNO))>
+                   *
+ERROR at line 8:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT DEPTNO, DNAME, LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=
+  4  (SELECT D.DEPTNO
+  5  FROM EMP E INNER JOIN DEPT D
+  6  ON E.DEPTNO=D.DEPTNO
+  7  GROUP BY D.DEPTNO
+  8  HAVING COUNT(EMPNO))
+  9  >(SELECT COUNT(EMPNO)
+ 10  FROM EMP
+ 11  WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='SMITH'));
+HAVING COUNT(EMPNO))
+                   *
+ERROR at line 8:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+---------- ---------------------------- --------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+        40 OPERATIONS                   BOSTON                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO;
+
+    DEPTNO COUNT(EMPNO)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- ------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        30            6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        20            5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        10            3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPTNO) = (
+  6  SELECT COUNT(EMPTNO) FROM EMP
+  7  WHERE COMM IS NULL);
+HAVING COUNT(EMPTNO) = (
+             *
+ERROR at line 5:
+ORA-00904: "EMPTNO": invalid identifier 
+
+
+SQL> 
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7  WHERE COMM IS NULL)
+  8  
+SQL> ;
+  1  SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7* WHERE COMM IS NULL)
+SQL> ;;
+SP2-0042: unknown command ";" - rest of line ignored.
+SQL> 
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7  WHERE COMM IS NULL)
+  8  
+SQL> ;
+  1  SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7* WHERE COMM IS NULL)
+SQL> ;
+  1  SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7* WHERE COMM IS NULL)
+SQL> 
+SQL> ;
+  1  SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7* WHERE COMM IS NULL)
+SQL> ;;
+SP2-0042: unknown command ";" - rest of line ignored.
+SQL> SELECT D.DEPTNO, COUNT(EMPNO)
+  2  FROM EMP E INNER JOIN DEPT D
+  3  ON E.DEPTNO=D.DEPTNO
+  4  GROUP BY D.DEPTNO
+  5  HAVING COUNT(EMPNO) = (
+  6  SELECT COUNT(EMPNO) FROM EMP
+  7  WHERE COMM IS NULL);
+
+no rows selected
+
+SQL> SE.
+SP2-0042: unknown command "SE." - rest of line ignored.
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+14 rows selected.
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+---------- ---------------------------- --------------------------                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        30 SALES                        CHICAGO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+        40 OPERATIONS                   BOSTON                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+
+SQL> SELECT EMPNO, ENAME
+  2  FROM EMP WHERE MGR=EMPNO;
+
+no rows selected
+
+SQL> SELECT EMPNO, ENAME
+  2  FROM EMP WHERE MGR=(SELECT EMPNO FROM EMP);
+FROM EMP WHERE MGR=(SELECT EMPNO FROM EMP)
+                    *
+ERROR at line 2:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> SPOOLOFF
+SP2-0042: unknown command "SPOOLOFF" - rest of line ignored.
+SQL> SPOOL OFF

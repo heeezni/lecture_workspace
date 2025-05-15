@@ -63,3 +63,9 @@ function collisionCheck(me,target){
     )
 }
 /*-----------------------------------------------------------------*/
+// 범위를 지정한 랜덤
+//  API 사용 예) getRandomByRange(5,8) 5부터 8사이의 랜덤값
+function getRandomByRange(min,max){
+    return min+(parseInt(Math.random()*(max-min+1)));
+}
+/*-----------------------------------------------------------------*/
