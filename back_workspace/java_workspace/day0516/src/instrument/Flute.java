@@ -4,10 +4,10 @@ public class Flute{
 	String color="silver";
 	int price=1000000;
 	
-	public void volume_up(){
+	public void volumeUp(){
 		System.out.println("볼륨업");
 	}
-	public void volume_down(){
+	public void volumeDown(){
 		System.out.println("볼륨다운");
 	}
 }
