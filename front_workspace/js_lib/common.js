@@ -41,20 +41,20 @@ function getLastDate(yy,mm){
 }
 /*-----------------------------------------------------------------*/
 // 충돌체크함수
-// API 사용 예)
 function collisionCheck(me,target){
-    //나에 대한 수치 계산
+    //1. me의 위치와 크기 정보
     const me_x= parseInt(me.style.left);
     const me_y= parseInt(me.style.top);
     const me_width=parseInt(me.style.width);
     const me_height=parseInt(me.style.height);
 
-    //조사대상 상대방
+    //2. target의 위치와 크기 정보
     const target_x= parseInt(target.style.left);
     const target_y= parseInt(target.style.top);
     const target_width=parseInt(target.style.width);
     const target_height=parseInt(target.style.height);
 
+    //3. 충돌이 아닌 조건 중 하나라도 만족하면 false, 아니면 true
     return!(
     me_x+me_width < target_x || //me의 오른쪽이 타겟의 왼쪽보다 왼쪽에 있으면
     me_x > target_x+target_width || //me의 왼쪽이 타겟의 오른쪽보다 더 오른쪽이면 
