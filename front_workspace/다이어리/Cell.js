@@ -61,6 +61,7 @@ class Cell{
         this.div.addEventListener("click", ()=>{ //화살표 함수는 this를 가질 수 없음
             //창을 띄울거임
             openDialog(this); //이 this는 상위스코프의 this(=객체)
+
         });
     }
     //셀에 보여질 날짜를 수시로 변경해야 하므로, 메서드의 대상이 될 수 있음

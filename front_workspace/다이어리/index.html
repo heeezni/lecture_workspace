@@ -7,11 +7,19 @@
     <link rel="stylesheet" href="./style.css">
     <script src="./Cell.js"></script>
     <script>
-        //JavaScript는 C,Java,C#같은 대부분의 프로그래밍 언어가 
-        // 배열 선언 시 정적 배열을 원칙으로 하는 원칙이 적용되지 않음
-        //원칙: 배열은 생성 시 그 크기를 고정하지 않으면 안됨
+        // JavaScript는 C, Java, C#과 같은 대부분의 정적 언어와 달리
+        // 배열 선언 시 '고정된 크기'를 지정하지 않아도 됨
+
+        // (정적 언어의 원칙)
+        // C, Java, C# 등의 언어에서는 배열 생성 시 반드시 크기를 명시해야 하며,
+        // 배열의 크기는 변경할 수 없음 → "정적 배열"
+
+        // (JavaScript의 특징)
+        // JavaScript는 동적 언어이기 때문에,
+        // 배열의 크기를 미리 고정하지 않아도 되고,
+        // 실행 중 언제든 요소를 추가하거나 삭제할 수 있음
         let cellArray=Array.from({length:6},()=> Array(7).fill(0));
-           //선언형 프로그래밍 ("반복문을 내가 돌려?")
+        //선언형 프로그래밍 ("반복문을 내가 돌려?")
         let currentYear; //유저가 현재 보고있는 연도
         let currentMonth; //유저가 현재 보고있는 월
         let currentCell; //유저가 현재 선택한 셀 (모든게 다 들어있음)
@@ -44,6 +52,21 @@
         }
 
         /*---------------------------------------------
+        달력과 다이어리 비교하여 렌더링 처리
+        ------------------------------------------------*/
+        function checkData(cell, year, month, date){
+            //다이어리에 등록된 데이터와 각 날짜 비교하여 년,월, 일이 같은 경우는
+            //다이어리에 등록된 날짜로 간주 → 제목 출력, 아이콘 출력
+            for(let k=0; k<diaryArray.length; k++){
+                let diary=diaryArray[k] //한 건의 다이어리 추출
+                if(diary.year==year && diary.month==month && diary.date==date){
+                    cell.titleDiv.innerText=diary.title; //다이어리 제목 출력
+                    cell.renderIcon(diary.icon, 25);//아이콘 출력
+                }
+            }
+        }
+
+        /*---------------------------------------------
         해당 년,월의 달력의 숫자 출력
         ------------------------------------------------*/
         function printNum(){
@@ -58,7 +81,8 @@
                     //index값이 시작요일 도달하게되면..해당 월의 마지막일까지만
                     if(index >=getStartday(currentYear,currentMonth) && date <=getLastdate(currentYear,currentMonth)){
                         cellArray[i][j].setDate(currentYear, currentMonth, date);
-                        date++;
+                        checkData(cellArray[i][j], currentYear, currentMonth, date);
+                        date++; //다이어리 비교 끝난 후에 날짜 증가해야 정확
                     }
                     index++;
                 }
@@ -96,6 +120,9 @@
                     cellArray[i][j].titleDiv.innerText="";
 
                     //2) 등록된 아이콘이 있으면 제거 (remove)
+                    if(cellArray[i][j].iconDiv.children.length>0){ //아이콘 발견!
+                        cellArray[i][j].iconDiv.removeChild(cellArray[i][j].icon);
+                    }
                 }
             }
         }
@@ -132,11 +159,18 @@
             dialog.style.display="block" // ↔ none
 
             //팝업의 위치는 사용자가 클릭한 셀의 좌표와 일치시키자
-            console.log(`넘겨받은 셀의 좌표 x=${obj.x},y=${obj.y}`);
+            //console.log(`넘겨받은 셀의 좌표 x=${obj.x},y=${obj.y}`);
             //넘겨받은 x,y를 이용하여 새 창의 위치를 결정짓자
             dialog.style.position="absolute";
             dialog.style.left=obj.x+"px";
             dialog.style.top=obj.y+"px";
+
+                for(let i=0; i<diaryArray.length; i++){
+                    if(diaryArray==obj.diaryArray){
+                    document.getElementById("t_title").value=diaryArray[i].title;
+                    document.getElementById("t_detail").value=diaryArray[i].detail;
+                }
+            }
         }
 
         /*---------------------------------------------
@@ -208,13 +242,44 @@
             document.body.addEventListener("keyup", function(e){
                 if(e.keyCode==27){closeDialog()}; //esc눌렀을 때 닫기
             });
-            
+            //이미지를 클릭하면, 파일탐색기를 강제 클릭시키자
+            document.querySelector("#info img").addEventListener("click", ()=>{
+                //강제 클릭 유도
+                document.getElementById("fileChooser").click(); //대상 컴포넌트에 클릭 일으킴
+                //프로그래밍적 클릭
+
+                //유저가 파일 선택한 순간 = change이벤트
+                //그 때 파일을 읽어들이자
+                document.getElementById("fileChooser").addEventListener("change",(e)=>{
+                    //console.log(e); e.target.files라는 유사배열의 0번째 파일
+                    let file=e.target.files[0]; //우리가 선택한 파일
+                    
+                    //파일 읽어들이는 객체
+                    let reader=new FileReader();
+                    reader.onload=function(data){
+                        //console.log(data.target.result); 우리가 원했던 data 문자열
+                        //읽어들인 데이터는 단지 Js객체 표기를 차용한 것뿐이므로 단순한 문자열에 불과
+                        //객체처럼 .찍고 접근 불가 →실제 객체화 시키기 (JSON 내장객체 이용)
+                        let obj=JSON.parse(data.target.result); //해석 후 객체 반환
+                        diaryArray=obj.diaryList;
+
+                        printTitle();
+                        clearCell(); //기존의 div에 기록된 데이터 삭제
+                        printNum();
+                    }
+                    reader.readAsText(file);
+
+                });
+            });
         });
     </script>
 </head>
 <body>
     <div id="wrapper">
-        <div id="info"></div>
+        <div id="info">
+            <input type="file" style="display: none;" id="fileChooser">
+            <img src="./images/file.png" alt="파일첨부" style="width: 60px;">
+        </div>
         <div id="header">
             <a href="javascript:prev()">이전</a>
             <h2></h2>
