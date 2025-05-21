@@ -38,13 +38,13 @@ public class ChatB extends Frame implements KeyListener{
 	public void	keyPressed(KeyEvent e){} //keydown
 	public void	keyReleased(KeyEvent e){ //keyup
 		if(e.getKeyCode()==KeyEvent.VK_ENTER){
-			String message1 = chatA.t_input.getText();
-			area.append(message1+"\n");
+			//String message1 = chatA.t_input.getText(); // chatB에서 채팅할 땐 chatA 입력 필드에 아무것도 없음
+			//area.append(message1+"\n"); //그니까 필요없음
 			
 			//내가 입력한 값
-			String message2 = t_input.getText();
-			area.append(message2+"\n");
-			chatA.area.append(message2+"\n"); // \n은 줄바꿈
+			String message = t_input.getText();
+			area.append(message+"\n");
+			chatA.area.append(message+"\n"); // \n은 줄바꿈
 			t_input.setText("");
 		}
 	}
