@@ -6,5 +6,15 @@ class Sensor extends GameObject{
 
         //부모의 코드에 존재하지 않는 것만 자식이 처리
         this.hero=hero;
-    }
+
+        //충돌체크시에 용도로만 사용할 위치값
+        this.fakeX;
+        this.fakeY;
+        this.setVisible(false);
+    }  
+    setFakeValue(fakeX, fakeY){};
+
+    setVisible(flag){
+        this.div.style.display=(flag)? "block":"none";
+    };
 }
