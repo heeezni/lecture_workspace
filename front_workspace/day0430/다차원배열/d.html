@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin:0px}
+        #wrapper{
+            width: 1000px;
+            height: 600px;
+            background-color: yellow;
+            margin: auto;
+        }
+        #aside1{
+            width: 200px;
+            height: 600px;
+            background-color: antiquewhite;
+            float:left;
+            text-align: center;
+        }
+        #section{
+            width: 600px;
+            height: 600px;
+            background-color: blue;
+            float:left;
+        }
+        #header{
+            width: 100%;
+            height: 50px;
+            background-color: rgb(176, 147, 113);
+        }
+        #content{
+            width: 100%;
+            height: 550px;
+            background-color: yellow;
+        }
+        #aside2{
+            width: 200px;
+            height: 600px;
+            background-color: rgb(84, 135, 135);
+            float:left;
+        }
+        form input{
+            height: 35px;
+            margin:2px;
+            border:1px solid #cccccc;
+            border-radius: 3px;
+        }
+        table{
+            /*두겹으로 겹치는 테이블의 기본 경계를 허문다*/
+            border-collapse: collapse; 
+        }
+    </style>
+    <script>
+        let memberArray=[]; //비어있는 1차원 배열을 선언하자    
+        memberArray.push([1,"Zino", 100, 150]);
+        memberArray.push([2,"Adams", 200, 250]);
+        memberArray.push([3,"Scott", 300, 350]);
+        memberArray.push([4,"King", 400, 450]);
+        memberArray.push([5,"WARD", 500, 550]);
+
+        let content;//회원 목록이 table  출력될 영역 
+        let currentIndex; //현재 내가 선택한 층
+
+        //사원 1명에 대한 자세한 정보 가져와서 우측 영역에 출력하자 
+        function getDetail(index){
+            currentIndex = index; //현재 내가 몇층을 보고 있는지 다른 함수에서도
+                                            //알게 하기 위해, 전역변수로 빼자 
+            //넘어온 index는 층수이므로, memberArray 배열에 접근할 수 있다!!
+            console.log("사원번호 ", memberArray[index][0]);
+            console.log("이름은 ",  memberArray[index][1]);
+            console.log("급여는 ",  memberArray[index][2]);
+            console.log("커미션 ",  memberArray[index][3]);
+
+            form2.empno.value= memberArray[index][0]; //사원번호
+            form2.ename.value=memberArray[index][1]; //사원명
+            form2.sal.value=memberArray[index][2]; //급여 
+            form2.comm.value=memberArray[index][0];//커미션
+        }
+
+        //선택한 층에 사는, 사원의 정보를 변경하여 테이블 갱신까지 처리..
+        function edit(){
+            //현재 이차원 배열인 memberArray의 수정하고 싶은 사원을 접근해보자
+            //접근하려면, 층 즉 currentIndex가 필요함 
+            memberArray[currentIndex][0]=form2.empno.value;//사원번호 반영
+            memberArray[currentIndex][1]=form2.ename.value;//사원이름 반영
+            memberArray[currentIndex][2]=form2.sal.value;//급여 반영
+            memberArray[currentIndex][3]=form2.sal.value;//커미션 반영
+            
+            printTable(memberArray);//테이블 출력 
+        }
+        
+        //사원 한명 삭제 (이차원 배열의 몇층을 제거할지를 결정짓는다.)
+        function del(){
+            memberArray.splice(currentIndex, 1);
+            printTable(memberArray);//테이블 갱신
+        }
+
+        //동적으로 테이블을 출력해보자
+        function printTable(list){
+            let tag="<table border='1px' width='100%'>";
+            tag=tag+"<tr align='center'>";
+            tag=tag+"<td>No</td>";    
+            tag=tag+"<td>EMPNO</td>";    
+            tag=tag+"<td>ENAME</td>";    
+            tag=tag+"<td>SAL</td>";    
+            tag=tag+"<td>COMM</td>";    
+            tag=tag+"</tr>";
+
+            let total=list.length;
+
+            //실제 데이터가 출력될 tr 영역...
+            for(let i=0;i<list.length;i++){ //이차원 배열은 층수와 같으니...층수만큼 반복시킨다
+                tag=tag+"<tr align='center' onClick=\"getDetail("+i+")\"    onMouseOver=\"this.style.background='pink'\" onMouseOut=\"this.style.background=''\">";
+                tag=tag+"<td>"+(total--)+"</td>";    
+
+                for(let a=0;a<list[i].length;a++){    
+                    tag=tag+"<td>"+list[i][a]+"</td>";    
+                }
+                tag=tag+"</tr>";
+            }
+            //통계출력 (td를 5개를 통합)
+            tag=tag+"<tr>";
+            tag=tag+"<td colspan='5' align='right'>사원수 "+list.length+" 명</td>";
+            tag=tag+"</tr>";
+            tag=tag+"</table>";
+
+            content.innerHTML=tag;//모아진 태그를 한꺼번에 출력하자~~!
+        }
+
+        //메모리 상의 데이터베이스=이차원 배열에, 사원 한명 등록하기..
+        function regist(){
+            //사원 한명은 하나의 일차원 배열에 담을 수 있으므로, 일차원 배열 생성하자
+            let member=[];
+            member.push(form1.empno.value);//사원번호의 값을 0번째에 등록
+            member.push(form1.ename.value);//사원명 값을 1번째에 등록
+            member.push(form1.sal.value);//급여 값을 2번째에 등록
+            member.push(form1.comm.value);//커미션 값을 3번째에 등록
+
+            //방금 생성된 사원 1명의 정보를 담는 member 배열을, memberArray라는
+            //배열에 추가하자(memberArray는 비로소 이차원 배열이 됨)
+            memberArray.push(member);
+            
+            //alert("가입을 축하합니다.");
+            //등록 초기화 (기존 입력했던 데이터를 다시 지운다.)
+            form1.reset();
+        }
+
+        function init(){
+            content=document.getElementById("content");
+        }
+
+        addEventListener("load", function(){
+            init();
+            printTable(memberArray);
+            
+            //문서 로드 시, 커서를 좌측 입력 최상단에 올려놓아주는 배려..
+            form1.empno.focus(); //커서 올려놓기
+
+            //등록 버튼에 클릭이벤트 연결 
+            let bt_regist=document.querySelector("#aside1 input[type='button']");
+            bt_regist.addEventListener("click", function(){
+                regist();//회원 등록
+                printTable(memberArray);//회원 출력
+            });
+
+            form2.bt_edit.addEventListener("click", function(){
+                if(confirm("정보를 수정하실래요?")){
+                    edit();
+                }
+            });
+
+            function searchData(){
+
+                let category = document.querySelector("#category");
+                let keyword = document.querySelector("#keyword");
+                let searchArray=[];
+
+                console.log("선택한 카테고리는 ",category.value);
+                console.log("검색어는 ", keyword.value);
+
+                for(let i=0;i<memberArray.length;i++){
+                    if(memberArray[i][parseInt(category.value)] == keyword.value){
+                        console.log("발견 ", i );
+                        searchArray.push(memberArray[i]);
+                    };
+                }
+                printTable(searchArray);
+
+            }
+
+            form2.bt_del.addEventListener("click", function(){
+                if(confirm("삭제하시겠어요?")){
+                    //사원을 선택한적이 없는 경우 욕!!
+                    if(currentIndex==undefined){
+                        alert("먼저 삭제하실 사원을 선택하세요");
+                    }else{
+                        del();
+                    }
+                }
+            });
+
+            document.querySelector("#header input[type='button']").addEventListener("click", function(){
+                searchData();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="aside1">
+            <!-- 입력 양식 구성 
+                form 태그는 말그래도 양식이라는 뜻, 즉 제출 양식을 작성하기 위한
+                태그이며, 눈에 보여지지 않음, 주 용도는 전송 범위를 설정 
+            -->
+             <form name="form1">
+                <input type="text" name="empno" placeholder="사원번호 입력..">
+                <input type="text" name="ename" placeholder="사원명 입력..">
+                <input type="text" name="sal"   placeholder="급여 입력..">
+                <input type="text" name="comm" placeholder="커미션..">
+                <input type="button" value="사원등록">
+             </form>
+
+        </div>
+        <div id="section">
+            <div id="header">
+                
+                <select id="category" name="category" >
+                    <option value="0">사원번호</option>
+                    <option value="1">사원명</option>
+                    <option value="2">급여</option>
+                    <option value="3">커미션</option>
+                </select>
+                <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력하세요">
+                <input type="button" value="검색">
+            </div>
+            <div id="content"></div>
+        </div>
+        <div id="aside2">
+            <form name="form2">
+                <input type="text" name="empno" placeholder="사원번호 입력..">
+                <input type="text" name="ename" placeholder="사원명 입력..">
+                <input type="text" name="sal"   placeholder="급여 입력..">
+                <input type="text" name="comm" placeholder="커미션..">
+                
+                <input type="button" name="bt_edit" value="사원수정">
+                <input type="button" name="bt_del" value="사원삭제">
+             </form>
+
+        </div>
+    </div>    
+
+</body>
+</html>
