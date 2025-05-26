@@ -4,3 +4,11 @@
 **/.classpath
 **/.project
 **/.metadata/
+
+# JavaScript 관련 무시 규칙
+node_modules/
+dist/
+build/
+.vscode/
+.env
+*.log
