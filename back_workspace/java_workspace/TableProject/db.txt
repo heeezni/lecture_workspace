@@ -17,3 +17,7 @@ create user 'java'(유저명)@'%'(접속정보)identified by '1234'(비밀번호
 grant all privileges on dev.(접속 db명)* to 'java'@'%' with grant option;
 - 갱신
 flush privileges;
+
+
+select * from member4 where member4_id(pk)
+PK를 가지고 있다가 **노출만 안하면 됨**
