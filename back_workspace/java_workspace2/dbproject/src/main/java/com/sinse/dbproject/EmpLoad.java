@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,6 +21,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import org.apache.commons.compress.harmony.pack200.MetadataBandGroup;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /*JTable은 껍데기에 불과하므로, 연동할 테이블이 수 백개라 할 지라도
  * TableModel은 1개면 충분하다. 바뀌는 건 쿼리문만*/
@@ -92,11 +101,17 @@ public class EmpLoad extends JFrame{
 				/*외부클래스.this ➡ 외부클래스의 인스턴스 접근
 				내부 클래스는 외부클래스의 인스턴스 접근시, 클래스명.this*/
 				if(result==JFileChooser.APPROVE_OPTION) { //파일열기를 수락했다면
-					loadExcel();
+					//유저가 선택한 파일 정보 얻기
+					File file=chooser.getSelectedFile();
+					loadExcel(file);
 				}
 			}
 		});
-		
+		/*KeyListener, WindowListener 등 재정의 할 메서드가 3개 이상 되는 인터페이스의 경우
+		 * 개발자 대신 이미 java api차원에서, 즉 우리 대신 리스너 인터페이스를 구현해 놓은 
+		 * 중간 객체들을 가리켜 어댑터라고 한다.
+		 * like 전자제품과 220v 사이의 완충 장치 역할
+		 * 우리 대신 메서드들을 재정의해놓았기 때문에 개발자는 구현의무가 없게 됨*/
 		//addWindowListener(new MyWindowAdapter());
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) { //익명내부클래스로 구현
@@ -202,8 +217,57 @@ public class EmpLoad extends JFrame{
 	}
 	
 	/*java 자체적인 api에는 엑셀을 연동하는 기능 X
-	 * Apache에서 배포하는 POI라는 패키지를 연동해보자*/ 
-	public void loadExcel() {
+	 * Apache에서 배포하는 POI라는 패키지를 연동해보자
+	 * 엑셀파일 (WorkBook) > 테이블이 있는 시트 (Worksheet) >  Row > Cell
+	 * */ 
+	public void loadExcel(File file) {
+		//Excel 97~2001 구 버전 xls : HSSFWorkBook
+		//이후 버전 xslx : XSSFWorkBook
+		try {
+			XSSFWorkbook workbook = new XSSFWorkbook(file);
+			
+			//시트에 접근하자
+			XSSFSheet sheet = workbook.getSheetAt(0); //첫번째 시트 얻기
+			
+			//Row의 레코드에 접근하자
+			XSSFRow row = sheet.getRow(0);
+			
+			//Cell에 접근하자
+			//Model의 컬럼제목 배열인 title 배열에 채워넣기
+			/*XSSFCell cell =row.getCell(0); //ID
+			System.out.println(cell.getStringCellValue());*/
+			model=new DataModel();
+			model.title=new String[row.getLastCellNum()];
+			for(int i=0; i<row.getLastCellNum(); i++) {
+				model.title[i]=row.getCell(i).getStringCellValue(); //ID
+			}
+			
+			model.data=new String[sheet.getLastRowNum()-1][model.title.length];
+			//2번째 행부터 데이터를 접근하여 Model의 data에 대입하자
+			//System.out.println(sheet.getFirstRowNum());
+			for(int i=sheet.getFirstRowNum()+1; i<=(sheet.getLastRowNum()); i++) { //컬럼명 제외하고, 마지막사람까지 나오게
+				//System.out.println(i); 0~19
+				XSSFRow r = sheet.getRow(i);
+				//하나의 row를 이루고 있는 cell만큼 반복
+				for(int a=0; a<r.getLastCellNum(); a++) {
+					XSSFCell cell = r.getCell(a);
+					System.out.print(cell.getStringCellValue()+"\t");
+					model.data[i][a]=cell.getStringCellValue();
+					/*
+					 * 엑셀 실제 행 번호 (1부터 시작)
+					 * 자바 배열 인덱스 (0부터 시작)
+					 * */
+					System.out.println(model.data);
+				}
+				System.out.println("");
+			}
+			
+			
+			
+		} catch (InvalidFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 	
