@@ -20,13 +20,13 @@ public class ListTest {
 	 * 			컬렉션의 대상은 오직 객체만을 대상으로 (JS 배열과 유사)
 	 * 컬렉션 프레임웍은 최상위 인터페이스들의 메서드를 주로 사용하기 때문에
 	 * 하위의 어떠한 구현 객체를 사용하더라도, 메서드 사용이 일관상이 있다.
-	 * 담을 때는 거의 add, 길이는 거의 size()
+	 * 담을 때는 거의 add(), 길이는 거의 size()
 	*/
 	//ArrayList, Vector 중요
 	
 	public static void main(String[] args) {
 		
-		List<String> list = new ArrayList(); // 고무줄 배열(JS와 동일)
+		List<String> list = new ArrayList<>(); // 고무줄 배열(JS와 동일)
 		//<>안에 자료형을 명시하면, 컴파일러가 다른 자료형을 거부한다
 		//즉, 컴파일 타임에 자료형 체크 **제너릭(Generic) 타입**
 
@@ -40,8 +40,8 @@ public class ListTest {
 			System.out.println(list.get(i));
 		}
 		//Java 5부터 개선된 for문 (improved for)
-		for(Object obj:list){ //list 크기만큼 반목문 돈다 - 데이터 다룰 때 쓴다(느림)
-			System.out.println(obj);
+		for(String fruit:list){ //list 크기만큼 반목문 돈다 - 데이터 다룰 때 쓴다(느림)
+			System.out.println(fruit);
 		}
 	}
 }
