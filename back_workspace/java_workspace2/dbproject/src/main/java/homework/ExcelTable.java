@@ -48,6 +48,16 @@ public class ExcelTable extends JFrame{
 		setSize(800,500);
 		setVisible(true);
 	}
+	
+	//데이터 접속
+	public void connect() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 	public static void main(String[] args) {
 		new ExcelTable();

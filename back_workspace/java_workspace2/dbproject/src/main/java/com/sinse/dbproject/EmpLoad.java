@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import org.apache.commons.compress.harmony.pack200.MetadataBandGroup;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -221,8 +220,8 @@ public class EmpLoad extends JFrame{
 	 * 엑셀파일 (WorkBook) > 테이블이 있는 시트 (Worksheet) >  Row > Cell
 	 * */ 
 	public void loadExcel(File file) {
-		//Excel 97~2001 구 버전 xls : HSSFWorkBook
-		//이후 버전 xslx : XSSFWorkBook
+		// Excel 97~2003 구 버전 (.xls) → HSSFWorkbook 사용
+		// Excel 2007 이상 (.xlsx) → XSSFWorkbook 사용
 		try {
 			XSSFWorkbook workbook = new XSSFWorkbook(file);
 			
@@ -242,7 +241,7 @@ public class EmpLoad extends JFrame{
 				model.title[i]=row.getCell(i).getStringCellValue(); //ID
 			}
 			
-			model.data=new String[sheet.getLastRowNum()-1][model.title.length];
+			model.data=new String[sheet.getLastRowNum()][model.title.length]; //☑
 			//2번째 행부터 데이터를 접근하여 Model의 data에 대입하자
 			//System.out.println(sheet.getFirstRowNum());
 			for(int i=sheet.getFirstRowNum()+1; i<=(sheet.getLastRowNum()); i++) { //컬럼명 제외하고, 마지막사람까지 나오게
@@ -252,22 +251,24 @@ public class EmpLoad extends JFrame{
 				for(int a=0; a<r.getLastCellNum(); a++) {
 					XSSFCell cell = r.getCell(a);
 					System.out.print(cell.getStringCellValue()+"\t");
-					model.data[i][a]=cell.getStringCellValue();
+					model.data[i-1][a]=cell.getStringCellValue(); //☑
 					/*
 					 * 엑셀 실제 행 번호 (1부터 시작)
 					 * 자바 배열 인덱스 (0부터 시작)
 					 * */
-					System.out.println(model.data);
 				}
 				System.out.println("");
 			}
+			System.out.println(model.data);
+			table.setModel(model);
+			table.updateUI();
 			
 			
-			
-		} catch (InvalidFormatException | IOException e) {
+		} catch (InvalidFormatException  e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		
 	}
 	
