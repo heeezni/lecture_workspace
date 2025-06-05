@@ -7,6 +7,7 @@ public class Admin {
 	private String id;
 	private String pwd;
 	private String name;
+	//sql: desc admin; 하면 1:1대응하는 컬럼들 볼 수 있음
 	
 	public int getAdmin_id() {
 		return admin_id;

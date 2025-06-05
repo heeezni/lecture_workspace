@@ -25,3 +25,8 @@ build/
 # === OS/기타 ===
 Thumbs.db
 .DS_Store
+back_workspace/java_workspace/.metadata/
+back_workspace/java_workspace2/.metadata/.lock
+back_workspace/java_workspace2/.metadata/.lock_info
+back_workspace/java_workspace2/.metadata/version.ini
+back_workspace/java_workspace2/.metadata/
