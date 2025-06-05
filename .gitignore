@@ -1,0 +1,27 @@
+# === Java 관련 ===
+**/*.class
+**/.classpath
+**/.project
+**/.settings/
+**/bin/
+**/target/
+
+# === 테스트 코드 ===
+**/src/test/
+
+# === IDE ===
+**/.metadata/         # 이클립스 워크스페이스 전체 설정
+**/.idea/             # IntelliJ 관련 (혹시 모를 대비)
+*.iml                 # IntelliJ 프로젝트 파일
+
+# === JavaScript/Node ===
+node_modules/
+dist/
+build/
+.vscode/
+.env
+*.log
+
+# === OS/기타 ===
+Thumbs.db
+.DS_Store
