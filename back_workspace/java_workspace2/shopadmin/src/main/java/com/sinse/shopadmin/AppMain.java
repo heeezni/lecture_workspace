@@ -42,7 +42,7 @@ public class AppMain extends JFrame{
 	
 	public Connection con;
 	
-	public Admin admin;
+	public Admin admin=new Admin(); //추후 제거
 	
 	//모든 페이지를 담게될 배열
 	Page[]pages;
