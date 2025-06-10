@@ -155,17 +155,7 @@ public class ProductPage extends Page{
 					//e.getSource(); //이벤트를 일으킨 컴포넌트(즉 콤보박스)
 					TopCategory topCategory=(TopCategory)cb_topcategory.getSelectedItem();
 					
-					//하위 카테고리 목록 가져오기
-					List<SubCategory> subList=subCategoryDAO.selectByTop(topCategory);
-					
-					//모든 하위 카테고리 콤보 아이템 지우기
-					cb_subcategory.removeAllItems();
-					
-					//서브 카테고리 수만큼 반복하면서 두번째 콤보박스에 SubCategory 모델 채워넣기
-					for(int i=0; i<subList.size(); i++) {
-						SubCategory subcategory=subList.get(i); //i번째 요소 꺼내기
-						cb_subcategory.addItem(subcategory);
-					}
+					getSubCategory(topCategory);
 				}
 			}
 		});
@@ -190,6 +180,27 @@ public class ProductPage extends Page{
 			cb_topcategory.addItem(topcategory);
 		}
 	}
+	
+	public void getSubCategory(TopCategory topCategory) {
+		//하위 카테고리 목록 가져오기
+		List<SubCategory> subList=subCategoryDAO.selectByTop(topCategory);
+		
+		//모든 하위 카테고리 콤보 아이템 지우기
+		cb_subcategory.removeAllItems();
+		
+		SubCategory dummy=new SubCategory();
+		dummy.setSub_name("하위 카테고리를 선택하세요");
+		dummy.setSubcategory_id(0); //1보다 작으면 됨 (pk는 1부터 시작이니까) - DB조회 안됨
+		cb_subcategory.addItem(dummy);
+		
+		//서브 카테고리 수만큼 반복하면서 두번째 콤보박스에 SubCategory 모델 채워넣기
+		for(int i=0; i<subList.size(); i++) {
+			SubCategory subcategory=subList.get(i); //i번째 요소 꺼내기
+			cb_subcategory.addItem(subcategory);
+		}
+	}
+	
+	
  }
 
 
