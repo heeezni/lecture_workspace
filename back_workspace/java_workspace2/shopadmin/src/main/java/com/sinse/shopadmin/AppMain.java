@@ -9,8 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.sinse.shopadmin.common.config.Config;
+import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.common.view.Page;
 import com.sinse.shopadmin.config.view.ConfigPage;
 import com.sinse.shopadmin.cs.view.CustomerPage;
@@ -40,7 +39,8 @@ public class AppMain extends JFrame{
 	JLabel la_cs;
 	JLabel la_config;//설정
 	
-	public Connection con;
+	DBManager dbManager=DBManager.getInstance();
+	Connection con;
 	
 	public Admin admin=new Admin(); //추후 제거
 	
@@ -59,7 +59,7 @@ public class AppMain extends JFrame{
 		la_order=new JLabel("주문관리");
 		la_member=new JLabel("회원관리");
 		la_cs=new JLabel("고객센터");
-		la_config=new JLabel("환경설정");
+		la_config=new JLabel("쇼핑몰 관리");
 		
 		//스타일
 		p_banner.setPreferredSize(new Dimension(Config.UTIL_WIDTH, Config.UTIL_HEIGHT));
@@ -138,12 +138,7 @@ public class AppMain extends JFrame{
 			public void windowClosing(WindowEvent e) {
 				
 				//데이터베이스 접속 끊기
-				if(con!=null)
-					try {
-						con.close();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+				dbManager.release(con);
 				
 				//프로세스 종료
 				System.exit(0);
@@ -159,21 +154,7 @@ public class AppMain extends JFrame{
 	
 	//DB연결
 	public void connect() {
-
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			con=DriverManager.getConnection(Config.url, Config.id, Config.pwd);
-			if(con!=null) {
-				this.setTitle("MySQL 접속성공");
-			}else {
-				this.setTitle("MySQL 접속실패");
-			}
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		con=dbManager.getConnection();
 	}
 	
 

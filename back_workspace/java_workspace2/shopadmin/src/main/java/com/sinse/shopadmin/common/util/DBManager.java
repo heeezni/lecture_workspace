@@ -44,15 +44,23 @@ public class DBManager {
 	}
 
 	// DB관련된 자원을 해제하는 메서드
-	public void release(PreparedStatement pstmt) { // DML(insert, update, delete) 수행 시
+	public void release(Connection con) { //connection 해제
 			try {
-				if (pstmt != null) pstmt.close();
+				if (con != null) con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 	}
+	public void release(PreparedStatement pstmt) { // DML(insert, update, delete) 수행 시
+		try {
+			if (pstmt != null) pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-	public void release(PreparedStatement pstmt, ResultSet rs) { // select 수행시
+	// SELECT 수행 후 ResultSet + PreparedStatement 해제
+	public void release(ResultSet rs, PreparedStatement pstmt) { // select 수행시
 			try {
 				if (rs != null) rs.close();
 				if (pstmt != null) pstmt.close();
@@ -61,7 +69,8 @@ public class DBManager {
 			}
 	}
 
-	public void release(PreparedStatement pstmt, ResultSet rs, Connection con) { // select 수행시
+	// 모든 자원 해제 (Connection까지 닫을 경우)
+	public void release(ResultSet rs, PreparedStatement pstmt,  Connection con) { // select 수행시
 			try {
 				if (rs != null) rs.close();
 				if (pstmt != null) pstmt.close();

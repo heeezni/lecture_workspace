@@ -3,6 +3,7 @@ package com.sinse.shopadmin.member.view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 
 import com.sinse.shopadmin.AppMain;
 import com.sinse.shopadmin.common.config.Config;
+import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.common.util.StringUtil;
 import com.sinse.shopadmin.common.view.Page;
 
@@ -32,6 +34,7 @@ public class MemberJoin extends Page {
 	
 	JButton bt_login;
 	JButton bt_join;
+	DBManager dbManager=DBManager.getInstance();
 	
 	public MemberJoin(AppMain appmain) {
 		super(appmain);
@@ -106,9 +109,10 @@ public class MemberJoin extends Page {
 			StringBuffer sql=new StringBuffer();
 			sql.append("insert into admin(id, pwd, name, email)"); 
 			sql.append(" values(?,?,?,?)");
+			Connection con=dbManager.getConnection();
 			PreparedStatement pstmt=null;
 			try {
-				pstmt=appmain.con.prepareStatement(sql.toString());
+				pstmt=con.prepareStatement(sql.toString());
 				pstmt.setString(1, t_id.getText()); //사용자가 입력한 아이디 값
 				pstmt.setString(2, StringUtil.getSecuredPass(new String(t_pwd.getPassword())));
 				pstmt.setString(3, t_name.getText());

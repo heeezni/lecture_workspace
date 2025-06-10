@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import com.sinse.shopadmin.AppMain;
 import com.sinse.shopadmin.common.config.Config;
+import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.common.util.StringUtil;
 import com.sinse.shopadmin.common.view.Page;
 import com.sinse.shopadmin.security.model.Admin;
@@ -30,6 +31,8 @@ public class LoginForm extends Page{
 	JPasswordField t_pwd;
 	JButton bt_login;
 	JButton bt_join;
+	
+	DBManager dbManager=DBManager.getInstance();
 
 	
 	public LoginForm(AppMain appmain) {
@@ -84,11 +87,12 @@ public class LoginForm extends Page{
 		String pwd=new String(t_pwd.getPassword()); //String 명시적 생성법도 쓴다!
 
 		String sql="select * from admin where id=? and pwd=?"; //✅ ?=바인드 변수
+		Connection con=dbManager.getConnection();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 
 		try {
-			pstmt=appmain.con.prepareStatement(sql); //★ AppMain의 Connection객체를 쓰자!
+			pstmt=con.prepareStatement(sql); //★ AppMain의 Connection객체를 쓰자!
 			//쿼리문을 수행하기 위해, 바인드 변수 먼저 지정하기!
 			pstmt.setString(1, id);
 			pstmt.setString(2, StringUtil.getSecuredPass(pwd));

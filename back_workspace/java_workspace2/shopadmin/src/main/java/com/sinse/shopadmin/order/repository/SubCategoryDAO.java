@@ -46,7 +46,7 @@ public class SubCategoryDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			dbManager.release(pstmt,rs);
+			dbManager.release(rs,pstmt);
 		}
 		return list;
 	}
