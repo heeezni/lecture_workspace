@@ -18,7 +18,7 @@ public class UploadDialog extends JDialog { // 새 창 = JDialog
 		dialog.setSize(700, 600);
 		dialog.setLayout(new FlowLayout());
 
-		// 커스텀된 바를 임시로 6개 화면에 부착해보자
+		// 커스텀된 바를 파일수 만큼 화면에 부착해보자
 		for (int i = 0; i < productPage.files.length; i++) {
 			// 어디에 저장할 지 디렉토리 결정! (지금은 로컬 dir) "C://public"
 			File dest = FileUtil.createFile(Config.PRODUCT_IMAGE_PATH, FileUtil.getExt(productPage.files[i].getName()));
@@ -33,4 +33,4 @@ public class UploadDialog extends JDialog { // 새 창 = JDialog
 		dialog.setVisible(true);
 	}
 
-}
+}	

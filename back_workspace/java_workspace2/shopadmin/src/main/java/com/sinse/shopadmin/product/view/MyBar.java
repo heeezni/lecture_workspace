@@ -90,7 +90,7 @@ public class MyBar extends JProgressBar implements Runnable {
 				fos.write(buff, 0, read); // 뭘, 어디서부터, 어디까지 (buff.length 쓰지 않기. 꼭 1024개 채우지 못할 수도 있음)
 				
 				try {
-					Thread.sleep(1);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
