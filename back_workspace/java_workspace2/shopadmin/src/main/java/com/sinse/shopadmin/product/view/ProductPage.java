@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -73,6 +74,8 @@ public class ProductPage extends Page {
 
 	JFileChooser chooser;
 	Image[] imgArray; // 유저가 선택한 파일로부터 생성된 이미지 배열
+	File[] files; // 유저가 선택한 파일정보를 담은 파일 배열 (파일복사, 업로드 위해 필요)
+					// + FileInputStream, FileOutputStream의 대상 = File
 
 	public ProductPage(AppMain appmain) {
 		super(appmain);
@@ -106,10 +109,10 @@ public class ProductPage extends Page {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g); // 배경 유지하려면 남겨놔야함
 				// 유저가 선택한 파일 수만큼 반복하면서 이미지 그리기
-				if(imgArray!=null) { //배열이 존재할 때만 그리게
-					for (int i = 0; i <imgArray.length; i++) {
-						g.drawImage(imgArray[i], 5+(65*i), 5,60,60, this);
-					}					
+				if (imgArray != null) { // 배열이 존재할 때만 그리게
+					for (int i = 0; i < imgArray.length; i++) {
+						g.drawImage(imgArray[i], 5 + (65 * i), 5, 60, 60, this);
+					}
 				}
 			}
 		};
@@ -207,25 +210,38 @@ public class ProductPage extends Page {
 
 		// 파일 탐색기 띄우기
 		bt_open.addActionListener(e -> {
-			chooser.showOpenDialog(ProductPage.this);
+			int result = chooser.showOpenDialog(ProductPage.this);
+			if (result == JFileChooser.APPROVE_OPTION)
+				preview();
+		});
 
-			// 유저가 선택한 파일에 대한 정보 얻기
-			File[] files = chooser.getSelectedFiles();
-			imgArray=new Image[files.length]; //유저가 선택한 파일의 수에 맞게 이미지 배열 준비
-			// 파일은 파일일 뿐 이미지가 아니므로, 파일을 이용하여 이미지를 만들자!
+		// 등록버튼과 리스너 연결
+		bt_regist.addActionListener(e -> {
+			regist();
+		});
+	}
+
+	public void preview() {
+		// 유저가 선택한 파일에 대한 정보 얻기
+		files = chooser.getSelectedFiles();
+
+		if (files.length > 6) {
+			JOptionPane.showMessageDialog(this, "이미지는 최대 6개까지 가능합니다.");
+		} else {
+			imgArray = new Image[files.length]; // 유저가 선택한 파일의 수에 맞게 이미지 배열 준비
 
 			try {
+				// 파일은 파일일 뿐 이미지가 아니므로, 파일을 이용하여 이미지를 만들자!
 				for (int i = 0; i < files.length; i++) {
 					BufferedImage bffrImg = ImageIO.read(files[i]);
-					imgArray[i]=bffrImg.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+					imgArray[i] = bffrImg.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			//그림 다시 그리기
+			// 그림 다시 그리기
 			p_preview.repaint();
-		});
-
+		}
 	}
 
 	// DAO를 통해 얻어온 List를 이용하여 콤보박스 채우기
@@ -271,4 +287,47 @@ public class ProductPage extends Page {
 		t_size.setListData(new Vector(sizeDAO.selectAll()));
 	}
 
+	public void upload() {
+		// 시각적 효과를 위해 각 이미지의 업로드 진행률을 보여줄 것 (새 창으로)
+		UploadDialog dialog = new UploadDialog(this);
+		// System.out.println("여기 실행"); 모달창이 닫혀야 여기가 실행됨 
+	}
+	
+	//MySQL에 상품등록관련 쿼리 수행
+	public void insert() {
+		
+	}
+
+	// 이미지 업로드 + DB insert
+	public void regist() {
+		// 양식을 제대로 작성했는지 유효성 check
+
+		// 상위카테고리 유효성 체크
+		if (cb_topcategory.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "상위 카테고리를 선택하세요.");
+		} else if (cb_subcategory.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "하위 카테고리를 선택하세요.");
+		} else if (t_product_name.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "상품명을 입력하세요.");
+		} else if (t_brand.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "브랜드를 입력하세요.");
+		} else if (t_price.getText().length() < 1) { // 텍스트 입력 + 숫자냐 문자냐 따지기 (직접 예외처리)
+			JOptionPane.showMessageDialog(this, "가격을 입력하세요.");
+		} else if (t_discount.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "할인가를 입력하세요.");
+		} else if (t_color.getMinSelectionIndex() < 0) { // 안골랐을 때
+			JOptionPane.showMessageDialog(this, "한 개 이상의 색상을 선택하세요.");
+		} else if (t_size.getMinSelectionIndex() < 0) {
+			JOptionPane.showMessageDialog(this, "한 개 이상의 사이즈를 선택하세요.");
+		} else if (files.length < 1) {
+			JOptionPane.showMessageDialog(this, "상품이미지를 선택하세요.");
+		} else if (t_introduce.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "상품 소개를 입력하세요.");
+		} else if (t_detail.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "상세내용을 입력하세요.");
+		} else {
+			upload();
+			insert(); //MySQL에 insert
+		}
+	}
 }

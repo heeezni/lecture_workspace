@@ -29,5 +29,7 @@ public class Config {
 		public static final String url="jdbc:mysql://localhost:3306/shop";
 		public static final String id="shop";
 		public static final String pwd="1234";
+		
+		public static final String PRODUCT_IMAGE_PATH="C://public";
 
 }
