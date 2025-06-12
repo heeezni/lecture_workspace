@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,6 +27,9 @@ public class GUIServer extends JFrame implements Runnable {
 
 	Thread thread; // 서버가동시, 메인스레드가 accept()에서 대기상태에 빠지지 않게 하기 위해
 	ServerSocket server;
+
+	// 사용자가 접속할 때마다, 몇 명이 현재 서버를 사용 중인지, 그 기록을 처리할 객체
+	Vector<ServerThread> vec = new Vector<>();
 
 	public GUIServer() {
 		p_north = new JPanel();
@@ -69,27 +69,30 @@ public class GUIServer extends JFrame implements Runnable {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 
-	@Override
-	public void run() {
-		startServer();
-	}
-
 	public void startServer() {
 		try {
 			server = new ServerSocket(Integer.parseInt(t_port.getText()));
-			
-			while(true) {
+
+			while (true) {
 				area.append("서버 생성 및 접속자 청취 중....\n");
 				Socket socket = server.accept(); // 여기서 대기 상태에 빠지므로, 우리는 스레드로 처리했음
 				area.append(socket.getInetAddress().getHostAddress() + " 님 접속 \n");
-				
-				//접속자 1명당 대화용 스레드인 ServerThread인스턴스를 만들면서 Socket넘기기
-				ServerThread st=new ServerThread(this, socket);
+
+				// 접속자 1명당 대화용 스레드인 ServerThread인스턴스를 만들면서 Socket넘기기
+				ServerThread st = new ServerThread(this, socket);
+				st.start();
+				vec.add(st); // 접속자 추가
+				area.append("현재 접속자 " + vec.size() + "명\n");
 			}
 
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void run() {
+		startServer();
 	}
 
 	public static void main(String[] args) {
