@@ -27,8 +27,8 @@ public class MyBar extends JProgressBar implements Runnable {
 		this.origin = origin;
 		this.dest = dest;
 
-		System.out.println("새롭게 생성될 파일의 디렉토리는" + dest.getParent());
-		System.out.println("새롭게 생성될 파일명은" + dest.getName());
+		//System.out.println("새롭게 생성될 파일의 디렉토리는" + dest.getParent());
+		//System.out.println("새롭게 생성될 파일명은" + dest.getName());
 		try {
 			fis = new FileInputStream(origin); // 원본파일 대상으로 입력스트림 생성
 			fos = new FileOutputStream(dest); // 파일이 복사될 대상에 대한 출력스트림 생성
@@ -37,7 +37,7 @@ public class MyBar extends JProgressBar implements Runnable {
 		}
 
 		setPreferredSize(new Dimension(680, 50));
-		setBorder(new TitledBorder("어쩌구.jpg -> 1234.jpg"));
+		setBorder(new TitledBorder(origin.getName()+"→"+dest.getName()));
 		// 진행바 중앙에 텍스트 띄우기
 		setStringPainted(true);
 		setFont(new Font("Verdana", Font.BOLD, 17));
@@ -90,7 +90,7 @@ public class MyBar extends JProgressBar implements Runnable {
 				fos.write(buff, 0, read); // 뭘, 어디서부터, 어디까지 (buff.length 쓰지 않기. 꼭 1024개 채우지 못할 수도 있음)
 				
 				try {
-					Thread.sleep(50);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
