@@ -6,10 +6,10 @@ public class Config {
  * 페이지 정의
  *-----------------------------------------------------------*/
 	public static final int MAIN_PAGE=0; //페이지
-	public static final int PRODUCT_PAGE=1; //상품페이지
-	public static final int CUSTOMER_PAGE=2; //cs
-	public static final int LOGIN_PAGE=3;
-	public static final int JOIN_PAGE=4;
+	public static final int JOIN_PAGE=1;
+	public static final int PRODUCT_PAGE=2; //상품페이지
+	public static final int CUSTOMER_PAGE=3; //cs
+	public static final int LOGIN_PAGE=4;
 	public static final int CART_PAGE=5; 
 	public static final int WISHLIST_PAGE=6;
 	
@@ -28,4 +28,12 @@ public class Config {
  *-----------------------------------------------------------*/
 	public static final int MAIN_VISUAL_WIDTH=SHOPMAIN_WIDTH;
 	public static final int MAIN_VISUAL_HEIGHT=400;
+	
+	/*------------------------------------------------------------
+	 * DB
+	 *-----------------------------------------------------------*/
+		public static final String url="jdbc:mysql://localhost:3306/shop";
+		public static final String id="shop";
+		public static final String pwd="1234";
+	
 }
