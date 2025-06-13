@@ -8,6 +8,8 @@ import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,6 +26,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.sinse.shopadmin.AppMain;
+import com.sinse.shopadmin.common.exception.ProductColorException;
+import com.sinse.shopadmin.common.exception.ProductException;
+import com.sinse.shopadmin.common.exception.ProductImgException;
+import com.sinse.shopadmin.common.exception.ProductSizeException;
+import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.common.view.Page;
 import com.sinse.shopadmin.order.repository.SubCategoryDAO;
 import com.sinse.shopadmin.order.repository.TopCategoryDAO;
@@ -73,6 +80,8 @@ public class ProductPage extends Page {
 	JButton bt_regist; // 상품 등록
 	JButton bt_list; // 상품 리스트
 
+	DBManager dbManager = DBManager.getInstance();
+
 	TopCategoryDAO topCategoryDAO;
 	SubCategoryDAO subCategoryDAO;
 	ColorDAO colorDAO;
@@ -86,8 +95,8 @@ public class ProductPage extends Page {
 	Image[] imgArray; // 유저가 선택한 파일로부터 생성된 이미지 배열
 	File[] files; // 유저가 선택한 파일정보를 담은 파일 배열 (파일복사, 업로드 위해 필요)
 					// + FileInputStream, FileOutputStream의 대상 = File
-	
-	File[] newFiles; //UploadDialog에 의해 새롭게 생성된, 즉 업로드 된 파일에 대한 정보
+
+	File[] newFiles; // UploadDialog에 의해 새롭게 생성된, 즉 업로드 된 파일에 대한 정보
 
 	public ProductPage(AppMain appmain) {
 		super(appmain);
@@ -141,7 +150,6 @@ public class ProductPage extends Page {
 		productColorDAO = new ProductColorDAO();
 		productSizeDAO = new ProductSizeDAO();
 		productImgDAO = new ProductImgDAO();
-		
 
 		chooser = new JFileChooser("C:/lecture_workspace/front_workspace/images");
 		chooser.setMultiSelectionEnabled(true); // 파일 다중선택 가능하도록 설정
@@ -312,52 +320,71 @@ public class ProductPage extends Page {
 
 	// MySQL에 상품등록관련 쿼리 수행
 	public void insert() {
-		
-		//Product 모델 인스턴스 1개를 만들어 안에 상품등록 데이터 채워넣기!
-		Product product=new Product();
-		product.setSubcategory((SubCategory)cb_subcategory.getSelectedItem()); //fk값 (toString 오버라이드해서)
-		product.setProduct_name(t_product_name.getText());
-		product.setBrand(t_brand.getText());
-		product.setPrice(Integer.parseInt(t_price.getText()));
-		product.setDiscount(Integer.parseInt(t_discount.getText()));
-		product.setIntroduce(t_introduce.getText());
-		product.setDetail(t_detail.getText());
-		
-		
-		// ProductDAO에게 일시키기
-		int result= productDAO.insert(product);
-		
-		int product_id=productDAO.selectRecentPk();
-		product.setProduct_id(product_id); // ★★★★구해온 최신 pk를 product에 반영 ★★★★
-		
-		//상품에 딸려있는 색상 등록하기
-		List<Color> colorList=t_color.getSelectedValuesList();
-		
-		for(Color color : colorList) {
-			ProductColor productColor=new ProductColor(); //empty 상태
-			productColor.setProduct(product); // 어떤 상품에
-			productColor.setColor(color); // 어떤 색상을
-			productColorDAO.insert(productColor);
-		}
-		
-		// 상품의 사이즈 등록하기
-		List<Size> sizeList=t_size.getSelectedValuesList();
-		
-		for(Size size : sizeList) {
-			ProductSize productSize=new ProductSize(); //empty 상태
-			productSize.setProduct(product); // 어떤 상품에
-			productSize.setSize(size); // 어떤 사이즈를
-			productSizeDAO.insert(productSize);			
-		}
-		
-		// 상품의 이미지 등록하기
-		for(int i=0; i<newFiles.length; i++) {
-			File file=newFiles[i]; //업로드된 파일 객체를 꺼내보자
-			ProductImg productImg = new ProductImg();
-			productImg.setProduct(product);
-			productImg.setFilename(file.getName());
-			productImg.setProduct_img_id(productImg.getProduct().getProduct_id());
-			productImgDAO.insert(productImg);
+		// 트랜잭션이 적용되려면, 4개의 DAO모두 같은 Connection이어야 한다.
+		Connection con = dbManager.getConnection();
+		try {
+			con.setAutoCommit(false); // start transaction명령 포함되어 있으므로 별도로 명시 불필요
+			// 이 영역은 트랜잭션을 이루고 있는 업무들의 시도 영역.
+			// 만일 이 영역에서 에러가 발생하면 실행부가 catch문으로 진입하기 때문에 해당 catch문에서 트랜잭션을 rollback
+			// 아니면 commit
+
+			// Product 모델 인스턴스 1개를 만들어 안에 상품등록 데이터 채워넣기!
+			Product product = new Product();
+			product.setSubcategory((SubCategory) cb_subcategory.getSelectedItem()); // fk값 (toString 오버라이드해서)
+			product.setProduct_name(t_product_name.getText());
+			product.setBrand(t_brand.getText());
+			product.setPrice(Integer.parseInt(t_price.getText()));
+			product.setDiscount(Integer.parseInt(t_discount.getText()));
+			product.setIntroduce(t_introduce.getText());
+			product.setDetail(t_detail.getText());
+
+			// ProductDAO에게 일시키기
+			productDAO.insert(product);
+
+			int product_id = productDAO.selectRecentPk();
+			product.setProduct_id(product_id); // ★★★★구해온 최신 pk를 product에 반영 ★★★★
+
+			// 상품에 딸려있는 색상 등록하기
+			List<Color> colorList = t_color.getSelectedValuesList();
+
+			for (Color color : colorList) {
+				ProductColor productColor = new ProductColor(); // empty 상태
+				productColor.setProduct(product); // 어떤 상품에
+				productColor.setColor(color); // 어떤 색상을
+				productColorDAO.insert(productColor);
+			}
+
+			// 상품의 사이즈 등록하기
+			List<Size> sizeList = t_size.getSelectedValuesList();
+
+			for (Size size : sizeList) {
+				ProductSize productSize = new ProductSize(); // empty 상태
+				productSize.setProduct(product); // 어떤 상품에
+				productSize.setSize(size); // 어떤 사이즈를
+				productSizeDAO.insert(productSize);
+			}
+
+			// 상품의 이미지 등록하기
+			for (int i = 0; i < newFiles.length; i++) {
+				File file = newFiles[i]; // 업로드된 파일 객체를 꺼내보자
+				ProductImg productImg = new ProductImg();
+				productImg.setProduct(product);
+				productImg.setFilename(file.getName());
+				productImg.setProduct_img_id(productImg.getProduct().getProduct_id());
+				productImgDAO.insert(productImg);
+			}
+			con.commit(); //에러가 없으니 확정짓자
+		} catch (ProductException|ProductColorException|ProductSizeException|ProductImgException e) { //상품 예외 | 상품 색상 예외 | 상품 사이즈 예외 | 이미지 등록 예외 
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace(); //개발자를 위한 에러 로그
+			//유저를 위해 에러 원인을 알려주자 (여기는 View이니까)
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.sinse.shopadmin.common.exception.ProductImgException;
 import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.product.model.ProductImg;
 
@@ -11,11 +12,10 @@ import com.sinse.shopadmin.product.model.ProductImg;
 public class ProductImgDAO {
 	DBManager dbManager = DBManager.getInstance();
 	
-	public int insert(ProductImg productImg) {
+	public void insert(ProductImg productImg) throws ProductImgException {
 		
 		Connection con=null;
 		PreparedStatement pstmt = null;
-		int result=0;
 		con=dbManager.getConnection();
 		StringBuffer sql=new StringBuffer();
 		sql.append("insert into product_img(filename, product_id) values(?,?)");
@@ -24,10 +24,13 @@ public class ProductImgDAO {
 			pstmt=con.prepareStatement(sql.toString());
 			pstmt.setString(1, productImg.getFilename());
 			pstmt.setInt(2, productImg.getProduct().getProduct_id());
-			result=pstmt.executeUpdate();
+			int result=pstmt.executeUpdate();
+			if(result<0) {
+				throw new ProductImgException("상품이미지가 등록되지 않았습니다.");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new ProductImgException("상품이미지가 등록되지 않았습니다.",e);
 		}
-		return result;
 	}
 }
