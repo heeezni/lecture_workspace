@@ -26,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.sinse.shopadmin.AppMain;
+import com.sinse.shopadmin.common.config.Config;
 import com.sinse.shopadmin.common.exception.ProductColorException;
 import com.sinse.shopadmin.common.exception.ProductException;
 import com.sinse.shopadmin.common.exception.ProductImgException;
@@ -151,7 +152,7 @@ public class ProductPage extends Page {
 		productSizeDAO = new ProductSizeDAO();
 		productImgDAO = new ProductImgDAO();
 
-		chooser = new JFileChooser("C:/lecture_workspace/front_workspace/images");
+		chooser = new JFileChooser("C://Users/a/OneDrive/문서/lecture_workspace/front_workspace/images");
 		chooser.setMultiSelectionEnabled(true); // 파일 다중선택 가능하도록 설정
 
 		// 스타일
@@ -244,6 +245,11 @@ public class ProductPage extends Page {
 		bt_regist.addActionListener(e -> {
 			regist();
 		});
+		
+		bt_list.addActionListener(e->{
+			appmain.showPage(Config.PRODUCT_LIST_PAGE);
+		});
+		
 	}
 
 	public void preview() {
@@ -385,6 +391,12 @@ public class ProductPage extends Page {
 			JOptionPane.showMessageDialog(this, e.getMessage());
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				con.setAutoCommit(true); //다시 되돌려 놓기
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

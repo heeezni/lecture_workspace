@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sinse.shopadmin.common.exception.ProductException;
 import com.sinse.shopadmin.common.util.DBManager;
 import com.sinse.shopadmin.product.model.Product;
+import com.sinse.shopadmin.product.model.SubCategory;
+import com.sinse.shopadmin.product.model.TopCategory;
 
 //Product 테이블에 대한 CRUD만을 수행 - DB작업코드만 작성해야함
 public class ProductDAO {
@@ -46,19 +50,20 @@ public class ProductDAO {
 
 			// 쿼리수행
 			result = pstmt.executeUpdate(); // DML실행
-			
-			if(result<1){
+
+			if (result < 1) {
 				throw new ProductException("등록이 되지 않았어요.");
 			}
 
 		} catch (SQLException e) {
-			/*e.printStackTrace() 처리만 해버리면, 바깥쪽(=유저)이 사용하는 프로그램에서는
-			에러의 원인을 알 수 없으므로, 신뢰성 떨어짐.
-			따라서 에러가 발생하면, 이 영역에서만 처리를 국한 시키지 말고 외부 영역까지 에러 원인을 전달해야함*/
+			/*
+			 * e.printStackTrace() 처리만 해버리면, 바깥쪽(=유저)이 사용하는 프로그램에서는 에러의 원인을 알 수 없으므로, 신뢰성
+			 * 떨어짐. 따라서 에러가 발생하면, 이 영역에서만 처리를 국한 시키지 말고 외부 영역까지 에러 원인을 전달해야함
+			 */
 			e.printStackTrace();
-			//내가 만든 에러 일부러 발생시키기
-			throw new ProductException("등록에 실패하였습니다. \n 이용에 불편을 드려 죄송합니다.",e);
-			
+			// 내가 만든 에러 일부러 발생시키기
+			throw new ProductException("등록에 실패하였습니다. \n 이용에 불편을 드려 죄송합니다.", e);
+
 		} finally {
 			dbManger.release(pstmt);
 		}
@@ -93,6 +98,64 @@ public class ProductDAO {
 		}
 
 		return pk;
+	}
+
+	// 모든 상품 목록 가져오기 (상품 + 상위 카테고리 + 하위 카테고리 -> JOIN하자)
+	public List selectAll() {
+		Connection con = dbManger.getConnection();
+		PreparedStatement pstmt=null;
+		ResultSet rs=null; // rs를 더이상 전방향 후방향 옮기지 않는 이유 = list덕분
+		List<Product> list = new ArrayList<>(); // 만일 배열을 쓸 경우 rs는 전/후방향 스크롤 까지 가능해야함
+										// 배열은 생성 시 크기를 먼저 지정해야 하므로
+
+		StringBuffer sql = new StringBuffer();
+		/*
+		 * (, & where)
+		 * sql.append("select * from topcategory t, subcategory s, product p");
+		 * sql.append(" where t.topcategory_id=s.topcategory_id and");
+		 * sql.append(" s.subcategory_id=p.subcategory_id");
+		 */
+		// inner join & on
+		sql.append("select t.topcategory_id, top_name, s.subcategory_id, sub_name");
+		sql.append(",product_id, product_name, brand, price, discount, introduce, detail"); //color, size, img는 상세보기에서 보여주기
+		sql.append(" from topcategory t inner join subcategory s inner join product p");
+		sql.append(" on t.topcategory_id=s.topcategory_id and");
+		sql.append(" s.subcategory_id=p.subcategory_id");
+		try {
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery(); // 쿼리 수행 및 표 반환
+			while (rs.next()) {
+				Product product = new Product();
+				product.setProduct_id(rs.getInt("product_id"));
+				product.setProduct_name(rs.getString("product_name"));
+				product.setBrand(rs.getString("brand"));
+				product.setPrice(rs.getInt("price"));
+				product.setDiscount(rs.getInt("discount"));
+				product.setIntroduce(rs.getString("introduce"));
+				product.setDetail(rs.getString("detail"));
+
+				// 하위 카테고리
+				SubCategory subcategory=new SubCategory();
+				subcategory.setSubcategory_id(rs.getInt("s.subcategory_id"));
+				subcategory.setSub_name(rs.getString("sub_name"));
+				product.setSubcategory(subcategory); //product 채우기
+
+				// 상위카테고리
+				TopCategory topcategory=new TopCategory();
+				topcategory.setTopcategory_id(rs.getInt("t.topcategory_id"));
+				topcategory.setTop_name(rs.getString("top_name"));
+				subcategory.setTopCategory(topcategory); //서브가 탑을 참조해야 하므로 서브에 탑 넣어주기
+				
+				list.add(product);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dbManger.release(rs, pstmt);
+		}
+
+		return list;
 	}
 
 }
