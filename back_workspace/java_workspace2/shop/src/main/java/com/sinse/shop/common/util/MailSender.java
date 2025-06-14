@@ -22,7 +22,7 @@ import jakarta.mail.internet.MimeMessage;
 // 이메일 보내주는 객체
 public class MailSender {
 	String acount_user = "lucyhj80@gmail.com"; // 구글의 이메일 계정
-	String app_pwd = "jynn vzvv njlf dzzk"; // 내가 받은 앱 비밀번호
+	String app_pwd = "google 앱 비밀번호"; // 내가 받은 앱 비밀번호
 	Session session;
 	
 
