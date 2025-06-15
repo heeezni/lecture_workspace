@@ -44,7 +44,7 @@ public class ProductModel extends AbstractTableModel { // 표형태로 보여주
 					case 0 : value=Integer.toString(product.getSubcategory().getTopCategory().getTopcategory_id()); break;
 					case 1 : value=product.getSubcategory().getTopCategory().getTop_name();break;
 					case 2 : value=Integer.toString(product.getSubcategory().getSubcategory_id()); break;
-					case 3 : value=product.getSubcategory().getSub_name();
+					case 3 : value=product.getSubcategory().getSub_name(); break;
 					case 4 : value=Integer.toString(product.getProduct_id()); break;
 					case 5 : value=product.getProduct_name(); break;
 					case 6 : value=Integer.toString(product.getPrice()); break;
