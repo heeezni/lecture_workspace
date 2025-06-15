@@ -8,13 +8,13 @@ import java.sql.SQLException;
 
 import com.sinse.shop.common.config.Config;
 
-/*AppMain에서 DB를 핸들링하지 말고, 보다 중립적인 객체에서 Connection을 얻는 것 뿐 아니라,
-닫는 것 마저도 **대행**해주는 기능을 보유한 객체 선언*/
+/*Connection을 얻는 것 뿐 아니라,
+닫는 것 마저도 **대행**해주는 기능을 보유한 중립적 객체 선언*/
 public class DBManager {
 	private static DBManager instance; 
 	private Connection con;
 
-	//아무도 직접 인스턴스를 생성하지 못하게 생성자의 접근제한을 막아버린다
+	//아무도 직접 인스턴스를 생성하지 못하게 생성자의 접근제한을 막아버린다 (Singleton)
 	private DBManager() { 
 		try {
 			// 1.드라이버 로드
@@ -31,7 +31,7 @@ public class DBManager {
 	}
 	
 	public static DBManager getInstance() {
-		//만일 인스턴스가 존재하지 않으면, 이 메서드에서 인스턴스 생성해줌
+		// 만일 인스턴스가 존재하지 않으면, 이 메서드에서 인스턴스 생성해줌
 		if(instance==null) {
 			instance=new DBManager();
 		}
