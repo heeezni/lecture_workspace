@@ -1,7 +1,8 @@
 # === Java 컴파일 산출물 ===
 *.class
 /bin/
-/target/
+# 모든 위치의 target 폴더 무시
+**/target/
 
 # === Eclipse/STS 프로젝트 설정 (필요하므로 무시 ❌) ===
 # ❗ Eclipse 프로젝트로 인식되려면 아래 3개는 Git에 포함되어야 함!
