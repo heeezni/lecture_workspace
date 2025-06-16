@@ -99,7 +99,7 @@ public class AppMain extends JFrame{
 		});
 		
 		
-		setBounds(50,50,1400,900);
+		setBounds(50,50,1415,900);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE); //db 연동 후엔 지우기
 	}
