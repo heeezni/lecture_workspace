@@ -1,6 +1,5 @@
 package com.sinse.shop.product.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -20,8 +19,8 @@ public class ProductItem extends JPanel {
 	Product product;
 	Image img;
 	
-	public ProductItem(Product prodcut) {
-		this.product = prodcut;
+	public ProductItem(Product product) {
+		this.product = product;
 		
 		// Product에 들어있는 이미지 가져오기
 		try {
@@ -35,7 +34,6 @@ public class ProductItem extends JPanel {
 		
 
 		setPreferredSize(new Dimension(220, 280));
-		setBackground(Color.YELLOW);
 	}
 
 	@Override

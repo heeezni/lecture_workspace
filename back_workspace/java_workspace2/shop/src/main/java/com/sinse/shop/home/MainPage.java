@@ -48,7 +48,7 @@ public class MainPage extends Page {
 		setPreferredSize(new Dimension(Config.SHOPMAIN_WIDTH, (Config.SHOPMAIN_HEIGHT - Config.UTIL_HEIGHT)));
 
 		p_visual.setBackground(Color.CYAN);
-		p_content.setBackground(Color.RED);
+		p_content.setBackground(Color.BLACK);
 
 		// 최신 상품 생성하기
 		createRecentList();
@@ -62,7 +62,7 @@ public class MainPage extends Page {
 
 	// 최신 상품 패널 원하는 수만큼 p_content에 출력
 	public void createRecentList() {
-		List<Product>productList=productDAO.selectRecentList(1);
+		List<Product>productList=productDAO.selectRecentList(6);
 		
 		for (int i = 0; i < productList.size(); i++) {
 			Product product  = productList.get(i); //리스트에서 상품 하나씩 꺼내자!
@@ -73,6 +73,5 @@ public class MainPage extends Page {
 			ProductItem productItem = new ProductItem(product); //상품 하나를 표현하는 디자인 카드
 			p_content.add(productItem);
 		}
-
 	}
 }

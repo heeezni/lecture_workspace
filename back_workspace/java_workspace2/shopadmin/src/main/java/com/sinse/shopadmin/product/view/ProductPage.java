@@ -152,7 +152,7 @@ public class ProductPage extends Page {
 		productSizeDAO = new ProductSizeDAO();
 		productImgDAO = new ProductImgDAO();
 
-		chooser = new JFileChooser("C://Users/a/OneDrive/문서/lecture_workspace/front_workspace/images");
+		chooser = new JFileChooser("C://Users/a/OneDrive/문서/closet/image");
 		chooser.setMultiSelectionEnabled(true); // 파일 다중선택 가능하도록 설정
 
 		// 스타일
