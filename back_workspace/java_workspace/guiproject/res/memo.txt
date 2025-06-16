@@ -1,3 +1,0 @@
-Java Developer
-spring boot
-Oracle

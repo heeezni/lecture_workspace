@@ -1,3 +1,0 @@
-javac 클래스명.java (컴파일)
-java Test(실행) 확장자x
-ls
