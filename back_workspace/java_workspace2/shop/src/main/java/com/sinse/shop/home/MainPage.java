@@ -23,11 +23,14 @@ public class MainPage extends Page {
 	ImageUtil imageUtil = new ImageUtil();
 	Image img;
 	ProductDAO productDAO=new ProductDAO();
+	
+	//최신상품 목록 중 유저가 지금 선택한 바로 그 상품!
+	public Product product;
 
 	public MainPage(AppMain appMain) {
 		super(appMain);
 		// 생성
-		img = imageUtil.getImage("images/패션.jpg", Config.MAIN_VISUAL_WIDTH, Config.MAIN_VISUAL_HEIGHT);
+		img = imageUtil.getImage("패션.jpg", Config.MAIN_VISUAL_WIDTH, Config.MAIN_VISUAL_HEIGHT);
 		p_visual = new JPanel() { // 패널을 이름없는 익명클래스로 재정의하는 코드를 작성
 			// .java파일 생성 필요x, 내부클래스다 보니 외부 클래스인 MainPage멤버 공유 가능
 			@Override
@@ -70,7 +73,7 @@ public class MainPage extends Page {
 				System.out.println(i+ "번 째 "+product.getFilenameList().get(a));
 			}
 			
-			ProductItem productItem = new ProductItem(product); //상품 하나를 표현하는 디자인 카드
+			ProductItem productItem = new ProductItem(this,product); //상품 하나를 표현하는 디자인 카드
 			p_content.add(productItem);
 		}
 	}

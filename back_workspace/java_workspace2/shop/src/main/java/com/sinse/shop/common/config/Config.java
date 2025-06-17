@@ -5,9 +5,9 @@ public class Config {
 /*------------------------------------------------------------
  * 페이지 정의
  *-----------------------------------------------------------*/
-	public static final int MAIN_PAGE=0; //페이지
-	public static final int JOIN_PAGE=1;
-	public static final int PRODUCT_PAGE=2; //상품페이지
+	public static final int MAIN_PAGE=0; // 메인페이지
+	public static final int JOIN_PAGE=1; // 회원가입 페이지
+	public static final int PRODUCT_DETAIL_PAGE=2; //상품페이지
 	public static final int CUSTOMER_PAGE=3; //cs
 	public static final int LOGIN_PAGE=4;
 	public static final int CART_PAGE=5; 
