@@ -13,6 +13,7 @@ public class ServerChatThread extends Thread{
 	Socket socket; //서버로부터 넘겨받은 소켓, 스트림을 뽑을 수 있으므로
 	BufferedReader buffr;
 	BufferedWriter buffw;
+	private boolean isRunning = true;
 	
 	public ServerChatThread(GUIServer guiserver, Socket socket) {
 		this.guiserver=guiserver;
@@ -27,7 +28,7 @@ public class ServerChatThread extends Thread{
 	
 	@Override
 	public void run() {
-		while(true) {
+		while(isRunning) {
 			listen();
 		}
 	}
@@ -49,6 +50,7 @@ public class ServerChatThread extends Thread{
 		} catch (IOException e) {
 			/*상대방 클라이언트가 나가버리면 (소켓을 끊어버리면
 			 * 나는 더이상 접속자 명단에 들어있으면 안되므로, 나를 제거하자*/
+			isRunning=false;
 			guiserver.vec.remove(this); //서버스레드인 나를 죽이기 (나는 상대방과 1:1매칭되어있어서)
 			guiserver.area.append("현재 접속자"+guiserver.vec.size()+" 명\n");
 			System.out.println("어! 누구 나갔다");
