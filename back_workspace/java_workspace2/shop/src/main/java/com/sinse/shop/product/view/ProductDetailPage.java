@@ -46,7 +46,8 @@ public class ProductDetailPage extends Page {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				g.drawImage(img, 0, 0, p_big.getPreferredSize().getSize().width, this.getPreferredSize().getSize().height, this);
+				g.drawImage(img, 0, 0, p_big.getPreferredSize().getSize().width,
+						this.getPreferredSize().getSize().height, this);
 
 			}
 		};
