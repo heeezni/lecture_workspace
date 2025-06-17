@@ -4,11 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -30,10 +26,9 @@ public class Client extends JFrame implements Runnable{
 	JButton bt;
 	JTextArea area;
 	JScrollPane scroll;
-	Thread thread;
-	Socket socket;
-	BufferedReader buffr;
-	BufferedWriter buffw;
+	Thread thread; // 접속 스레드
+	ClientChatThread clientThread; //채팅용 스레드
+	
 	
 	public Client() {
 		p_north=new JPanel();
@@ -53,7 +48,8 @@ public class Client extends JFrame implements Runnable{
 		p_south.setPreferredSize(new Dimension(300,50));
 		t_input.setPreferredSize(new Dimension(300,30));
 		
-		cb_ip.addItem("192.168.60.14");
+		cb_ip.addItem("192.168.60.14"); //ip 잘 확인하기
+		cb_ip.addItem("192.168.60.20"); //강사님 ip
 		
 		p_north.add(cb_ip);
 		p_north.add(t_port);
@@ -70,11 +66,11 @@ public class Client extends JFrame implements Runnable{
 		});
 		
 		t_input.addKeyListener(new KeyAdapter() {
-		
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
-					send();
+					clientThread.send(t_input.getText()); //엔터쳤을 때 보내기
+					t_input.setText("");
 				}
 			}
 			
@@ -83,29 +79,18 @@ public class Client extends JFrame implements Runnable{
 		setBounds(350,0,350,450);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
 	}
-	
-	public void send() {
-		try {
-			buffw.write(t_input.getText()+"\n");
-			t_input.setText("");
-			buffw.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
+
 	// 접속 : 서버의 ip와 포트번호 이용하여 소켓을 생성하는 것
 	public void connectServer() {
 		String ip=(String)cb_ip.getSelectedItem();
 		int port = Integer.parseInt(t_port.getText());
 		
 		try {
-			socket=new Socket(ip, port);
-			buffr=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			buffw=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			Socket socket=new Socket(ip, port);
+			//접속 이후부터 채팅은 스레드가 담당하므로, 소켓을 스레드에게 전달해주자!
+			clientThread = new ClientChatThread(this, socket);
+			clientThread.start();
 			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

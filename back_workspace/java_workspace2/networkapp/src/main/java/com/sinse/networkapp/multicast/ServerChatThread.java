@@ -39,9 +39,19 @@ public class ServerChatThread extends Thread{
 			msg=buffr.readLine(); // 클라이언트가 전송한 메시지 청취
 			guiserver.area.append(msg+"\n");
 			
-			send(msg);
+			// 서버에 접속한 모든 유저와 1:1 대응하는 
+			//ServerChatThread수만큼 반복하면서 메시지를 보내자
+			for(int i=0; i<guiserver.vec.size();i++) {
+				//해당 서버 챗 스레드의 send메서드 호출
+				ServerChatThread st=guiserver.vec.get(i);
+				st.send(msg);				
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			/*상대방 클라이언트가 나가버리면 (소켓을 끊어버리면
+			 * 나는 더이상 접속자 명단에 들어있으면 안되므로, 나를 제거하자*/
+			guiserver.vec.remove(this); //서버스레드인 나를 죽이기 (나는 상대방과 1:1매칭되어있어서)
+			guiserver.area.append("현재 접속자"+guiserver.vec.size()+" 명\n");
+			System.out.println("어! 누구 나갔다");
 		} 
 	}
 	
