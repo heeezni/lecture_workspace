@@ -21,5 +21,25 @@
 		<servlet-name>memberRegist</servlet-name>
 		<url-pattern>/member/regist</url-pattern>
 	</servlet-mapping>
+	
+	<!-- 서블릿 생명주기를 테스트하는 서블릿 매핑 -->
+	<servlet>
+		<servlet-name>testServlet</servlet-name>
+		<servlet-class>com.sinse.web0618.TestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>testServlet</servlet-name>
+		<url-pattern>/hello</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 서블릿 생명주기를 테스트하는 서블릿 매핑 -->
+	<servlet>
+		<servlet-name>studyServlet</servlet-name>
+		<servlet-class>com.sinse.web0618.StudyServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>studyServlet</servlet-name>
+		<url-pattern>/study</url-pattern>
+	</servlet-mapping>
 
 </web-app>
