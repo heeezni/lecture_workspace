@@ -58,7 +58,7 @@ public class WriteServlet extends HttpServlet {
 				// 서버에서 문자열로 작성한 자바 스크립트 코드는 문장의 끝에 반드시 ;을 명시해야함 (필수!)
 				out.print("<script>");
 				out.print("alert('글 등록 완료');");
-				out.print("location.href='/notice/list';");
+				out.print("location.href='/notice/list.jsp';");
 				out.print("</script>");
 			} else {
 				out.print("<script>");
