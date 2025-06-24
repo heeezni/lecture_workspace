@@ -2,6 +2,7 @@ package imgCloud;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -14,7 +15,7 @@ import com.oreilly.servlet.MultipartRequest;
 // 클라이언트가 전송한 텍스트 데이터, 바이너리 데이터까지 처리해보기
 public class UploadServlet extends HttpServlet {
 
-	String savePath = "C:/SSG I&C/lecture_workspace/back_workspace/javaee_workspace/imgCloud/src/main/webapp/public";
+	String savePath = "C:\\SSG_I&C\\lecture_workspace\\back_workspace\\javaee_workspace\\imgCloud\\src\\main\\webapp\\public";
 	int maxLimit = 3 * 1024 * 1024; // 3MB
 
 	/*
@@ -30,7 +31,7 @@ public class UploadServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		// 업로드 처리
 		try {
-			MultipartRequest multi = new MultipartRequest(request, savePath, maxLimit, "utf-8");
+			MultipartRequest multi = new MultipartRequest(request, savePath, maxLimit,"utf-8");
 			System.out.println("업로드 성공");
 
 			// 텍스트 파라미터 추출
@@ -64,7 +65,11 @@ public class UploadServlet extends HttpServlet {
 			
 				// 파라미터명을 이용하면, 업로드된 파일명도 추출가능
 				String filename=multi.getOriginalFileName(param);
-				out.print(" 업로드된 파일명은 "+filename);
+				out.print(" 업로드된 파일명은 "+filename); // 클라이언트가 브라우저일때
+				
+				filename=URLDecoder.decode(filename, "UTF-8"); // 디코드
+				
+				System.out.println(" 업로드된 파일명은 "+filename); // 클라이언트가 브라우저가 아닐 때
 			
 			}
 
